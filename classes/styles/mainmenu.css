@@ -1,0 +1,169 @@
+@import url('https://fonts.googleapis.com/css2?family=Macondo&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+*, ::after, ::before
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+:root
+{
+    --clr: #222327;
+    --backgroundclr: #333;
+    --btnclr: #29fd53;
+}
+
+nav
+{
+    position: sticky;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    top: 0;
+    left: 0;
+    width: 120px;
+    height: 60px;
+    background: var(--backgroundclr);
+    box-shadow: 0 25px 35px rgba(0,0,0,0.2);
+    transition: height 0.5s, width 0.5s;
+    transition-delay: 0s, 0.75s;
+    overflow: hidden;
+    z-index: 50;
+}
+
+nav.active
+{
+    width: 300px;
+    height: 400px;
+    transition: height 0.5s, width 0.5s;
+    transition-delay: 0.75s, 0s;
+}
+
+nav .sup
+{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+nav .user
+{
+    position: relative;
+    border-radius: 50%;
+    border: 6px solid var(--backgroundclr);
+    overflow: hidden;
+    width: 60px;
+    height: 60px;
+    background: var(--backgroundclr);
+    color: #fff;
+}
+
+nav p
+{
+    display: none;
+    height: 60px;
+    width: calc(100% - 120px);
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    white-space: nowrap;
+    opacity: 0;
+}
+
+nav.active p
+{
+    opacity: 1;
+    display: flex;
+}
+
+nav .user img
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    min-width: 60px;
+    background: var(--backgroundclr);
+    object-fit: cover;
+    object-position: center;
+}
+
+nav .menu_toggle
+{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    background: var(--backgroundclr);
+    cursor: pointer;
+}
+
+nav .menu_toggle::before
+{
+    content: '';
+    position: absolute;
+    width: 32px;
+    height: 2px;
+    background: #fff;
+    transform: translateY(-10px);
+    box-shadow: 0 10px #fff;
+    transition: 0.5s;
+}
+
+nav .menu_toggle::after
+{
+    content: '';
+    position: absolute;
+    width: 32px;
+    height: 2px;
+    background: #fff;
+    transform: translateY(10px);
+    transition: 0.5s;
+}
+
+nav.active .menu_toggle::before
+{
+    transform: translateY(0px) rotate(45deg);
+    box-shadow: 0 0 #fff;
+}
+
+nav.active .menu_toggle::after
+{
+    transform: translateY(0px) rotate(-45deg);
+}
+
+.menu_access
+{
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    border-top: 1px solid rgba(255,255,255,0.5);
+}
+
+.menu_access li
+{
+    list-style: none;
+}
+
+.menu_access li a
+{
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+    font-size: 1rem;
+    gap: 10px;
+    text-decoration: none;
+    color: #fff;
+}
+
+.menu_access li a ion-icon
+{
+    font-size: 1.5rem;
+}

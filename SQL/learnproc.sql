@@ -1,6 +1,10 @@
 use projet4;
 delimiter //
 
+-- --------------------------------------
+--
+-- --------------------------------------
+
 drop procedure if exists projet4.findFirstAuthorID;
 create procedure projet4.findFirstAuthorID(out authorid int, out authoremail varchar(128))
   begin
@@ -21,17 +25,6 @@ create procedure projet4.log(in mess varchar(128), in payload varchar(128))
     select concat_ws(':','LOG', date_format(current_timestamp, '%M %d %Y --- %H:%i:%s'), mess, payload) '';
   end//
 
-
-drop function if exists projet4.ffAuthorID;
-
-create function projet4.ffAuthorID() returns INT
-  begin
-      declare authorid INT;
-      select id into authorid from projet4.users
-        where userrole = 'AUTHOR' limit 1;
-      return authorid;    
-  end//
-
 drop procedure if exists projet4.addUser;
 delimiter //
 create procedure projet4.addUser(in email VARCHAR(128), in pwd VARCHAR(128), pseudo VARCHAR(128))
@@ -45,6 +38,30 @@ delimiter //
 create procedure projet4.dropUserById(in id INT)
   begin
     DELETE from projet4.users where id = id;
+  end//
+
+-- --------------------------------------
+--
+-- --------------------------------------
+
+drop function if exists projet4.ffAuthorID;
+
+create function projet4.ffAuthorID() returns INT
+  begin
+      declare authorid INT;
+      select id into authorid from projet4.users
+        where userrole = 'AUTHOR' limit 1;
+      return authorid;    
+  end//
+
+drop function if exists projet4.findUserByPseudo;
+delimiter //
+create function projet4.findUserByPseudo(in pseudo VARCHAR(128)) returns INT
+  begin
+    declare userId INT;
+    select id into userId from projet4.users
+      where pseudo = pseudo;
+    return id;
   end//
 
 
@@ -62,5 +79,6 @@ call projet4.dropUserById(14);
 
 -- select email 'Author email is', pseudo 'and pseudo is' from projet4.users where id = projet4.ffAuthorID();
 select email '', pseudo '' from projet4.users where id = projet4.ffAuthorID();
+select * from projet4.users where id = projet4.findUserByPseudo('Toto98');
 
 

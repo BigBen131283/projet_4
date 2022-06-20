@@ -19,6 +19,6 @@ select billets.id, content 'Title',
       date_format(pub_date, '%M %d %Y --- %H:%i:%s') 'Published',
       pseudo 'Pseudo',
       email 'mail',
-      if(published=true, 'en ligne', 'en attente') 'publication'
+      if(published=true, 'en ligne', 'en attente') 'publication', user_id
   from projet4.billets, projet4.users where users.id = user_id
-      order by 2 desc;
+      order by pub_date desc;

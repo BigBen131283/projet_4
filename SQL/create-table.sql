@@ -33,10 +33,10 @@ CREATE TABLE IF NOT EXISTS projet4.users (
   pseudo VARCHAR(64) NOT NULL,
   userstatus VARCHAR(64) NOT NULL DEFAULT 'ACTIVE' CHECK (userstatus in ('ACTIVE', 'SUSPENDED', 'DELETED')),
   userrole VARCHAR(64) NOT NULL DEFAULT 'READER' CHECK (userrole in ('AUTHOR', 'READER')),
-  PRIMARY KEY (id, email, pseudo))
+  PRIMARY KEY (id))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
-
+CREATE UNIQUE INDEX `uniqueUser` ON projet4.users(`email`, `pseudo`) USING BTREE;
 
 -- -----------------------------------------------------
 -- Table projet4.billets

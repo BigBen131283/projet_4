@@ -2,7 +2,7 @@ use projet4;
 delimiter //
 
 -- --------------------------------------
---
+-- Procédures
 -- --------------------------------------
 
 drop procedure if exists projet4.findFirstAuthorID;
@@ -19,29 +19,39 @@ create procedure projet4.findFirstReaderID(out readerid int)
       where userrole = 'READER' limit 1;
   end//
 
-drop procedure if exists projet4.log;
-create procedure projet4.log(in mess varchar(128), in payload varchar(128))
-  begin
-    select concat_ws(':','LOG', date_format(current_timestamp, '%M %d %Y --- %H:%i:%s'), mess, payload) '';
-  end//
-
 drop procedure if exists projet4.addUser;
-delimiter //
-create procedure projet4.addUser(in email VARCHAR(128), in pwd VARCHAR(128), pseudo VARCHAR(128))
+create procedure projet4.addUser(in email VARCHAR(128), in pwd VARCHAR(128), 
+    in pseudo VARCHAR(128), out result VARCHAR(128))
   begin
+    DECLARE EXIT HANDLER FOR 1062
+        begin
+            SET result = concat_ws(' ', email, 'Utilisateur déjà enregistré'); 
+        end;
     INSERT INTO projet4.users(email, pwd, pseudo) 
       VALUES (email, pwd, pseudo);
+      SET result = concat_ws(' ', email, 'Utilisateur enregistré');
   end//
 
 drop procedure if exists projet4.dropUserById;
-delimiter //
-create procedure projet4.dropUserById(in id INT)
+create procedure projet4.dropUserById(in userId INT, out result VARCHAR(128))
   begin
-    DELETE from projet4.users where id = id;
+    DECLARE code CHAR(5) DEFAULT '00000';
+    DECLARE msg TEXT;
+    DECLARE CONTINUE HANDLER FOR SQLEXCEPTION
+    begin
+        get diagnostics condition 1
+            code = returned_sqlstate, msg = message_text;
+    end;
+    DELETE from projet4.users where idd = userId;
+    if code = '00000' THEN
+        set result = 'done';
+    else
+        set result = "pas done";
+    end if;
   end//
 
 -- --------------------------------------
---
+-- Fonctions
 -- --------------------------------------
 
 drop function if exists projet4.ffAuthorID;
@@ -55,30 +65,19 @@ create function projet4.ffAuthorID() returns INT
   end//
 
 drop function if exists projet4.findUserByPseudo;
-delimiter //
-create function projet4.findUserByPseudo(in pseudo VARCHAR(128)) returns INT
+create function projet4.findUserByPseudo(userpseudo VARCHAR(128)) returns INT
   begin
     declare userId INT;
+    DECLARE EXIT HANDLER FOR NOT FOUND
+        begin
+            return 9999;
+        end;
     select id into userId from projet4.users
-      where pseudo = pseudo;
-    return id;
+      where pseudo = userpseudo;
+    return userId;
   end//
 
 
 delimiter ;
-
-
-
-call projet4.findFirstAuthorID(@A, @AA);
-call projet4.log('First Author ID is', @A);
-call projet4.findFirstReaderID(@B);
-call projet4.log('First Reader ID is', @B);
-
-call projet4.addUser('toto@free.fr','9876', 'Toto98');
-call projet4.dropUserById(14);
-
--- select email 'Author email is', pseudo 'and pseudo is' from projet4.users where id = projet4.ffAuthorID();
-select email '', pseudo '' from projet4.users where id = projet4.ffAuthorID();
-select * from projet4.users where id = projet4.findUserByPseudo('Toto98');
 
 

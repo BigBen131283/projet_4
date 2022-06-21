@@ -42,7 +42,7 @@
     inset: -10px 140px;
     background: linear-gradient(315deg, #00ccff, #d400d4);
     transition: 0.5s;
-    animation: animate 4s linear infinite;
+    /* animation: animate 4s linear infinite; */
 }
 
 .box:hover::before

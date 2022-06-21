@@ -21,15 +21,24 @@ create procedure projet4.findFirstReaderID(out readerid int)
 
 drop procedure if exists projet4.addUser;
 create procedure projet4.addUser(in email VARCHAR(128), in pwd VARCHAR(128), 
-    in pseudo VARCHAR(128), out result VARCHAR(128))
+    in pseudo VARCHAR(128), in isAuthor BOOLEAN,
+    out result VARCHAR(128), out isError TINYINT)
   begin
     DECLARE EXIT HANDLER FOR 1062
         begin
-            SET result = concat_ws(' ', email, 'Utilisateur déjà enregistré'); 
+            SET result = concat_ws(' ', email, 'Utilisateur déjà enregistré');
+            SET isError = 1; 
         end;
-    INSERT INTO projet4.users(email, pwd, pseudo) 
-      VALUES (email, pwd, pseudo);
-      SET result = concat_ws(' ', email, 'Utilisateur enregistré');
+
+    if isAuthor THEN
+        INSERT INTO projet4.users(email, pwd, pseudo, userrole)
+            VALUES (email, pwd, pseudo, 'AUTHOR');
+    else
+        INSERT INTO projet4.users(email, pwd, pseudo) 
+            VALUES (email, pwd, pseudo);
+    end if;
+    SET result = concat_ws(' ', email, 'Utilisateur enregistré');
+    SET isError = 0;
   end//
 
 drop procedure if exists projet4.dropUserById;
@@ -49,6 +58,39 @@ create procedure projet4.dropUserById(in userId INT, out result VARCHAR(128))
         set result = "pas done";
     end if;
   end//
+
+drop procedure if exists projet4.loadusers;
+
+create procedure projet4.loadusers(in numberOfUsers INT, in startIndex INT, 
+    in isAuthor BOOLEAN)
+begin
+    declare x INT;
+    declare pseudo VARCHAR(128);
+    declare email VARCHAR(128);
+    declare pwd VARCHAR(128);
+    declare result VARCHAR(128);
+    declare isError TINYINT;
+
+    set x = 0;
+    set pseudo = '';
+    set pwd = '1234';
+    set email = '';
+
+    loop_toto: LOOP
+        SET x = x + 1;
+        if x > numberOfUsers THEN
+            leave loop_toto;
+        end if;
+
+        SET pseudo = CONCAT('utilisateur',x + startIndex - 1);
+        SET email = CONCAT(pseudo,'@free.fr');
+        
+        call projet4.addUser(email, pwd, pseudo, isAuthor, result, isError);
+        if isError = 1 THEN
+            select result;
+        end if;
+    end LOOP;
+end//
 
 -- --------------------------------------
 -- Fonctions

@@ -51,7 +51,7 @@ create procedure projet4.dropUserById(in userId INT, out result VARCHAR(128))
         get diagnostics condition 1
             code = returned_sqlstate, msg = message_text;
     end;
-    DELETE from projet4.users where idd = userId;
+    DELETE from projet4.users where id = userId;
     if code = '00000' THEN
         set result = 'done';
     else

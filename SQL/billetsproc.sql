@@ -6,22 +6,22 @@ delimiter //
 -- --------------------------------------
 
 drop procedure if exists projet4.findLastBillet;
-create procedure projet4.findLastBillet(out billet_id INT, out pub_date TIMESTAMP)
+create procedure projet4.findLastBillet(out billet_id INT, out publish_at TIMESTAMP)
     begin
-        select max(pub_date) as dernierBillet from projet4.billets;
+        select max(publish_at) as dernierBillet from projet4.billets;
     end//
 
 drop procedure if exists projet4.findFirstBillet;
-create procedure projet4.findFirstBillet(out billet_id INT, out pub_date TIMESTAMP)
+create procedure projet4.findFirstBillet(out billet_id INT, out publish_at TIMESTAMP)
     begin
-        select min(pub_date) as premierBillet from projet4.billets;
+        select min(publish_at) as premierBillet from projet4.billets;
     end//
 
 drop procedure if exists projet4.addBillet;
-create procedure projet4.addBillet(in title TEXT, in content TEXT,in user_id INT, in pub_date TIMESTAMP, in published BOOLEAN)
+create procedure projet4.addBillet(in title TEXT, in content TEXT,in users_id INT, in publish_at TIMESTAMP, in published BOOLEAN)
     begin
-        INSERT INTO projet4.billets(title, content, user_id, pub_date, published) 
-            VALUES (title, content, user_id, pub_date, published);       
+        INSERT INTO projet4.billets(title, content, users_id, publish_at, published) 
+            VALUES (title, content, users_id, publish_at, published);       
     end//
 
 drop procedure if exists projet4.dropBilletByID;
@@ -30,9 +30,9 @@ create procedure projet4.dropBilletByID(in billet_id INT, out result VARCHAR(128
         declare code CHAR(5) DEFAULT '00000';
         declare msg TEXT;
         declare CONTINUE HANDLER FOR SQLEXCEPTION
-        begin get diagnostics condition 1
-            code = returned_sqlstate, msg = message_text;
-        end;
+            begin get diagnostics condition 1
+                code = returned_sqlstate, msg = message_text;
+            end;
         DELETE from projet4.billets where id = billet_id;
         if code = '00000' THEN
             set result = 'done';
@@ -47,16 +47,14 @@ create procedure projet4.loadBillets(in numberOfBillets INT, in startIndex INT)
         declare x INT;
         declare title TEXT;
         declare content TEXT;
-        declare user_id INT;
-        declare authoremail VARCHAR(128);
-        declare pub_date TIMESTAMP;
+        declare users_id INT;
+        declare publish_at TIMESTAMP;
         declare published BOOLEAN;
 
         set x = 0;
         set title = '';
         set content = '';
-        set user_id = projet4.ffAuthorID();
-        set pub_date = NOW();
+        set users_id = projet4.ffAuthorID();
         set published = true;
         
         loop_billets : LOOP
@@ -67,8 +65,8 @@ create procedure projet4.loadBillets(in numberOfBillets INT, in startIndex INT)
 
             set title = CONCAT('title',x + startIndex - 1);
             set content = CONCAT('content',x + startIndex - 1);
-
-            call projet4.addBillet(title, content, user_id, pub_date, published);
+            set publish_at = projet4.randomdate();
+            call projet4.addBillet(title, content, users_id, publish_at, published);
         end LOOP;
     end//
 
@@ -76,4 +74,11 @@ create procedure projet4.loadBillets(in numberOfBillets INT, in startIndex INT)
 -- Fonctions
 -- --------------------------------------
 
+drop function if exists projet4.randomdate;
+create function projet4.randomdate() returns timestamp
+  begin
+    declare toto timestamp;
+    SELECT CURRENT_TIMESTAMP - INTERVAL FLOOR(RAND() * 30 * 24 * 60 * 60) second into toto;
+    return toto;
+  end//
 -- delimiter ;

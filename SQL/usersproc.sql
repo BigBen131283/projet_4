@@ -47,10 +47,10 @@ create procedure projet4.dropUserById(in userId INT, out result VARCHAR(128))
     DECLARE code CHAR(5) DEFAULT '00000';
     DECLARE msg TEXT;
     DECLARE CONTINUE HANDLER FOR SQLEXCEPTION
-    begin
-        get diagnostics condition 1
-            code = returned_sqlstate, msg = message_text;
-    end;
+      begin
+          get diagnostics condition 1
+              code = returned_sqlstate, msg = message_text;
+      end;
     DELETE from projet4.users where id = userId;
     if code = '00000' THEN
         set result = 'done';
@@ -109,7 +109,7 @@ create function projet4.ffAuthorID() returns INT
   begin
       declare authorid INT;
       select id into authorid from projet4.users
-        where userrole = 'AUTHOR' limit 1;
+        where role = 10 limit 1;
       return authorid;    
   end//
 

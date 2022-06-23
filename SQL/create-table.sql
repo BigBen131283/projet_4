@@ -18,21 +18,30 @@ USE `projet4` ;
 -- DROP Tables if exists
 -- -----------------------------------------------------
 
+DROP TABLE IF EXISTS projet4.likes ;
 DROP TABLE IF EXISTS projet4.comments ;
 DROP TABLE IF EXISTS projet4.billets ;
 DROP TABLE IF EXISTS projet4.users ;
 
 -- -----------------------------------------------------
 -- Table projet4.users
+-- status 10 inscrit en attente
+-- status 20 inscrit
+-- status 30 suspendu
+-- status 40 supprimé
+--
+-- role 10 Author
+-- role 20 Reader
 -- -----------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS projet4.users (
-  id INT NOT NULL AUTO_INCREMENT,
+  id INT(11) NOT NULL AUTO_INCREMENT,
   email VARCHAR(128) NOT NULL,
-  pwd VARCHAR(64) NOT NULL,
+  password VARCHAR(64) NOT NULL,
   pseudo VARCHAR(64) NOT NULL,
-  userstatus VARCHAR(64) NOT NULL DEFAULT 'ACTIVE' CHECK (userstatus in ('ACTIVE', 'SUSPENDED', 'DELETED')),
-  userrole VARCHAR(64) NOT NULL DEFAULT 'READER' CHECK (userrole in ('AUTHOR', 'READER')),
+  status INT(11) NOT NULL DEFAULT 20,
+  role INT(11) NOT NULL,
+  profile_picture INT NOT NULL DEFAULT 0,
   PRIMARY KEY (id))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -43,12 +52,12 @@ CREATE UNIQUE INDEX `uniqueUser` ON projet4.users(`email`, `pseudo`) USING BTREE
 -- -----------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS projet4.billets (
-  id INT NOT NULL AUTO_INCREMENT,
+  id INT(11) NOT NULL AUTO_INCREMENT,
   title TEXT NOT NULL,
   content TEXT NOT NULL,
-  pub_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  published BOOLEAN DEFAULT FALSE,
-  user_id INT NOT NULL,
+  publish_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  published TINYINT NOT NULL DEFAULT 0,
+  users_id INT NOT NULL,
   PRIMARY KEY (id))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -61,30 +70,43 @@ DEFAULT CHARACTER SET = utf8;
 
 CREATE TABLE IF NOT EXISTS projet4.comments (
   id INT NOT NULL AUTO_INCREMENT,
-  content TEXT NOT NULL,
-  pub_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  thumbs_up INT NOT NULL DEFAULT 0,
-  thumbs_down INT NOT NULL DEFAULT 0,
-  moderation VARCHAR(64) NOT NULL DEFAULT 'PUBLISHED' CHECK (moderation in ('PUBLISHED', 'SIGNALED', 'REVIEW_OK', 'REVIEW_KO')), 
-  user_id INT NOT NULL,
-  billet_id INT NOT NULL,
+  content VARCHAR(255) NOT NULL,
+  publish_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  thumbs_up INT(11) NOT NULL DEFAULT 0,
+  thumbs_down INT(11) NOT NULL DEFAULT 0,
+  report INT(11) NOT NULL, 
+  users_id INT(11) NOT NULL,
+  billet_id INT(11) NOT NULL,
   PRIMARY KEY (id))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
--- CREATE INDEX fk_comments_users1_idx ON projet4.comments (users_id ASC);
--- ALTER TABLE projet4.comments ADD FOREIGN KEY fk_comments_users (users_id) 
---     REFERENCES projet4.users (id);
--- CREATE INDEX fk_comments_billets1_idx ON projet4.comments (billets_id ASC);
--- CREATE INDEX fk_billets_users_idx ON projet4.billets (users_id ASC);
+-- -----------------------------------------------------
+-- Table projet4.likes
+-- -----------------------------------------------------
 
-ALTER TABLE projet4.billets ADD CONSTRAINT fk_billets_to_users FOREIGN KEY (user_id) 
+CREATE TABLE IF NOT EXISTS projet4.likes(
+  users_id INT(11) NOT NULL,
+  comments_id INT(11) NOT NULL,
+  like_it TINYINT (1) NOT NULL
+)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+-- -----------------------------------------------------
+-- Foreign Keys
+-- -----------------------------------------------------
+
+ALTER TABLE projet4.billets ADD CONSTRAINT fk_billets_to_users FOREIGN KEY (users_id) 
   REFERENCES projet4.users(id);
-ALTER TABLE projet4.comments ADD CONSTRAINT fk_comments_to_users FOREIGN KEY (user_id)
+ALTER TABLE projet4.comments ADD CONSTRAINT fk_comments_to_users FOREIGN KEY (users_id)
   REFERENCES projet4.users(id);
 ALTER TABLE projet4.comments ADD CONSTRAINT fk_comments_to_billets FOREIGN KEY (billet_id)
   REFERENCES projet4.billets(id);
-
+ALTER TABLE projet4.likes ADD CONSTRAINT fk_likes_to_users FOREIGN KEY (users_id)
+  REFERENCES projet4.users(id);
+ALTER TABLE projet4.likes ADD CONSTRAINT fk_likes_to_comments FOREIGN KEY (comments_id)
+  REFERENCES projet4.comments(id);
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

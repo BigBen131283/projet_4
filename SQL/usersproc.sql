@@ -31,11 +31,11 @@ create procedure projet4.addUser(in email VARCHAR(128), in pwd VARCHAR(128),
         end;
 
     if isAuthor THEN
-        INSERT INTO projet4.users(email, pwd, pseudo, userrole)
-            VALUES (email, pwd, pseudo, 'AUTHOR');
+        INSERT INTO projet4.users(email, password, pseudo, role)
+            VALUES (email, pwd, pseudo, 10);
     else
-        INSERT INTO projet4.users(email, pwd, pseudo) 
-            VALUES (email, pwd, pseudo);
+        INSERT INTO projet4.users(email, password, pseudo, role) 
+            VALUES (email, pwd, pseudo, 20);
     end if;
     SET result = concat_ws(' ', email, 'Utilisateur enregistré');
     SET isError = 0;
@@ -67,6 +67,7 @@ begin
     declare x INT;
     declare pseudo VARCHAR(128);
     declare email VARCHAR(128);
+    declare rootname VARCHAR(128);
     declare pwd VARCHAR(128);
     declare result VARCHAR(128);
     declare isError TINYINT;
@@ -76,13 +77,19 @@ begin
     set pwd = '1234';
     set email = '';
 
+    if isAuthor THEN
+      set rootname = 'auteur';
+    else
+      set rootname = 'utilisateur';
+    end if;
+
     loop_toto: LOOP
         SET x = x + 1;
         if x > numberOfUsers THEN
             leave loop_toto;
         end if;
 
-        SET pseudo = CONCAT('utilisateur',x + startIndex - 1);
+        SET pseudo = CONCAT(rootname,x + startIndex - 1);
         SET email = CONCAT(pseudo,'@free.fr');
         
         call projet4.addUser(email, pwd, pseudo, isAuthor, result, isError);

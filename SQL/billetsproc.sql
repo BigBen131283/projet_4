@@ -6,15 +6,15 @@ delimiter //
 -- --------------------------------------
 
 drop procedure if exists projet4.findLastBillet;
-create procedure projet4.findLastBillet(out billet_id INT, out publish_at TIMESTAMP)
+create procedure projet4.findLastBillet(out zedate TIMESTAMP, out billid INT)
     begin
-        select max(publish_at) as dernierBillet from projet4.billets;
+        select publish_at, id into zedate, billid from projet4.billets order by 1 desc limit 1;
     end//
 
 drop procedure if exists projet4.findFirstBillet;
-create procedure projet4.findFirstBillet(out billet_id INT, out publish_at TIMESTAMP)
+create procedure projet4.findFirstBillet(out zedate TIMESTAMP, out billid INT)
     begin
-        select min(publish_at) as premierBillet from projet4.billets;
+        select publish_at, id into zedate, billid from projet4.billets order by 1 asc limit 1;
     end//
 
 drop procedure if exists projet4.addBillet;
@@ -81,4 +81,6 @@ create function projet4.randomdate() returns timestamp
     SELECT CURRENT_TIMESTAMP - INTERVAL FLOOR(RAND() * 30 * 24 * 60 * 60) second into toto;
     return toto;
   end//
--- delimiter ;
+
+
+delimiter ;

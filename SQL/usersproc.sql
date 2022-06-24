@@ -9,14 +9,14 @@ drop procedure if exists projet4.findFirstAuthorID;
 create procedure projet4.findFirstAuthorID(out authorid int, out authoremail varchar(128))
   begin
     select id, email into authorid, authoremail from projet4.users
-      where userrole = 'AUTHOR' limit 1;    
+      where role = 10 limit 1;    
   end//
 
 drop procedure if exists projet4.findFirstReaderID;
 create procedure projet4.findFirstReaderID(out readerid int)
   begin
     select id into readerid from projet4.users 
-      where userrole = 'READER' limit 1;
+      where role = 20 limit 1;
   end//
 
 drop procedure if exists projet4.addUser;

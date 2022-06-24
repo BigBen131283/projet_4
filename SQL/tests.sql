@@ -29,3 +29,4 @@ select  billets.content 'Chapter Title',
   from projet4.billets, projet4.comments, projet4.users where comments.billet_id = billets.id
       and comments.users_id = users.id
       order by 4 desc;
+      

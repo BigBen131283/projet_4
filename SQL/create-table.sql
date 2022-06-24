@@ -49,6 +49,9 @@ CREATE UNIQUE INDEX `uniqueUser` ON projet4.users(`email`, `pseudo`) USING BTREE
 
 -- -----------------------------------------------------
 -- Table projet4.billets
+--
+-- published 1 le billet est publié
+-- published 0 le billet sera publié plus tard
 -- -----------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS projet4.billets (
@@ -56,7 +59,7 @@ CREATE TABLE IF NOT EXISTS projet4.billets (
   title TEXT NOT NULL,
   content TEXT NOT NULL,
   publish_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  published TINYINT NOT NULL DEFAULT 0,
+  published TINYINT NOT NULL DEFAULT 1,
   users_id INT NOT NULL,
   PRIMARY KEY (id))
 ENGINE = InnoDB
@@ -66,6 +69,11 @@ DEFAULT CHARACTER SET = utf8;
 
 -- -----------------------------------------------------
 -- Table projet4.comments
+--
+-- report 30 commentaire publié et visible
+-- report 20 commentaire signalé et masqué
+-- report 10 commentaire modéré et masqué/supprimé
+-- report 40 commentaire modéré et accepté ne peut plus être signalé
 -- -----------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS projet4.comments (
@@ -74,7 +82,7 @@ CREATE TABLE IF NOT EXISTS projet4.comments (
   publish_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   thumbs_up INT(11) NOT NULL DEFAULT 0,
   thumbs_down INT(11) NOT NULL DEFAULT 0,
-  report INT(11) NOT NULL, 
+  report INT(11) NOT NULL DEFAULT 30, 
   users_id INT(11) NOT NULL,
   billet_id INT(11) NOT NULL,
   PRIMARY KEY (id))

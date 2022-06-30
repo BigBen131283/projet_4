@@ -36,7 +36,7 @@ nav
 nav.active
 {
     width: 300px;
-    height: 330px;
+    height: 375px;
     transition: height 0.5s, width 0.5s;
     transition-delay: 0.75s, 0s;
 }

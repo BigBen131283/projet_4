@@ -23,9 +23,13 @@
 
 body
 {
-    background: url(./resources/images/alaska5.jpg);
+    background: url(../../resources/images/alaska5.jpg);
     background-size: cover;
     background-repeat: no-repeat;
+    background-position: center;
+    display: block;
+    width: 100%;
+    min-height: 100vh;
 }
 
 
@@ -46,7 +50,7 @@ form
     border-radius: 10px;
 }
 
-form h2
+form h1
 {
     margin: 0 0 30px;
     padding: 0;
@@ -171,6 +175,8 @@ form ul li a::before
     position: absolute;
     bottom: -10px;
     pointer-events: none;
+    height: 10px;
+    flex-wrap: nowrap;
     z-index: 1;
     font-size: 10px;
     color: var(--primaryclr);
@@ -187,4 +193,33 @@ form ul li a:hover::before
     opacity: 1;
     letter-spacing: 6px;
     transition-delay: 0.25s;
+}
+
+@media screen and (max-width: 1024px)
+{
+    form
+    {
+        width: 300px;
+        background: rgba(0,0,0,.6);
+    }
+
+    .links button
+    {
+        width: 60%;
+    }
+
+    .links button:hover
+    {
+        letter-spacing: normal;
+    }
+    form ul li a::before
+    {
+        opacity: 1;
+        letter-spacing: 6px;
+    }
+
+    form ul li a:hover
+    {
+        transform: translateY(0px);
+    }
 }

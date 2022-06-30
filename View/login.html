@@ -5,17 +5,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Se connecter</title>
-    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="../classes/styles/login.css">
+    <link rel="stylesheet" href="../classes/styles/login/tablett.css" media="screen AND (min-width: 600px)">
+    <link rel="stylesheet" href="../classes/styles/login/desktop.css" media="screen AND (min-width: 1024px)">
 </head>
 <body>
-    <form method="post">
-        <h2>Connexion</h2>
+    <form method="post" novalidate>
+        <h1>Connexion</h1>
         <div class="inputBox">
-            <input type="text" name="pseudo" required="" id="pseudo">
+            <input type="text" name="pseudo" required id="pseudo">
             <label for="pseudo">Pseudo</label>
         </div>
         <div class="inputBox">
-            <input type="password" name="pass" required="" id="pass">
+            <input type="password" name="pass" required id="pass">
             <label for="pass">Mot de passe</label>
         </div>
         <div class="links">

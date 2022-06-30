@@ -47,8 +47,6 @@ section
     position: relative;
     width: 100%;
     padding: 15px;
-    /* padding-top: 25px;
-    padding-bottom: 25px; */
     color: var(--backgroundclr);
     display: flex;
     flex-direction: column;
@@ -73,7 +71,16 @@ section p
     text-align: justify;
 }
 
-@media screen and (max-width)
+@media screen and (min-width: 1024px)
 {
-        
+    section
+    {
+        padding-top: 25px;
+        padding-bottom: 25px;
+    }
+
+    h1
+    {
+        font-size: 4em;
+    }
 }

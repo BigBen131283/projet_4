@@ -94,3 +94,36 @@
     mix-blend-mode: lighten;
     filter: brightness(1.1);
 }
+
+@media screen and (min-width: 700px)
+{
+    .header .titre
+    {
+        top: 4px;
+        left: -20%;
+    }
+}
+
+
+@media screen and (min-width: 1024px)
+{
+    .header .titre
+    {
+        top: 4px;
+        left: -20%;
+    }
+
+    .header .author
+    {
+        bottom: 13%;
+        right: 9%;
+        font-size: 4em;
+    }
+
+    .header .gad
+    {
+        bottom: 5%;
+        right: 5%;
+        font-size: 5em;
+    }
+}

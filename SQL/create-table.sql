@@ -36,12 +36,12 @@ DROP TABLE IF EXISTS projet4.users ;
 
 CREATE TABLE IF NOT EXISTS projet4.users (
   id INT(11) NOT NULL AUTO_INCREMENT,
-  email VARCHAR(128) NOT NULL,
+  email VARCHAR(128) NOT NULL UNIQUE,
   password VARCHAR(64) NOT NULL,
   pseudo VARCHAR(64) NOT NULL,
   status INT(11) NOT NULL DEFAULT 20,
   role INT(11) NOT NULL,
-  profile_picture INT NOT NULL DEFAULT 0,
+  profile_picture VARCHAR(25) NOT NULL DEFAULT 0,
   PRIMARY KEY (id))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -52,13 +52,16 @@ CREATE UNIQUE INDEX `uniqueUser` ON projet4.users(`email`, `pseudo`) USING BTREE
 --
 -- published 1 le billet est publié
 -- published 0 le billet sera publié plus tard
+--
+-- Pas de valeur par défaut de publish_at, 
+-- aller chercher la date ou la renseigner manuellement pour différer la publication
 -- -----------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS projet4.billets (
   id INT(11) NOT NULL AUTO_INCREMENT,
-  title TEXT NOT NULL,
+  title VARCHAR(255) NOT NULL UNIQUE,
   content TEXT NOT NULL,
-  publish_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  publish_at DATETIME NOT NULL,
   published TINYINT NOT NULL DEFAULT 1,
   users_id INT NOT NULL,
   PRIMARY KEY (id))
@@ -74,12 +77,14 @@ DEFAULT CHARACTER SET = utf8;
 -- report 20 commentaire signalé et masqué
 -- report 10 commentaire modéré et masqué/supprimé
 -- report 40 commentaire modéré et accepté ne peut plus être signalé
+--
+-- Pas de date par défaut, aller chercher la date lors de la publication du commentaire
 -- -----------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS projet4.comments (
   id INT NOT NULL AUTO_INCREMENT,
   content VARCHAR(255) NOT NULL,
-  publish_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  publish_at DATETIME NOT NULL,
   thumbs_up INT(11) NOT NULL DEFAULT 0,
   thumbs_down INT(11) NOT NULL DEFAULT 0,
   report INT(11) NOT NULL DEFAULT 30, 

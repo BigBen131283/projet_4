@@ -1,0 +1,16 @@
+.box
+{
+    width: 400px;
+    min-height: 400px;
+}
+
+.displayed_bio
+{
+    padding: 10px;
+    padding-top: 190px;
+    font-size: 1.4rem;
+    width: 400px;
+    background: rgba(0,0,0,0.7);
+    color: var(--pclr);
+    transform: translateY(-185px);
+}

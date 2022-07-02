@@ -9,8 +9,13 @@
 {
     --clr: #222327;
     --backgroundclr: #333;
-    --btnclr: #29fd53;
-    --sitebgclr: #fdfdfd;
+    --alternatebgclr: #fdfdfd;
+    --h1clr: #333;
+    --pclr: #fdfdfd;
+    --primaryclr: #59B8A2;
+    --secondaryclr: #1C3253;
+    --thirdclr: #bbb5ac;
+    --fourthclr: #ffd101;
 }
 
 *, ::before, ::after
@@ -31,6 +36,11 @@ body
     background: var(--backgroundclr);
     display: flex;
     flex-direction: column;
+}
+
+h1, h2, h3, h4, h5, h6
+{
+    color: var(--h1clr);
 }
 
 .site

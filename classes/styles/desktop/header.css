@@ -1,0 +1,35 @@
+.header .titre
+{
+    top: 4px;
+    left: -20%;
+}
+
+.header .author
+{
+    bottom: 13%;
+    right: 9%;
+    font-size: 4em;
+}
+
+.header .gad
+{
+    bottom: 5%;
+    right: 5%;
+    font-size: 5em;
+}
+
+.access-button
+{
+    width: 250px;
+    font-size: 20px;
+    transition: all 0.5s;
+}
+
+.access-button:hover
+{
+    cursor: pointer;
+    letter-spacing: 2px;
+    box-shadow: 0 0 10px var(--primaryclr),
+                0 0 20px var(--primaryclr),
+                0 0 40px var(--primaryclr);
+}

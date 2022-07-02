@@ -1,0 +1,6 @@
+#On démarre le moteur de réécriture
+RewriteEngine On
+
+# On réécrit l'URL
+RewriteCond %{REQUEST_URI} !classes
+RewriteRule ^([a-zA-Z0-9\-\_\/]*)$ index.php

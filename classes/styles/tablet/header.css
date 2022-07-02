@@ -1,0 +1,25 @@
+.header .titre
+{
+    top: 4px;
+    font-size: 3.5rem;
+}
+
+.header .author
+{
+    bottom: 9%;
+    right: 5%;
+    font-size: 2.5rem;
+}
+
+.header .gad
+{
+    bottom: 5%;
+    right: 5%;
+    font-size: 3rem;
+}
+
+.access-button
+{
+    width: 250px;
+    font-size: 20px;
+}

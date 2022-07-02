@@ -1,3 +1,15 @@
+:root
+{
+    --clr: #222327;
+    --backgroundclr: #333;
+    --btnclr: #29fd53;
+    --sitebgclr: #fdfdfd;
+    --primaryclr: #59B8A2;
+    --secondaryclr: #1C3253;
+    --thirdclr: #bbb5ac;
+    --fourthclr: #ffd101;
+}
+
 /* Accueil parallax */
 
 .header
@@ -48,22 +60,31 @@
     z-index: 1;
 }
 
-.stylo
+.access-button
 {
     position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+    background: var(--secondaryclr);
+    border: none;
+    text-decoration: none;
+    color: #fff;
+    font-size: 10px;
+    border-radius: 30px;
     bottom: 5%;
     left: 5%;
-    width: 50%;
-    max-width: 500px;
-    aspect-ratio: 1 / 1;
-    transform: rotate(45deg);
     z-index: 1;
 }
 
-.stylo img
+.access-button:hover
 {
-    width: 100%;
-    object-fit: cover;
+    cursor: pointer;
+    box-shadow: 0 0 10px var(--primaryclr),
+                0 0 20px var(--primaryclr),
+                0 0 40px var(--primaryclr);
 }
 
 /* superposition papier déchiré */

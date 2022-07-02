@@ -118,7 +118,7 @@ form button:hover
     cursor: pointer;
     box-shadow: 0 0 10px var(--primaryclr),
                 0 0 20px var(--primaryclr),
-                0 0 4px var(--primaryclr);
+                0 0 40px var(--primaryclr);
 }
 
 .links

@@ -2,8 +2,9 @@
 {
     --clr: #222327;
     --backgroundclr: #333;
-    --btnclr: #29fd53;
-    --sitebgclr: #fdfdfd;
+    --alternatebgclr: #fdfdfd;
+    --h1clr: #333;
+    --pclr: #fdfdfd;
     --primaryclr: #59B8A2;
     --secondaryclr: #1C3253;
     --thirdclr: #bbb5ac;
@@ -18,13 +19,6 @@
 #auteur h1
 {
     color: var(--backgroundclr);
-}
-
-.outer-box
-{
-    border-radius: 50%;
-    border: 6px solid #fff;
-    z-index: 2; 
 }
 
 .box
@@ -135,82 +129,7 @@ display: none;
     color: #fff;
     opacity: 1;
     transform: translateY(-135px);
-
-    /* transition: all 0.5s; */
 }
 
 
 
-@media screen and (min-width: 1024px)
-{
-    .full-bio
-    {
-        display: flex;
-        max-width: 70%;
-    }
-
-    .displayed_bio
-    {
-        /* display: none; */
-        opacity: 0;
-        padding-left: 220px;
-        transform: translateX(-600px);
-        transition: all 0.5s;
-    }
-
-    .displayed_bio.active
-    {
-        /* display: flex; */
-        opacity: 1;
-        transform: translateX(-200px);
-        height: 400px;
-        /* height: auto; */
-        width: auto;
-        /* padding-top: 10px; */
-        padding-top: 170px;
-    }
-
-    .box
-    {
-        width: 400px;
-        height: 400px;
-    }
-
-    .box:hover .content img
-    {
-        opacity: 0;
-    }
-
-    .content button
-    {
-        display: flex;
-        position: relative;
-        margin-top: 10px;
-        padding: 10px 20px;
-        background: #fff;
-        color: #070a1c;
-        border-radius: 25px;
-        font-weight: 500;
-        font-size: 1.25em;
-        text-transform: uppercase;
-        letter-spacing: 00.05em;
-        text-decoration: none;
-        transition: 0.5s;
-    }
-
-    .content button:hover
-    {
-        letter-spacing: 0.2em;
-        cursor: pointer;
-    }
-    
-    .box::before
-    {
-        inset: -10px 140px;
-    }
-
-    .box:hover::before
-    {
-        inset: -20px 0px;
-    }
-}

@@ -1,0 +1,84 @@
+#auteur
+{
+    background: rgba(0,0,0,.5);
+}
+
+#auteur h1
+{
+    color: #fff;
+}
+
+.full-bio
+{
+    flex-direction: row;
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    background: none;
+}
+
+.displayed_bio
+{
+    display: none;
+    opacity: 0;
+    background: none;
+    padding-top: 10px;
+    padding-right: 20px;
+    height: 400px;
+    transform: translateY(0px);
+    transition: all 0.5s;
+}
+
+.displayed_bio.active
+{
+    display: flex;
+    opacity: 1;
+    transform: opacity(1);
+    height: 400px;
+    width: auto;
+}
+
+.box
+{
+    width: 400px;
+    height: 400px;
+    min-width: 400px;
+}
+
+.box:hover .content img
+{
+    opacity: 0;
+}
+
+.content button
+{
+    display: flex;
+    position: relative;
+    margin-top: 10px;
+    padding: 10px 20px;
+    background: #fff;
+    color: #070a1c;
+    border-radius: 25px;
+    font-weight: 500;
+    font-size: 1.25em;
+    text-transform: uppercase;
+    letter-spacing: 00.05em;
+    text-decoration: none;
+    transition: 0.5s;
+}
+
+.content button:hover
+{
+    letter-spacing: 0.2em;
+    cursor: pointer;
+}
+
+.box::before
+{
+    inset: -10px 140px;
+}
+
+.box:hover::before
+{
+    inset: -20px 0px;
+}

@@ -1,0 +1,16 @@
+body
+{
+    background: url(../../../resources/images/alaska3.jpg);
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    min-height: 100vh;
+}
+
+.site
+{
+    width: 80%;
+    max-width: 1600px;
+    background: rgba(255,255,255,.7);
+}

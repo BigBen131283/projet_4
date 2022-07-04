@@ -1,22 +1,11 @@
 <?php
 
-use app\core\Request;
+use App\Autoloader;
+use App\Users\Users;
 
-require_once '../Core/Request.php';
+require_once '../classes/php/Autoloader.php';
+Autoloader::register();
 
-$request = new Request();
-
-
-$path = $request->getPath();
-// echo '</br>';
-$method = $request->method();
-
-$body = $request->getBody();
-var_dump($body);
-
-if($path === '/register')
-{
-    readfile("../View/register.html");
-}
+$user = new Users;
 
 ?>

@@ -97,12 +97,34 @@ class Model extends Db
         $liste_champs = implode(', ', $champs);
         $liste_inter = implode(', ', $inter);
 
-        return $this->requete('INSERT INTO ' . $this->table . ' (' . $liste_champs . ') VALUES(' . $liste_inter . ')', $valeurs);
-        
-        // echo $liste_champs; die($liste_inter);
+        return $this->requete('INSERT INTO ' . $this->table . ' (' . $liste_champs . ') VALUES(' . $liste_inter . ')', $valeurs);        
     }
 
-    
+    public function update(int $id, Model $model)
+    {
+        $champs = [];
+        $valeurs = [];
+
+        // On boucle pour éclater le tableau
+        foreach($model as $champ => $valeur)
+        {
+            //UPDATE table SET ex : email = ?, password = ?, pseudo = ?, status = ?, role = ? WHERE id= ?
+            if($valeur !== null && $champ != 'db' && $champ != 'table')
+            {
+                $champs[] = "$champ = ?";
+                $valeurs[] = $valeur;
+            }
+        }
+        $valeurs[] = $id;
+
+        //On transforme le tableau "champs" en une chaîne de caractères
+        $liste_champs = implode(', ', $champs);
+        // var_dump($liste_champs);
+        // var_dump($valeurs);
+        // die();
+        // On exécute la requête
+        return $this->requete('UPDATE ' . $this->table . ' SET ' . $liste_champs . ' WHERE id = ?', $valeurs);
+    }
 
     /**
      * Fonction générique utilisée dans les différentes fonctions du CRUD ci-dessus
@@ -121,6 +143,7 @@ class Model extends Db
         {
             // Requête préparée
             $query = $this->db->prepare($sql);
+            // var_dump($attributs);
             $query->execute($attributs);
             return $query;
         }

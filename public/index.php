@@ -14,11 +14,8 @@ $users = new UsersModel;
 // $author = $users->find(6);
 
 $donnees = [
-    'email' => 'email.hydrate@free.fr',
-    'password' => '4321',
-    'pseudo' => 'pseudo.hydrate',
-    'status' => 20,
-    'role' => 20
+    'email' => 'email.modified@orange.fr',
+    'pseudo' => 'modified.pseudo',
 ];
 
 $member = $users->hydrate($donnees);
@@ -27,7 +24,7 @@ echo '<br/>';
 var_dump($member);
 echo '<br/>';
 
-// $users->create($member);
+// $users->update(2, $member);
 
 echo '<br/>';
 

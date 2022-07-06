@@ -12,16 +12,25 @@ $users = new UsersModel;
 // $author = $users->findBy(['role' => 10]);
 // $author = $users->findAll();
 // $author = $users->find(6);
-$author = $users
-    ->setEmail('nouveau-mail@free.fr')
-    ->setPassword('5678')
-    ->setPseudo('NouveauLecteur')
-    ->setStatus(20)
-    ->setRole(20);
+
+$donnees = [
+    'email' => 'email.hydrate@free.fr',
+    'password' => '4321',
+    'pseudo' => 'pseudo.hydrate',
+    'status' => 20,
+    'role' => 20
+];
+
+$member = $users->hydrate($donnees);
+
 echo '<br/>';
-echo '<br/>';
+var_dump($member);
 echo '<br/>';
 
-var_dump($author);
+// $users->create($member);
+
+echo '<br/>';
+
+
 
 ?>

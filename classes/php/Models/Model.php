@@ -67,10 +67,42 @@ class Model extends Db
         return $this->requete("SELECT * FROM {$this->table} WHERE id = $id")->fetch();
     }
 
-    public function create(UsersModel $user)
+    /**
+     * CREATE
+     * 
+     * Ajouter une entrée dans la base en fonction du $model
+     * Permet d'ajouter dans n'importe quelle base de données une nouvelle entrée
+     * Gère en paramètres les champs
+     *
+     * @param Model $model
+     * @return object
+     */
+    public function create(Model $model):object
     {
+        $champs = [];
+        $inter = [];
+        $valeurs = [];
 
+        // On boucle pour éclater le tableau
+        foreach($model as $champ => $valeur)
+        {
+            //INSERT INTO table (liste de champs ex: email, Password, Pseudo, Status, Role) VALUES (?, ?, ?, ?, ?, ?)
+            if($valeur != null && $champ != 'db' && $champ !='table'){
+                $champs[] = $champ;
+                $inter[] = "?";
+                $valeurs[] = $valeur;
+            }
+        }
+        // On transforme le tableau "champs" en une chaîne de caratères
+        $liste_champs = implode(', ', $champs);
+        $liste_inter = implode(', ', $inter);
+
+        return $this->requete('INSERT INTO ' . $this->table . ' (' . $liste_champs . ') VALUES(' . $liste_inter . ')', $valeurs);
+        
+        // echo $liste_champs; die($liste_inter);
     }
+
+    
 
     /**
      * Fonction générique utilisée dans les différentes fonctions du CRUD ci-dessus
@@ -97,6 +129,31 @@ class Model extends Db
             // Requête simple
             return $this->db->query($sql);
         }
+    }
+
+    /**
+     * Permet de transformer un tableau reçu en objet
+     * Utile par exemple quand on reçoit les données d'un formulaire
+     *
+     * @param array $donnees
+     * @return object
+     */
+    public function hydrate(array $donnees):object
+    {
+        foreach($donnees as $key => $value)
+        {
+            //On récupère le nom du setter correspondant à la clé (key)
+            // titre -> setTitre
+            $setter = 'set'.ucfirst($key);
+
+            //On vérifie si le setter existe
+            if(method_exists($this, $setter))
+            {
+                // on appelle le setter
+                $this->$setter($value);
+            }
+        }
+        return $this;
     }
 }
 

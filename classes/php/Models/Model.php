@@ -14,6 +14,7 @@ class Model extends Db
 
     /**
      * READ
+     * 
      * Va rechercher tous les enregistrements d'une table
      * Permet d'interroger la base de données par l'intermédiaire de l'héritage
      *
@@ -27,6 +28,7 @@ class Model extends Db
     
     /**
      * READ
+     * 
      * Va rechercher un ou plusieurs enregistrement(s) d'une table selon des critères indiqués
      *
      * @param array $criteres
@@ -100,7 +102,16 @@ class Model extends Db
         return $this->requete('INSERT INTO ' . $this->table . ' (' . $liste_champs . ') VALUES(' . $liste_inter . ')', $valeurs);        
     }
 
-    public function update(int $id, Model $model)
+    /**
+     * UPDATE
+     * 
+     * Mise à jour des données d'une table à partir de l'id
+     *
+     * @param integer $id
+     * @param Model $model
+     * @return object
+     */
+    public function update(int $id, Model $model):object
     {
         $champs = [];
         $valeurs = [];
@@ -124,6 +135,11 @@ class Model extends Db
         // die();
         // On exécute la requête
         return $this->requete('UPDATE ' . $this->table . ' SET ' . $liste_champs . ' WHERE id = ?', $valeurs);
+    }
+
+    public function delete(int $id)
+    {
+        return $this->requete("DELETE FROM {$this->table} WHERE id = ?", [$id]);
     }
 
     /**

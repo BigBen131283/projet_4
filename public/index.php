@@ -13,18 +13,18 @@ $users = new UsersModel;
 // $author = $users->findAll();
 // $author = $users->find(6);
 
-$donnees = [
-    'email' => 'email.modified@orange.fr',
-    'pseudo' => 'modified.pseudo',
-];
+// $donnees = [
+//     'email' => 'email.modified@orange.fr',
+//     'pseudo' => 'modified.pseudo',
+// ];
 
-$member = $users->hydrate($donnees);
+// $member = $users->hydrate($donnees);
 
 echo '<br/>';
-var_dump($member);
+// var_dump($member);
 echo '<br/>';
 
-// $users->update(2, $member);
+$users->delete(18);
 
 echo '<br/>';
 

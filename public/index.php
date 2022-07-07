@@ -1,33 +1,20 @@
 <?php
 
 use App\Autoloader;
-use App\Models\UsersModel;
-use App\Users\Users;
+use App\Core\Main;
 
-require_once '../classes/php/Autoloader.php';
+
+// On définit une constante contenant le dossier racine du projet
+define('ROOT', dirname(__DIR__));
+var_dump(ROOT);
+// On importe l'autoloader
+require_once ROOT.'../classes/php/Autoloader.php';
 Autoloader::register();
 
-$users = new UsersModel;
+// On instancie Main (notre routeur)
+$app = new Main();
 
-// $author = $users->findBy(['role' => 10]);
-// $author = $users->findAll();
-// $author = $users->find(6);
-
-// $donnees = [
-//     'email' => 'email.modified@orange.fr',
-//     'pseudo' => 'modified.pseudo',
-// ];
-
-// $member = $users->hydrate($donnees);
-
-echo '<br/>';
-// var_dump($member);
-echo '<br/>';
-
-$users->delete(18);
-
-echo '<br/>';
-
-
+// On démarre l'application
+$app->start();
 
 ?>

@@ -2,5 +2,5 @@
 RewriteEngine On
 
 # On réécrit l'URL
-RewriteCond %{REQUEST_URI} !classes
-RewriteRule ^([a-zA-Z0-9\-\_\/]*)$ index.php
+# RewriteCond %{REQUEST_URI} !classes
+RewriteRule ^([a-zA-Z0-9\-\_\/]*)$ index.php?p=$1

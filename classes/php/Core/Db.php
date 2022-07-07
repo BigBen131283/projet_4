@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Database;
+namespace App\Core;
 
 // On "immporte" PDO
 use PDO;

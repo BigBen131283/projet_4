@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Database\Db;
+use App\Core\Db;
 
 class Model extends Db
 {

@@ -25,7 +25,7 @@ class Main
         {
             // On enlève le /
             $uri = substr($uri, 0, -1);
-
+            
             // Pour éviter le duplicate content
             // On envoie un code de redirection permanente
             http_response_code(301);
@@ -38,7 +38,7 @@ class Main
         // p=controleur/methode/paramètres
         // On sépare les paramètres dans un tableau
         $params = explode('/', $_GET['p']);
-        // var_dump($params);
+        var_dump($params);
 
         if($params[0] != '')
         {
@@ -65,7 +65,7 @@ class Main
             {
                 // Si il reste des paramètres on les passe à la méthode
                 // (isset($params[0])) ? $controller->$action($params) : $controller->$action();
-                (isset($params[0])) ? call_user_func_array([$controller, $action] , $params) : $controller->$action;
+                (isset($params[0])) ? call_user_func_array([$controller, $action] , $params) : $controller->$action();
             }
             else
             {

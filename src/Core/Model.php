@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Core;
 
 use App\Core\Db;
 
@@ -32,9 +32,9 @@ class Model extends Db
      * Va rechercher un ou plusieurs enregistrement(s) d'une table selon des critères indiqués
      *
      * @param array $criteres
-     * @return object
+     * 
      */
-    public function findBy(array $criteres):object
+    public function findBy(array $criteres)
     {
         $champs = []; // Contient les champs de $criteres
         $valeurs = []; // Contient les valeurs de $criteres

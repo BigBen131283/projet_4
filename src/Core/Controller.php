@@ -3,7 +3,7 @@
 // Ceci est notre contrôleur principal
 // On y trouve le rendu des vues
 
-namespace App\Controllers;
+namespace App\Core;
 
 abstract class Controller
 {
@@ -13,7 +13,7 @@ abstract class Controller
         extract($donnees);
 
         // On créé le chemin vers la vue
-        require_once ROOT.'./View/'.$fichier.'.php';
+        require_once ROOT.'./src/View/'.$fichier.'.php';
 
     }
 }

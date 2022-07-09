@@ -8,7 +8,7 @@ use App\Core\Main;
 define('ROOT', dirname(__DIR__));
 var_dump(ROOT);
 // On importe l'autoloader
-require_once ROOT.'../classes/php/Autoloader.php';
+require_once ROOT.'./src/Autoloader.php';
 Autoloader::register();
 
 // On instancie Main (notre routeur)

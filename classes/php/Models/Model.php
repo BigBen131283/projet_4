@@ -18,9 +18,9 @@ class Model extends Db
      * Va rechercher tous les enregistrements d'une table
      * Permet d'interroger la base de données par l'intermédiaire de l'héritage
      *
-     * @return array
+     * @return object
      */
-    public function findAll():array
+    public function findAll():object
     {
         $query = $this->requete('SELECT * FROM ' . $this->table);
         return $query->fetchAll();
@@ -32,9 +32,9 @@ class Model extends Db
      * Va rechercher un ou plusieurs enregistrement(s) d'une table selon des critères indiqués
      *
      * @param array $criteres
-     * @return array
+     * @return object
      */
-    public function findBy(array $criteres):array
+    public function findBy(array $criteres):object
     {
         $champs = []; // Contient les champs de $criteres
         $valeurs = []; // Contient les valeurs de $criteres
@@ -62,9 +62,9 @@ class Model extends Db
      * récupère un élément par son id
      *
      * @param integer $id
-     * @return array
+     * @return object
      */
-    public function find(int $id):array
+    public function find(int $id):object
     {
         return $this->requete("SELECT * FROM {$this->table} WHERE id = $id")->fetch();
     }

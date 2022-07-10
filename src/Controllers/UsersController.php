@@ -41,6 +41,19 @@ class UsersController extends Controller
         // On envoie à la vue
         $this->render('users/profil', compact('user'));
     }
+
+    public function register($params = null)
+    {
+        var_dump($params);
+        if($params)
+        {
+            $result = explode(',', $params);
+            foreach($result as $param)
+            {
+                echo "$param<br/>";
+            }
+        }      
+    }
 }
 
 ?>

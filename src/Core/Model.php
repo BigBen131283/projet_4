@@ -2,8 +2,6 @@
 
 namespace App\Core;
 
-use App\Core\Db;
-
 class Model extends Db
 {
     // Table de la base de données
@@ -50,7 +48,9 @@ class Model extends Db
 
         // On transforme le tableau "champs" en une chaîne de cararètres (string)
         $liste_champs = implode(' AND ', $champs);
-        // var_dump($liste_champs, $valeurs);
+        // var_dump($liste_champs);
+        // echo '<br/>';
+        // var_dump($valeurs);
         $id = 0;
         // On exécute la requête
         $query = $this->requete('SELECT * FROM ' . $this->table . ' WHERE ' . $liste_champs, $valeurs);

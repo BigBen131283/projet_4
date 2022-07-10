@@ -1,7 +1,3 @@
-<?php
-    include ROOT.'/src/View/Templates/header.php';
-?>
-
 <h1>Liste des membres</h1>
 
 <?php foreach($users as $user):?>

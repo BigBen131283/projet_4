@@ -1,1 +1,0 @@
-<p>Page d'accueil du Site en construction</p>

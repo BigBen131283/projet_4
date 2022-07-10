@@ -4,7 +4,9 @@ namespace App\Controllers;
 
 use App\Core\Controller;
 
-class MainController extends Controller
+include ROOT.'./src/View/Home/index.php';
+
+class Home extends Controller
 {
     public function index()
     {

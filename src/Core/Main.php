@@ -2,7 +2,7 @@
 
 namespace App\Core;
 
-use App\Controllers\MainController;
+use App\Controllers\Home;
 
 class Main
 {
@@ -52,7 +52,7 @@ class Main
             // Toutes les clés numériques seront modifiées pour commencer à zéro pendant que les clés litérales ne seront pas affectées.
             //
             //
-            $controller = '\\App\\Controllers\\'. ucfirst(array_shift($params)).'Controller';
+            $controller = '\\App\\Controllers\\'. ucfirst(array_shift($params));
             
             // On instancie le contrôleur 
             $controller = new $controller;
@@ -80,7 +80,7 @@ class Main
         {
             // On n'a pas de paramètres
             // On instancie le contrôleur par défaut
-            $controller = new MainController;
+            $controller = new Home;
 
             // On appelle la méthode index()
             $controller->index();

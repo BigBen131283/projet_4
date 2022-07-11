@@ -10,8 +10,7 @@ class Home extends Controller
 {
     public function index()
     {
-        echo "Ceci est la page d'accueil";
-        include ROOT.'./src/View/Home/index.php';
+        $this->render('home/index');
     }
 }
 

@@ -38,7 +38,7 @@ class Main
         // p=controleur/methode/paramètres
         // On sépare les paramètres dans un tableau
         $params = explode('/', $_GET['p']);
-        var_dump($params);
+        // var_dump($params);
 
         if($params[0] != '')
         {
@@ -66,7 +66,7 @@ class Main
                 // Si il reste des paramètres on les passe à la méthode
                 // (isset($params[0])) ? $controller->$action($params) : $controller->$action();
                 // Ici on récupère les paramètres
-                var_dump($params);
+                // var_dump($params);
                 (isset($params[0])) ? call_user_func_array([$controller, $action] , $params) : $controller->$action();
             }
             else

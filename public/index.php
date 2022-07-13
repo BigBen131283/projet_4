@@ -6,7 +6,7 @@ use App\Core\Main;
 
 // On définit une constante contenant le dossier racine du projet
 define('ROOT', dirname(__DIR__));
-var_dump(ROOT);
+// var_dump(ROOT);
 // On importe l'autoloader
 require_once ROOT.'./src/Autoloader.php';
 Autoloader::register();

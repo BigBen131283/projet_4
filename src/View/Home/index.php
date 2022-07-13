@@ -19,7 +19,7 @@
                 <li><a href="#auteur"><ion-icon name="body-outline"></ion-icon>L'Auteur</a></li>
                 <li><a href="#adventure"><ion-icon name="book-outline"></ion-icon>L'Aventure</a></li>
                 <li><a href="#accueil"><ion-icon name="person-outline"></ion-icon>Mon Profil</a></li>
-                <li><a href="./View/login.html"><ion-icon name="log-in-outline"></ion-icon>Se connecter</a></li>
+                <li><a href="/users/login"><ion-icon name="log-in-outline"></ion-icon>Se connecter</a></li>
                 <li><a href="#accueil"><ion-icon name="log-out-outline"></ion-icon>Se Déconnecter</a></li>
             </ul>
         </nav>

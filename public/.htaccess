@@ -1,6 +1,11 @@
 #On démarre le moteur de réécriture
 RewriteEngine On
 
+#On teste si le dossier existe physiquement,  si oui on le livre
+# RewriteCond %{REQUEST_FILENAME} !-f
+
+#On teste si le fichier est un fichier css
+# RewriteCond %{REQUEST_URI} !\.css [NC]
+
 # On réécrit l'URL
-# RewriteCond %{REQUEST_URI} !classes
 RewriteRule ^([a-zA-Z0-9\-\_\/]*)$ index.php?p=$1

@@ -7,7 +7,7 @@ namespace App\Core;
 
 abstract class Controller
 {
-    public function render(string $fichier, array $donnees = [])
+    public function render(string $fichier, array $donnees = [], string $extension = "php")
     {
         // On extrait le contenu de $donnees
         extract($donnees);
@@ -17,7 +17,7 @@ abstract class Controller
         // A partir de ce point toute sortie est conservée en mémoire
 
         // On créé le chemin vers la vue
-        require_once ROOT.'./src/View/'.$fichier.'.php';
+        require_once ROOT.'./src/View/'.$fichier.".$extension";
 
         $contenu = ob_get_clean();
 

@@ -42,17 +42,14 @@ class Users extends Controller
         $this->render('users/profil', compact('user'));
     }
 
-    public function register($params = null)
+    public function login()
     {
-        var_dump($params);
-        if($params)
-        {
-            $result = explode(',', $params);
-            foreach($result as $param)
-            {
-                echo "$param<br/>";
-            }
-        }      
+        $this->render('users/login', [], "html");
+    }
+
+    public function register()
+    {
+        $this->render('users/register', [], "html");
     }
 }
 

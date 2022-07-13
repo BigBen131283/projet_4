@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS projet4.users (
   password VARCHAR(64) NOT NULL,
   pseudo VARCHAR(64) NOT NULL,
   status INT(11) NOT NULL DEFAULT 20,
-  role INT(11) NOT NULL,
+  role INT(11) NOT NULL DEFAULT 20,
   profile_picture VARCHAR(25) NOT NULL DEFAULT 0,
   PRIMARY KEY (id))
 ENGINE = InnoDB

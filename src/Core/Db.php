@@ -22,7 +22,7 @@ class Db extends PDO
      * La classe ne peut pas être instanciée spécifiquement
      * On doit utiliser une méthode statique qui permettra d'obtenir l'instance
      */
-    private function __construct()
+    public function __construct()
     {
         // DSN de connexion
         $_dsn = 'mysql:dbname=' . self::DBNAME . ';host=' . self::DBHOST;

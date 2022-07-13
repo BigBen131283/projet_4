@@ -3,6 +3,8 @@
 namespace App\Controllers;
 
 use App\Models\UsersModel;
+use App\Core\Request;
+use App\Repository\UsersDB;
 use App\Core\Controller;
 
 class Users extends Controller
@@ -49,7 +51,21 @@ class Users extends Controller
 
     public function register()
     {
-        $this->render('users/register', [], "html");
+        $request = new Request;
+
+        if($request->isGet())
+        {
+            $this->render('users/register', [], "html");
+        }
+        else
+        {
+            $body = $request->getBody();
+            $dbAccess = new UsersDB();
+
+            $dbAccess->createUser($body, $this);
+        }
+        
+        
     }
 }
 

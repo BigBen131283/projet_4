@@ -44,7 +44,7 @@
                 <div class="full-bio">
                     <div class="box">
                         <div class="content">
-                            <img src="./resources/images/auteur.jpeg" alt="Photo de l'auteur">
+                            <img src="/images/auteur.jpeg" alt="Photo de l'auteur">
                             <h2>A propos de l'auteur<br/><span>Sa vie, son oeuvre</span></h2>
                             <button class="bio_toggle">Biographie</button>
                         </div>

@@ -35,8 +35,7 @@ class UsersDB extends Db
         else
         {
             $usersController->render('users/register', $errors, "html");
-        }
-    
+        }    
     }
 }
 

@@ -6,6 +6,8 @@ use App\Models\UsersModel;
 use App\Core\Request;
 use App\Repository\UsersDB;
 use App\Core\Controller;
+use App\Validator\UsersValidator;
+use App\Validator\ErrorMessages;
 
 class Users extends Controller
 {
@@ -52,20 +54,27 @@ class Users extends Controller
     public function register()
     {
         $request = new Request;
+        $validator = new UsersValidator();
 
-        if($request->isGet())
-        {
-            $this->render('users/register', [], "html");
-        }
-        else
+        if($request->isPost())
         {
             $body = $request->getBody();
             $dbAccess = new UsersDB();
 
-            $dbAccess->createUser($body, $this);
+            // On appelle ton validateur en lui passant les données
+            $errorMessages = $validator->checkUserEntries($body);
+            if(!$errorMessages->hasError())
+            {
+                $dbAccess->createUser($body, $this);
+                $this->render('home/index');
+            }
         }
-        
-        
+        else
+        {
+            $errorMessages = $validator->checkUserEntries([]);
+        }
+        var_dump($errorMessages->getAllErrors());
+        $this->render('users/register', ['errorMessages' => $errorMessages], "html");
     }
 }
 

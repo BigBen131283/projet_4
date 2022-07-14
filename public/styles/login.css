@@ -23,7 +23,7 @@
 
 body
 {
-    background: url(/images/alaska5.jpg);
+    /* background: url(/images/alaska5.jpg); */
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -75,6 +75,11 @@ form .inputBox input
     border-bottom: 1px solid var(--thirdclr);
     outline: none;
     background: transparent;
+}
+
+form p
+{
+    color: var(--thirdclr);
 }
 
 form .inputBox label

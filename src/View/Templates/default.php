@@ -23,8 +23,8 @@
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </head>
 
-<div>
-<?= $contenu?>
-</div>
+<body>
+    <?= $contenu?>
+</body>
 
 </html>

@@ -3,56 +3,95 @@
     namespace App\Validator;
 
     use Exception;
+    use App\Core\Logger;
 
     class UsersValidator
     {
         private const BAD_EMAIL = 'Email incorrect';
         private const BAD_FIELDS = 'Ce champ doit être renseigné';
         private const BAD_PASSWORD = 'Les deux mots de passe doivent être identiques';
+        private $logger;
 
-        public function checkUserEntries(array $params):object
+        private $errors = [];
+        private $values = [];       // Used to remember previously entered values
+
+        public function __construct()
         {
-            $errorMessages = new ErrorMessages();
-            
+            $this->logger = new Logger(UsersValidator::class);
+        }
+
+        public function checkUserEntries(array $params): array
+        {
             if(!empty($params))
             {
-                $email = $params['email'];
-                $password = $params['pass'];
-                $passCheck = $params['confirm-pass'];
-                $pseudo = $params['pseudo'];
+                $this->values["email"] = $params['email'];
+                $this->values["pass"] = $params['pass'];
+                $this->values["confirm-pass"] = $params['confirm-pass'];
+                $this->values["pseudo"] = $params['pseudo'];
 
-                if(empty($email))
+                if(empty($this->values["email"]))
                 {
-                    // throw new Exception('Ce champ doit être renseigné');
-                    $errorMessages->addError('email', self::BAD_FIELDS);
+                    $this->addError('email', self::BAD_FIELDS);
                 }
-                if(empty($pseudo))
+                if(!filter_var($this->values["email"], FILTER_VALIDATE_EMAIL))
                 {
-                    // throw new Exception('Ce champ doit être renseigné');
-                    $errorMessages->addError('pseudo', self::BAD_FIELDS);
+                    $this->addError('email', self::BAD_EMAIL);
                 }
-                if(empty($password))
+
+                if(empty($this->values["pseudo"]))
                 {
-                    // throw new Exception('Ce champ doit être renseigné');
-                    $errorMessages->addError('password', self::BAD_FIELDS);
+                    $this->addError('pseudo', self::BAD_FIELDS);
                 }
-                if(empty($passCheck))
+                if(empty($this->values["pass"]))
                 {
-                    // throw new Exception('Ce champ doit être renseigné');
-                    $errorMessages->addError('passCheck', self::BAD_FIELDS);
+                    $this->addError('password', self::BAD_FIELDS);
                 }
-                if($password !== $passCheck)
+                if(empty($this->values["confirm-pass"]))
                 {
-                    // throw new Exception('Les deux mots de passe doivent être identiques.');
-                    $errorMessages->addError('passCheck', self::BAD_PASSWORD);
+                    $this->addError('passCheck', self::BAD_FIELDS);
                 }
-                if(!filter_var($email, FILTER_VALIDATE_EMAIL))
+                if($this->values["pass"] !== $this->values["confirm-pass"])
                 {
-                    // throw new Exception('Email incorrect.');
-                    $errorMessages->addError('email', self::BAD_EMAIL);
+                    $this->addError('passCheck', self::BAD_PASSWORD);
                 }
             }
-            return $errorMessages;
+            return $this->errors;
+        }
+        // -------------------------------------------------------------------
+        public function addError($attribute, $message)
+        {
+            $this->errors[$attribute][] = $message;
+            $this->logger->console("Adding [$attribute] error message [$message]");
+            return;
+        }    
+        // -------------------------------------------------------------------
+        public function getFirstError($attribute)
+        {
+            if(!empty($this->errors)) {
+                if(isset($this->errors["$attribute"][0]))
+                {
+                    return '<p class="myerror">'.$this->errors["$attribute"][0].'</p>';
+                }
+            }
+            return '<p class="hidden"></p>';
+        }
+        // -------------------------------------------------------------------
+        public function getValue($attribute) 
+        {
+            if(isset($this->values["$attribute"])) {
+                return $this->values["$attribute"];
+            }
+            return '';
+        }
+        // -------------------------------------------------------------------
+        public function hasError()
+        {
+            return !empty($this->errors);
+        }
+
+        public function getAllErrors()
+        {
+            return $this->errors;
         }
     }
 

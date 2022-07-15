@@ -7,7 +7,7 @@ namespace App\Core;
 
 abstract class Controller
 {
-    public function render(string $fichier, array $donnees = [], string $extension = "php")
+    public function render(string $fichier, string $extension, string $layout = 'default', array $donnees = [])
     {
         // On extrait le contenu de $donnees
         extract($donnees);
@@ -21,7 +21,7 @@ abstract class Controller
 
         $contenu = ob_get_clean();
 
-        require_once ROOT.'./src/View/Templates/default.php';
+        require_once ROOT.'./src/View/Templates/'.$layout.'.php';
 
     }
 }

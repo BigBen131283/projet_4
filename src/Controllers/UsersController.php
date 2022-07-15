@@ -7,7 +7,8 @@ use App\Core\Request;
 use App\Repository\UsersDB;
 use App\Core\Controller;
 use App\Validator\UsersValidator;
-use App\Validator\ErrorMessages;
+use App\Core\Logger;
+use PDOException;
 
 class UsersController extends Controller
 {
@@ -25,7 +26,7 @@ class UsersController extends Controller
         $users = $usersModel->findBy(['status' => 20]);
 
         // On génère la vue
-        $this->render('users/index', ['users' => $users]);
+        $this->render('users/index', "php", 'defaultLogin', ['users' => $users]);
     }
 
     /**
@@ -43,39 +44,48 @@ class UsersController extends Controller
         $user = $usersModel->find($id);
 
         // On envoie à la vue
-        $this->render('users/profil', compact('user'));
+        $this->render('users/profil', "php", 'defaultLogin', compact('user'));
     }
 
     public function login()
     {
-        $this->render('users/login', []);
+        $this->render('users/login', "php", 'defaultLogin', []);
     }
 
     public function register()
     {
         $request = new Request;
-        $validator = new UsersValidator();
+        $logger = new Logger(Users::class);
 
+        $validator = new UsersValidator();
         if($request->isPost())
         {
+            $logger->console("Check post data");
             $body = $request->getBody();
-            $dbAccess = new UsersDB();
-
             // On appelle ton validateur en lui passant les données
-            $errorMessages = $validator->checkUserEntries($body);
-            if(!$errorMessages->hasError())
+            $errorList = $validator->checkUserEntries($body);
+            if(!$validator->hasError())
             {
-                $dbAccess->createUser($body, $this);
-                $this->render('home/index');
+                $logger->console("No error, insert in DB");
+                $dbAccess = new UsersDB();
+                try{
+                    $dbAccess->createUser($body, $this);
+                    $this->render('home/index', 'php');
+                }
+                catch(PDOException  $e) {
+                    $logger->console($e->getMessage());
+                    $validator->addError('email', 'Email déjà existant.'. $e->getCode());
+                    $this->render('users/register', "php", 'defaultLogin', ['errorHandler' => $validator]);
+                }
+            }
+            else {
+                $this->render('users/register', "php", 'defaultLogin', ['errorHandler' => $validator]);
             }
         }
         else
-        {
-            $errorMessages = $validator->checkUserEntries([]);
+        {   // This a get, send an empty error array
+            $this->render('users/register', "php", 'defaultLogin', ['errorHandler' => $validator]);
         }
-        var_dump($errorMessages->getAllErrors());
-        $this->render('users/register', ['errorMessages' => $errorMessages]);
     }
 }
-
 ?>

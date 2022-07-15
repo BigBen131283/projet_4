@@ -15,7 +15,7 @@
             $published = $billetsModel->findBy(['published' => 1]);
 
             // On génère la vue
-            $this->render('billets/index', ['billets' => $published]);
+            $this->render('billets/index', 'php', 'default', ['billets' => $published]);
         }
 
         public function chapitre(int $id)
@@ -27,7 +27,7 @@
             $billet = $billetsModel->find($id);
 
             // On envoie à la vue
-            $this->render('billets/chapitre', compact('billet'));
+            $this->render('billets/chapitre', 'php', 'default',compact('billet'));
         }
     }
 ?>

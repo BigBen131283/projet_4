@@ -16,6 +16,9 @@
     <link rel="stylesheet" href="/styles/mobile/authorprofile.css">
     <link rel="stylesheet" href="/styles/tablet/authorprofile.css" media="screen AND (min-width: 600px)">
     <link rel="stylesheet" href="/styles/desktop/authorprofile.css" media="screen AND (min-width: 1024px)">
+    <link rel="stylesheet" href="/styles/login.css">
+    <link rel="stylesheet" href="/styles/login/tablett.css" media="screen AND (min-width: 600px)">
+    <link rel="stylesheet" href="/styles/login/desktop.css" media="screen AND (min-width: 1024px)">
     <link rel="stylesheet" href="/styles/project.css">
     <link rel="stylesheet" href="/styles/lastpost.css">
     <script type="module" src="/scripts/script.js"></script>

@@ -9,7 +9,7 @@ use App\Core\Controller;
 use App\Validator\UsersValidator;
 use App\Validator\ErrorMessages;
 
-class Users extends Controller
+class UsersController extends Controller
 {
     /**
      * Cette méthode affichera une page listant tous les membres actifs
@@ -48,7 +48,7 @@ class Users extends Controller
 
     public function login()
     {
-        $this->render('users/login', [], "html");
+        $this->render('users/login', []);
     }
 
     public function register()
@@ -74,7 +74,7 @@ class Users extends Controller
             $errorMessages = $validator->checkUserEntries([]);
         }
         var_dump($errorMessages->getAllErrors());
-        $this->render('users/register', ['errorMessages' => $errorMessages], "html");
+        $this->render('users/register', ['errorMessages' => $errorMessages]);
     }
 }
 

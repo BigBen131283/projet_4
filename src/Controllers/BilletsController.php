@@ -4,7 +4,7 @@
     use App\Core\Controller;
     use App\Models\BilletsModel;
 
-    class Billets extends Controller
+    class BilletsController extends Controller
     {
         public function index()
         {

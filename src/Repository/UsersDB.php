@@ -3,12 +3,12 @@
 namespace App\Repository;
 
 use App\Core\Db;
-use App\Controllers\Users;
+use App\Controllers\UsersController;
 use App\Validator\UsersValidator;
 
 class UsersDB extends Db
 {
-    public function createUser(array $params, Users $usersController)
+    public function createUser(array $params, UsersController $usersController)
     {        
         $email = $params['email'];
         $password = $params['pass'];

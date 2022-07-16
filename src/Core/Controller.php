@@ -20,7 +20,7 @@ abstract class Controller
         require_once ROOT.'./src/View/'.$fichier.".$extension";
 
         $contenu = ob_get_clean();
-
+       
         require_once ROOT.'./src/View/Templates/'.$layout.'.php';
 
     }

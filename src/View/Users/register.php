@@ -1,4 +1,4 @@
-<form method="post" novalidate action="/users/register">
+<form method="post" novalidate action="">
         
         <h1>Inscription</h1>
         <div class="inputBox">

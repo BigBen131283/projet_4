@@ -1,4 +1,4 @@
-<form method="post" novalidate action="/users/login">
+<form method="post" novalidate action="">
     <h1>Connexion</h1>
     <div class="inputBox">
         <input type="text" name="pseudo" required id="pseudo" value="<?php echo $errorHandler->getValue('pseudo') ?>">

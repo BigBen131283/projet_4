@@ -17,6 +17,7 @@ class Main
     {
         $this->session = new Session();
         self::$main = $this;
+        $this->usersmodel = new UsersModel();
         $this->logger = new Logger(__CLASS__);
         $userId = $this->session->get('userId');
 
@@ -124,6 +125,11 @@ class Main
         $this->logger->console('logged out');
         $this->session->close('userId');
         $this->usersmodel = new UsersModel();
+    }
+
+    public function getUsersModel()
+    {
+        return $this->usersmodel;
     }
 }
 

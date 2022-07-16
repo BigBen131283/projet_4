@@ -45,18 +45,35 @@ class UsersDB extends Db
 
         if(empty($credentials))
         {
-            return false;
+            return null;
         }
         else
         {
             if($credentials->password !== $password)
             {
-                return false;
+                return null;
             }
-            return true;
+            return $credentials;
         }
-        
+    }
 
+    public function getUser($id)
+    {
+        $this->db = Db::getInstance();
+
+        $statement = $this->db->prepare('SELECT id, pseudo, email, role FROM users WHERE id = :id');
+
+        $statement->bindValue(':id', $id);
+
+        $statement->execute();
+
+        $result = $statement->fetchObject(static::class);
+
+        if($result)
+        {
+            return $result;
+        }
+        return null;
     }
 }
 

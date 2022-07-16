@@ -8,6 +8,7 @@ use App\Repository\UsersDB;
 use App\Core\Controller;
 use App\Validator\UsersValidator;
 use App\Core\Logger;
+use App\Core\Main;
 use PDOException;
 
 class UsersController extends Controller
@@ -63,10 +64,16 @@ class UsersController extends Controller
             {
                 $logger->console("No error, try login");
                 $dbAccess = new UsersDB();
-                try{
-                    if($dbAccess->login($body))
+                try
+                {
+                    $credentials = $dbAccess->login($body);
+                    if($credentials !== null)
                     {
+                        // ici tout est ok
+                        Main::$main->login($credentials->id);
                         $this->render('home/index', 'php');
+                        
+
                     }
                     else
                     {
@@ -75,11 +82,16 @@ class UsersController extends Controller
                         $this->render('users/login', "php", 'defaultLogin', ['errorHandler' => $validator]);
                     }                    
                 }
-                catch(PDOException  $e) {
+                catch(PDOException  $e) 
+                {
                     $logger->console($e->getMessage());
                     $validator->addError('loginerror', 'Problème de base de données'. $e->getCode());
                     $this->render('users/login', "php", 'defaultLogin', ['errorHandler' => $validator]);
                 }
+            }
+            else
+            {
+                $this->render('users/login', "php", 'defaultLogin', ['errorHandler' => $validator]);
             }
         }
         else
@@ -124,6 +136,12 @@ class UsersController extends Controller
         {   // This a get, send an empty error array
             $this->render('users/register', "php", 'defaultLogin', ['errorHandler' => $validator]);
         }
+    }
+
+    public function logout()
+    {
+        Main::$main->logout();
+        $this->render('home/index', 'php');
     }
 }
 ?>

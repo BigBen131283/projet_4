@@ -3,11 +3,37 @@
 namespace App\Core;
 
 use App\Controllers\HomeController;
+use App\core\Session;
+use App\Models\UsersModel;
 
 class Main
 {
-    public function start()
+    public Session $session;
+    public static Main $main;
+    private Logger $logger;
+    private UsersModel $usersmodel;
+    
+    public function __construct()
     {
+        $this->session = new Session();
+        self::$main = $this;
+        $this->logger = new Logger(__CLASS__);
+        $userId = $this->session->get('userId');
+
+        if($userId)
+        {
+            $this->logger->console('User Id : '.$userId);
+            $this->usersmodel = new UsersModel($userId);
+            $this->logger->console('User Pseudo : '.$this->usersmodel->getPseudo());
+        }
+        else
+        {
+            $this->logger->console('Anonymous user');
+        }
+    }
+    
+    public function start()
+    {       
         // http://nom-du-site.projet/controleur/methode/paramètres
         // on veut :
         // ex: http://projet4/billets/chapitre/paragraphe
@@ -85,6 +111,19 @@ class Main
             // On appelle la méthode index()
             $controller->index();
         }
+    }
+
+    public function login($userId)
+    {
+        $this->logger->console('login with Id : '.$userId);
+        $this->session->set('userId', $userId);
+    }
+
+    public function logout()
+    {
+        $this->logger->console('logged out');
+        $this->session->close('userId');
+        $this->usersmodel = new UsersModel();
     }
 }
 

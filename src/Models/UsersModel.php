@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Core\Model;
+use App\Repository\UsersDB;
 
 class UsersModel extends Model
 {
@@ -14,9 +15,22 @@ class UsersModel extends Model
     protected $role;
     protected $profile_picture;
 
-    public function __construct()
+    public function __construct($id = null)
     {
         $this->table = 'users';
+
+        if($id)
+        {
+            $usersDB = new UsersDB();
+            $user = $usersDB->getUser($id);
+            if($user)
+            {
+                $this->id = $user->id;
+                $this->email = $user->email;
+                $this->pseudo = $user->pseudo;
+                $this->role = $user->role;
+            }
+        }
     }
 
     /**

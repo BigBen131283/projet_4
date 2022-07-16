@@ -10,6 +10,7 @@
         private const BAD_EMAIL = 'Email incorrect';
         private const BAD_FIELDS = 'Ce champ doit être renseigné';
         private const BAD_PASSWORD = 'Les deux mots de passe doivent être identiques';
+        private const BAD_FILLING = 'Tous les champs doivent être renseignés';
         private $logger;
 
         private $errors = [];
@@ -84,6 +85,12 @@
             return '';
         }
         // -------------------------------------------------------------------
+        /**
+         * Vérifie si les champs sont remplis. 
+         * Si le tableau est vide -> renvoie "True"
+         *
+         * @return boolean
+         */
         public function hasError()
         {
             return !empty($this->errors);
@@ -94,7 +101,7 @@
             return $this->errors;
         }
 
-        public function checkLoginEntries()
+        public function checkLoginEntries($params)
         {
             if(!empty($params))
             {
@@ -104,11 +111,11 @@
 
                 if(empty($this->values["pseudo"]))
                 {
-                    $this->addError('pseudo', self::BAD_FIELDS);
+                    $this->addError('loginerror', self::BAD_FILLING);
                 }
                 if(empty($this->values["pass"]))
                 {
-                    $this->addError('password', self::BAD_FIELDS);
+                    $this->addError('loginerror', self::BAD_FILLING);
                 }
             }
             return $this->errors;

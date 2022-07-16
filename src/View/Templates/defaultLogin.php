@@ -7,8 +7,8 @@
     <title>Billet simple pour l'Alaska</title>
     <link rel="icon" type="image/gif" href="/images/favicon.png"/>
     <link rel="stylesheet" href="/styles/login.css">
-    <link rel="stylesheet" href="/styles/login/tablett.css" media="screen AND (min-width: 600px)">
-    <link rel="stylesheet" href="/styles/login/desktop.css" media="screen AND (min-width: 1024px)">
+    <!-- <link rel="stylesheet" href="/styles/login/tablett.css" media="screen AND (min-width: 600px)">
+    <link rel="stylesheet" href="/styles/login/desktop.css" media="screen AND (min-width: 1024px)"> -->
 </head>
 
 <body>

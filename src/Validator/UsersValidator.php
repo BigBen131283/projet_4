@@ -93,6 +93,26 @@
         {
             return $this->errors;
         }
+
+        public function checkLoginEntries()
+        {
+            if(!empty($params))
+            {
+                
+                $this->values["pass"] = $params['pass'];
+                $this->values["pseudo"] = $params['pseudo'];
+
+                if(empty($this->values["pseudo"]))
+                {
+                    $this->addError('pseudo', self::BAD_FIELDS);
+                }
+                if(empty($this->values["pass"]))
+                {
+                    $this->addError('password', self::BAD_FIELDS);
+                }
+            }
+            return $this->errors;
+        }
     }
 
 ?>

@@ -10,7 +10,7 @@
             <div class="user">
                 <img src="/images/default_user_picture.png" alt="Photo de profil" class="profile-picture">
             </div>
-            <p class="user_name">User name</p>
+            <p class="user_name"><?= 'User name' ?></p>
             <div class="menu_toggle"></div>
         </div>
         <ul class="menu_access">

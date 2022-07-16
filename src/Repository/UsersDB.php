@@ -3,12 +3,12 @@
 namespace App\Repository;
 
 use App\Core\Db;
-use App\Controllers\UsersController;
-use App\Validator\UsersValidator;
+use App\Core\Logger;
+use Exception;
 
 class UsersDB extends Db
 {
-    public function createUser(array $params, UsersController $usersController)
+    public function createUser(array $params)
     {        
         $email = $params['email'];
         $password = $params['pass'];
@@ -25,6 +25,38 @@ class UsersDB extends Db
 
         $statement->execute();
         return true;        
+    }
+
+    public function login(array $params)
+    {
+        $password = $params['pass'];
+        $pseudo = $params['pseudo'];
+
+        // $logger = new Logger(UsersDB::class);
+        // $logger->console('Je passe là');
+
+        $this->db = Db::getInstance();
+
+        $statement = $this->db->prepare('SELECT id, password FROM users WHERE pseudo = :pseudo');
+        $statement->bindValue(':pseudo', $pseudo);
+
+        $statement->execute();
+        $credentials = $statement->fetchObject(static::class);
+
+        if(empty($credentials))
+        {
+            return false;
+        }
+        else
+        {
+            if($credentials->password !== $password)
+            {
+                return false;
+            }
+            return true;
+        }
+        
+
     }
 }
 

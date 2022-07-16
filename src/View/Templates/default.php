@@ -12,7 +12,9 @@
     <link rel="stylesheet" href="/styles/mobile/header.css">
     <link rel="stylesheet" href="/styles/tablet/header.css" media="screen AND (min-width: 600px)">
     <link rel="stylesheet" href="/styles/desktop/header.css" media="screen AND (min-width: 1024px)">
-    <link rel="stylesheet" href="/styles/mainmenu.css">
+    <link rel="stylesheet" href="/styles/mobile/mainmenu.css">
+    <link rel="stylesheet" href="/styles/tablet/mainmenu.css" media="screen AND (min-width: 600px)">
+    <link rel="stylesheet" href="/styles/desktop/mainmenu.css" media="screen AND (min-width: 1024px)">
     <link rel="stylesheet" href="/styles/mobile/authorprofile.css">
     <link rel="stylesheet" href="/styles/tablet/authorprofile.css" media="screen AND (min-width: 600px)">
     <link rel="stylesheet" href="/styles/desktop/authorprofile.css" media="screen AND (min-width: 1024px)">

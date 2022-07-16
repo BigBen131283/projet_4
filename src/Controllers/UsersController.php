@@ -49,7 +49,45 @@ class UsersController extends Controller
 
     public function login()
     {
-        $this->render('users/login', "php", 'defaultLogin', []);
+        $request = new Request;
+        $logger = new Logger(Users::class);
+
+        $validator = new UsersValidator();
+        if($request->isPost())
+        {
+            $logger->console("Check login data");
+            $body = $request->getBody();
+            $errorList = $validator->checkLoginEntries($body);
+            $logger->console($validator->getValue('pseudo'));
+            if(!$validator->hasError())
+            {
+                $logger->console("No error, try login");
+                $dbAccess = new UsersDB();
+                try{
+                    if($dbAccess->login($body))
+                    {
+                        $this->render('home/index', 'php');
+                    }
+                    else
+                    {
+                        $validator->addError('loginerror', 'Pseudo inconnu ou mot de passe erroné');
+                        $logger->console($validator->getValue('pseudo'));
+                        $this->render('users/login', "php", 'defaultLogin', ['errorHandler' => $validator]);
+                    }                    
+                }
+                catch(PDOException  $e) {
+                    $logger->console($e->getMessage());
+                    $validator->addError('loginerror', 'Problème de base de données'. $e->getCode());
+                    $this->render('users/login', "php", 'defaultLogin', ['errorHandler' => $validator]);
+                }
+            }
+        }
+        else
+        {   
+            // This is perhaps a get, send an empty error array
+
+            $this->render('users/login', "php", 'defaultLogin', ['errorHandler' => $validator]);
+        }
     }
 
     public function register()
@@ -60,7 +98,7 @@ class UsersController extends Controller
         $validator = new UsersValidator();
         if($request->isPost())
         {
-            $logger->console("Check post data");
+            $logger->console("Check register data");
             $body = $request->getBody();
             // On appelle ton validateur en lui passant les données
             $errorList = $validator->checkUserEntries($body);
@@ -69,7 +107,7 @@ class UsersController extends Controller
                 $logger->console("No error, insert in DB");
                 $dbAccess = new UsersDB();
                 try{
-                    $dbAccess->createUser($body, $this);
+                    $dbAccess->createUser($body);
                     $this->render('home/index', 'php');
                 }
                 catch(PDOException  $e) {

@@ -17,7 +17,7 @@ class HomeController extends Controller
         $user = Main::$main->getUsersModel();
         $logger = new Logger(__CLASS__);
         $logger->console('Call Home Index, for user : '.$user->getPseudo());
-        $this->render('home/index', 'php');
+        $this->render('home/index', 'php', 'default', ['loggedUser'=>$user]);
     }
 }
 

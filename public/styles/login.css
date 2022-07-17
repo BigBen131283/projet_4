@@ -138,6 +138,14 @@ form button:hover
 .links button
 {
     width: 55%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.links button a
+{
+    text-decoration: none;
+    color: var(--thirdclr);
 }
 
 form ul

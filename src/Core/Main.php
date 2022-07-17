@@ -3,6 +3,8 @@
 namespace App\Core;
 
 use App\Controllers\HomeController;
+use App\core\Request;
+use App\core\Response;
 use App\core\Session;
 use App\Models\UsersModel;
 
@@ -12,12 +14,16 @@ class Main
     public static Main $main;
     private Logger $logger;
     private UsersModel $usersmodel;
+    public Request $request;
+    public Response $response;
     
     public function __construct()
     {
         $this->session = new Session();
         self::$main = $this;
         $this->usersmodel = new UsersModel();
+        $this->request = new Request;
+        $this->response = new Response;
         $this->logger = new Logger(__CLASS__);
         $userId = $this->session->get('userId');
 
@@ -65,7 +71,6 @@ class Main
         // p=controleur/methode/paramètres
         // On sépare les paramètres dans un tableau
         $params = explode('/', $_GET['p']);
-        // var_dump($params);
 
         if($params[0] != '')
         {

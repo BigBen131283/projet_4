@@ -13,41 +13,6 @@ use PDOException;
 
 class UsersController extends Controller
 {
-    /**
-     * Cette méthode affichera une page listant tous les membres actifs
-     *
-     * @return void
-     */
-    public function index()
-    {
-        // On instancie le modèle correspondant à la table "users"
-        $usersModel = new UsersModel;
-
-        // On va chercher tous les utilisateurs
-        $users = $usersModel->findBy(['status' => 20]);
-
-        // On génère la vue
-        $this->render('users/index', "php", 'defaultLogin', ['users' => $users]);
-    }
-
-    /**
-     * Cette méthode affiche 1 utilisateur
-     *
-     * @param integer $id Id de l'utilisateur
-     * @return void
-     */
-    public function profil(int $id)
-    {
-        // On instancie le modèle
-        $usersModel = new UsersModel;
-
-        // On va chercher un utilisateur 
-        $user = $usersModel->find($id);
-
-        // On envoie à la vue
-        $this->render('users/profil', "php", 'defaultLogin', compact('user'));
-    }
-
     public function login()
     {
         $request = new Request;
@@ -71,7 +36,7 @@ class UsersController extends Controller
                     {
                         // ici tout est ok
                         Main::$main->login($credentials->id);
-                        $this->render('home/index', 'php');
+                        Main::$main->response->redirect('/');
                         
 
                     }
@@ -120,7 +85,7 @@ class UsersController extends Controller
                 $dbAccess = new UsersDB();
                 try{
                     $dbAccess->createUser($body);
-                    $this->render('home/index', 'php');
+                    Main::$main->response->redirect('/');
                 }
                 catch(PDOException  $e) {
                     $logger->console($e->getMessage());
@@ -141,7 +106,12 @@ class UsersController extends Controller
     public function logout()
     {
         Main::$main->logout();
-        $this->render('home/index', 'php');
+        Main::$main->response->redirect('/');
+    }
+
+    public function profil()
+    {
+        $this->render('users/profil', 'php', 'defaultLogin', ['loggedUser' => Main::$main->getUsersModel()]);
     }
 }
 ?>

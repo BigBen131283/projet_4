@@ -14,6 +14,7 @@ class UsersModel extends Model
     protected $status;
     protected $role;
     protected $profile_picture;
+    protected $isLogged = false;
 
     public function __construct($id = null)
     {
@@ -29,8 +30,14 @@ class UsersModel extends Model
                 $this->email = $user->email;
                 $this->pseudo = $user->pseudo;
                 $this->role = $user->role;
+                $this->isLogged = true;
             }
         }
+    }
+
+    public function isLogged()
+    {
+        return $this->isLogged;
     }
 
     /**

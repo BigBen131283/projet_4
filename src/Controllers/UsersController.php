@@ -9,6 +9,7 @@ use App\Core\Controller;
 use App\Validator\UsersValidator;
 use App\Core\Logger;
 use App\Core\Main;
+use App\Core\Mail;
 use PDOException;
 
 class UsersController extends Controller
@@ -85,7 +86,20 @@ class UsersController extends Controller
                 $dbAccess = new UsersDB();
                 try{
                     $dbAccess->createUser($body);
-                    Main::$main->response->redirect('/');
+                    $email = $body['email'];
+                    $pseudo = $body['pseudo'];
+                    $mail = new Mail($email);
+
+                    $result = $mail->sendRegisterConfirmation("Please $pseudo, confirm your registration", $pseudo);
+
+                    if($result)
+                    {
+                        Main::$main->response->redirect('/');
+                    }
+                    else
+                    {
+                        $this->render('users/register', "php", 'defaultLogin', ['errorHandler' => $validator]);
+                    }
                 }
                 catch(PDOException  $e) {
                     $logger->console($e->getMessage());
@@ -112,6 +126,27 @@ class UsersController extends Controller
     public function profil()
     {
         $this->render('users/profil', 'php', 'defaultLogin', ['loggedUser' => Main::$main->getUsersModel()]);
+    }
+
+    public function registerconfirmed() 
+    {
+        $logger = new Logger(Users::class);
+        $dbAccess = new UsersDB();
+        try{
+            $request = new Request();
+            $uri = $_SERVER['REQUEST_URI'];
+            $uricomponents = parse_url($uri);
+            parse_str($uricomponents['query'], $params);
+            $pseudo = $params['pseudo'];
+            if($request->isGet()) {
+                $dbAccess->confirmRegistration($pseudo);
+            }
+        }
+        catch(PDOException  $e) {
+            $logger->console($e->getMessage());
+            Main::$main->response->redirect('/');
+        }
+        Main::$main->response->redirect('/users/login');
     }
 }
 ?>

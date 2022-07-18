@@ -8,6 +8,14 @@ use Exception;
 
 class UsersDB extends Db
 {
+    private const STATUS_REGISTERED = 10;
+    private const STATUS_CONFIRMED = 20;
+    private const STATUS_SUSPENDED = 30;
+    private const STATUS_DELETED = 40;
+    private const ROLE_AUTHOR = 10;
+    private const ROLE_READER = 20;
+    private const ROLE_SITEADMIN = 30;
+
     public function createUser(array $params)
     {        
         $email = $params['email'];
@@ -17,11 +25,13 @@ class UsersDB extends Db
         $this->db = Db::getInstance();
 
         // INSERT INTO table (liste de champs ex: email, Password, Pseudo, Status, Role) VALUES (?, ?, ?, ?, ?, ?)
-        $statement = $this->db->prepare('INSERT INTO users (email, password, pseudo) VALUES (:email, :password, :pseudo)');
+        $statement = $this->db->prepare('INSERT INTO users (email, password, pseudo, status) 
+                                            VALUES (:email, :password, :pseudo, :status)');
 
         $statement->bindValue(':email', $email);
         $statement->bindValue(':password', $password);
         $statement->bindValue(':pseudo', $pseudo);
+        $statement->bindValue(':status', self::STATUS_REGISTERED);
 
         $statement->execute();
         return true;        
@@ -74,6 +84,16 @@ class UsersDB extends Db
             return $result;
         }
         return null;
+    }
+
+    public function confirmRegistration($userpseudo) 
+    {
+        $this->db = Db::getInstance();
+        $statement = $this->db->prepare('UPDATE users SET status = :statusvalue WHERE pseudo = :pseudo');
+        $statement->bindValue(':statusvalue', self::STATUS_CONFIRMED);
+        $statement->bindValue(':pseudo', $userpseudo);
+        $statement->execute();      // Should normally not send an error ;-)
+        return true;
     }
 }
 

@@ -1,7 +1,6 @@
 <?php
 
-// Ceci est notre contrôleur principal
-// On y trouve le rendu des vues
+// Ceci est notre contrôleur principal pour le rendu des vues
 
 namespace App\Core;
 

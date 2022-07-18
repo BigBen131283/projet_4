@@ -4,6 +4,12 @@ nav
     flex-direction: row;
 }
 
+nav .sup a
+{
+    color: #fff;
+    text-decoration: none;
+}
+
 nav.active
 {
     width: 100%;

@@ -70,7 +70,8 @@ form .inputBox input
     padding: 10px 0;
     font-size: 16px;
     color: var(--thirdclr);
-    margin-bottom: 30px;
+    margin-top: 5px;
+    margin-bottom: 15px;
     border: none;
     border-bottom: 1px solid var(--thirdclr);
     outline: none;
@@ -80,6 +81,35 @@ form .inputBox input
 form p
 {
     color: var(--thirdclr);
+    animation: glow 2s linear infinite;
+}
+
+@keyframes glow
+{
+    0%
+    {
+        text-shadow: 0 0 10px var(--primaryclr);
+    }
+    25%
+    {
+        text-shadow: 0 0 10px var(--primaryclr),
+                     0 0 20px var(--primaryclr);
+    }
+    50%
+    {
+        text-shadow: 0 0 10px var(--primaryclr),
+                     0 0 20px var(--primaryclr),
+                     0 0 40px var(--primaryclr);
+    }
+    75%
+    {
+        text-shadow: 0 0 10px var(--primaryclr),
+                     0 0 20px var(--primaryclr);
+    }
+    100%
+    {
+        text-shadow: 0 0 10px var(--primaryclr);
+    }
 }
 
 form .inputBox label

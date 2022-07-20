@@ -2,14 +2,13 @@
 
 namespace App\Controllers;
 
-use App\Models\UsersModel;
 use App\Core\Request;
 use App\Repository\UsersDB;
 use App\Core\Controller;
 use App\Validator\UsersValidator;
 use App\Core\Logger;
 use App\Core\Main;
-use App\Core\Mail;
+use App\Core\MailTrap;
 use PDOException;
 
 class UsersController extends Controller
@@ -43,7 +42,7 @@ class UsersController extends Controller
                     }
                     else
                     {
-                        $validator->addError('loginerror', 'Pseudo inconnu ou mot de passe erroné');
+                        $validator->addError('loginerror', 'Pseudo inconnu ou mot de passe erroné ou compte en attente de validation');
                         $logger->console($validator->getValue('pseudo'));
                         $this->render('users/login', "php", 'defaultLogin', ['errorHandler' => $validator]);
                     }                    
@@ -89,10 +88,9 @@ class UsersController extends Controller
                     $dbAccess->createUser($body);
                     $email = $body['email'];
                     $pseudo = $body['pseudo'];
-                    $mail = new Mail($email);
+                    $mail = new MailTrap($email);
 
-                    // $result = $mail->sendRegisterConfirmation("Please $pseudo, confirm your registration", $pseudo);
-                    $result = true;
+                    $result = $mail->sendRegisterConfirmation("Please $pseudo, confirm your registration", $pseudo);
 
                     if($result)
                     {
@@ -126,22 +124,31 @@ class UsersController extends Controller
 
     public function registerconfirmed() 
     {
-        $logger = new Logger(Users::class);
-        $dbAccess = new UsersDB();
+        $logger = new Logger(__CLASS__);
+        $usersDB = new UsersDB();
+        $request = new Request();
+        $uri = $_SERVER['REQUEST_URI'];
+        $uricomponents = parse_url($uri);
+        parse_str($uricomponents['query'], $params);
+        $selector = $params['selector'];
+        $token = $params['token'];
         try{
-            $request = new Request();
-            $uri = $_SERVER['REQUEST_URI'];
-            $uricomponents = parse_url($uri);
-            parse_str($uricomponents['query'], $params);
-            $pseudo = $params['pseudo'];
-            if($request->isGet()) {
-                $dbAccess->confirmRegistration($pseudo);
+            if($request->isGet()&& $selector) {
+                if($usersDB->confirmRegistration($selector, $token)) {
+                    $logger->db('User registration confirmation failed');
+                    Main::$main->response->redirect('/');
+                }
+            }
+            else {
+                $logger->db('Invalid register confirmation request');
+                Main::$main->response->redirect('/');
             }
         }
         catch(PDOException  $e) {
-            $logger->console($e->getMessage());
+            $logger->db($e->getMessage());
             Main::$main->response->redirect('/');
         }
+        $logger->db('Confirmation request processed for ');
         Main::$main->response->redirect('/users/login');
     }
 }

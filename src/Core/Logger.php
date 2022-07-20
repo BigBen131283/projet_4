@@ -2,6 +2,8 @@
 
 namespace App\Core;
 
+use App\Repository\LoggerDB;
+
 class Logger
 {
 
@@ -40,6 +42,12 @@ class Logger
       echo "<script>console.log(\"$header $data\");</script>";
     }
   }
+  //-----------------------------------------------------------------------------
+  public function db($data) {
+    $loggerdb = new LoggerDB();
+    $loggerdb->log("{ Module: $this->module } ".$data);
+  }
+
 }
 
 ?>

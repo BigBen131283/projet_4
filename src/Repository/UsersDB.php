@@ -47,7 +47,7 @@ class UsersDB extends Db
 
         $this->db = Db::getInstance();
 
-        $statement = $this->db->prepare('SELECT id, password FROM users WHERE pseudo = :pseudo');
+        $statement = $this->db->prepare('SELECT id, password FROM users WHERE pseudo = :pseudo AND status='.self::STATUS_CONFIRMED);
         $statement->bindValue(':pseudo', $pseudo);
 
         $statement->execute();
@@ -86,14 +86,24 @@ class UsersDB extends Db
         return null;
     }
 
-    public function confirmRegistration($userpseudo) 
+    public function confirmRegistration($selector, $token) 
     {
         $this->db = Db::getInstance();
-        $statement = $this->db->prepare('UPDATE users SET status = :statusvalue WHERE pseudo = :pseudo');
-        $statement->bindValue(':statusvalue', self::STATUS_CONFIRMED);
-        $statement->bindValue(':pseudo', $userpseudo);
-        $statement->execute();      // Should normally not send an error ;-)
-        return true;
+        $resetdb = new ResetDB();
+        // 1st, check the resets table to validate the register confirmation request
+        if($resetdb->verify($selector, $token)) 
+        {
+            $userpseudo = $resetdb->getUserPseudo();
+            $statement = $this->db->prepare('UPDATE users SET status = :statusvalue WHERE pseudo = :pseudo');
+            $statement->bindValue(':statusvalue', self::STATUS_CONFIRMED);
+            $statement->bindValue(':pseudo', $userpseudo);
+            $statement->execute();      // Should normally not send an error ;-)
+            return true;
+        }   
+        else 
+        {
+            return false;
+        }
     }
 }
 

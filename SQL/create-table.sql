@@ -125,4 +125,33 @@ SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
---
+-- -----------------------------------------------------
+-- Log table
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS projet4.logs(
+  logid INT(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+  logtime DATETIME DEFAULT CURRENT_TIMESTAMP,
+  logmessage varchar(256) NOT NULL
+)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Table Register / lost password tracking requests 
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS projet4.resets (
+  resetid int(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+  resetactiontype varchar(64) NOT NULL,         -- Will be 'register', 'passreset', etc...
+  pseudo VARCHAR(64) NOT NULL,
+  selector TEXT NOT NULL,
+  token LONGTEXT NOT NULL,
+  expires int(32) NOT NULL,
+  resetstatus TINYINT NOT NULL,
+  requesttime DATETIME DEFAULT CURRENT_TIMESTAMP,
+  processedtime DATETIME DEFAULT CURRENT_TIMESTAMP
+)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+-- -----------------------------------------------------

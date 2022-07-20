@@ -76,6 +76,7 @@ class UsersController extends Controller
         $validator = new UsersValidator();
         if($request->isPost())
         {
+           
             $logger->console("Check register data");
             $body = $request->getBody();
             // On appelle ton validateur en lui passant les données
@@ -90,7 +91,8 @@ class UsersController extends Controller
                     $pseudo = $body['pseudo'];
                     $mail = new Mail($email);
 
-                    $result = $mail->sendRegisterConfirmation("Please $pseudo, confirm your registration", $pseudo);
+                    // $result = $mail->sendRegisterConfirmation("Please $pseudo, confirm your registration", $pseudo);
+                    $result = true;
 
                     if($result)
                     {
@@ -106,15 +108,9 @@ class UsersController extends Controller
                     $validator->addError('email', 'Email déjà existant.'. $e->getCode());
                     $this->render('users/register', "php", 'defaultLogin', ['errorHandler' => $validator]);
                 }
-            }
-            else {
-                $this->render('users/register', "php", 'defaultLogin', ['errorHandler' => $validator]);
-            }
+            }            
         }
-        else
-        {   // This a get, send an empty error array
-            $this->render('users/register', "php", 'defaultLogin', ['errorHandler' => $validator]);
-        }
+        $this->render('users/register', "php", 'defaultLogin', ['errorHandler' => $validator]);
     }
 
     public function logout()

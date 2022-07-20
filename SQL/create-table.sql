@@ -38,14 +38,14 @@ CREATE TABLE IF NOT EXISTS projet4.users (
   id INT(11) NOT NULL AUTO_INCREMENT,
   email VARCHAR(128) NOT NULL UNIQUE,
   password VARCHAR(64) NOT NULL,
-  pseudo VARCHAR(64) NOT NULL,
+  pseudo VARCHAR(64) NOT NULL UNIQUE,
   status INT(11) NOT NULL DEFAULT 10,
   role INT(11) NOT NULL DEFAULT 20,
-  profile_picture VARCHAR(25) NOT NULL DEFAULT 0,
+  profile_picture VARCHAR(64) NOT NULL DEFAULT 'defaultuserpicture.png',
   PRIMARY KEY (id))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
-CREATE UNIQUE INDEX `uniqueUser` ON projet4.users(`email`, `pseudo`) USING BTREE;
+-- CREATE UNIQUE INDEX `uniqueUser` ON projet4.users(`email`, `pseudo`) USING BTREE;
 
 -- -----------------------------------------------------
 -- Table projet4.billets

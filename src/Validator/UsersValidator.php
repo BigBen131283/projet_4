@@ -4,8 +4,9 @@
 
     use Exception;
     use App\Core\Logger;
+    use App\Core\Validator;
 
-    class UsersValidator
+    class UsersValidator extends Validator
     {
         private const BAD_EMAIL = 'Email incorrect';
         private const BAD_FIELDS = 'Ce champ doit être renseigné';

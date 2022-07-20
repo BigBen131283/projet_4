@@ -5,9 +5,9 @@ class Mail {
 
   private array $HEADERS;
   private string $to;
-  private const SMTP = 'smtp.free.fr';
+  private const SMTP = 'smtp.sfr.fr';
   private const smtp_port = '25';
-  private CONST sendmail_from = 'noreply-alaskastory@free.fr';
+  private CONST sendmail_from = 'noreply-alaskastory@sfr.fr';
 
   //----------------------------------------------------------------------
   public function __construct(string $to)
@@ -18,8 +18,8 @@ class Mail {
     ini_set('sendmail_from', self::sendmail_from);
     $this->to = $to;
     $this->HEADERS = array(
-      'From' => 'noreply-alaskastory@free.fr',
-      'Reply-To' => 'noreply-alaskastory@free.fr',
+      'From' => 'noreply-alaskastory@sfr.fr',
+      'Reply-To' => 'noreply-alaskastory@sfr.fr',
       'X-Mailer' => 'PHP/',
       'Content-type' => 'text/html; charset=iso-8859-1'
     );

@@ -8,7 +8,7 @@
     <nav class="main_menu">        
         <div class="sup">
             <div class="user">
-                <img src="/images/default_user_picture.png" alt="Photo de profil" class="profile-picture">
+                <img src="/images/defaultuserpicture.png" alt="Photo de profil" class="profile-picture">
             </div>
             <!-- S'affiche à la place de bonjour tant qu'il n'est pas connecté -->
             <?php if($loggedUser->isLogged()):?>

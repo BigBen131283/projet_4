@@ -34,7 +34,6 @@
                             $compositRule = $rule;
                             $rule = $compositRule["rule"];
                         }
-                        $this->logger->console('Clé :'.$key.' Règle :'.$rule);
                         if($rule === self::RULE_EMAIL && !filter_var($checkEntry["value"], FILTER_VALIDATE_EMAIL))
                         {
                             $this->addError($key, $rule);
@@ -55,10 +54,11 @@
                             }                            
                         }
                     }
+                    $this->values[$key] = $checkEntry["value"];
                 }
             }
-            $this->logger->log($this->errors);
-            die;
+            // $this->logger->log($this->errors);
+            // die;
             return $this->errors;
         }
         

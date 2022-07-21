@@ -3,12 +3,13 @@
     <div class="inputBox">
         <input type="text" name="pseudo" required id="pseudo" value="<?php echo $errorHandler->getValue('pseudo') ?>">
         <label for="pseudo">Pseudo</label>
+        <p><?php echo $errorHandler->getFirstError('pseudo'); ?></p>
     </div>
     <div class="inputBox">
         <input type="password" name="pass" required id="pass">
         <label for="pass">Mot de passe</label>
+        <p><?php echo $errorHandler->getFirstError('pass'); ?></p>
     </div>
-    <p><?php echo $errorHandler->getFirstError('loginerror'); ?></p>
     <div class="links">
         <button type="submit">Se connecter</button>
         <ul>

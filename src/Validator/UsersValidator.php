@@ -2,124 +2,64 @@
 
     namespace App\Validator;
 
-    use Exception;
-    use App\Core\Logger;
     use App\Core\Validator;
 
     class UsersValidator extends Validator
     {
-        private const BAD_EMAIL = 'Email incorrect';
-        private const BAD_FIELDS = 'Ce champ doit être renseigné';
-        private const BAD_PASSWORD = 'Les deux mots de passe doivent être identiques';
-        private const BAD_FILLING = 'Tous les champs doivent être renseignés';
-        private $logger;
-
-        private $errors = [];
-        private $values = [];       // Used to remember previously entered values
-
         public function __construct()
         {
-            $this->logger = new Logger(UsersValidator::class);
+            parent::__construct(__CLASS__);
         }
 
-        public function checkUserEntries(array $params): array
+        public function checkUserEntries(array $params)
         {
+            $fieldsAndRules=[];
             if(!empty($params))
             {
-                $this->values["email"] = $params['email'];
-                $this->values["pass"] = $params['pass'];
-                $this->values["confirm-pass"] = $params['confirm-pass'];
-                $this->values["pseudo"] = $params['pseudo'];
-
-                if(empty($this->values["email"]))
-                {
-                    $this->addError('email', self::BAD_FIELDS);
-                }
-                if(!filter_var($this->values["email"], FILTER_VALIDATE_EMAIL))
-                {
-                    $this->addError('email', self::BAD_EMAIL);
-                }
-
-                if(empty($this->values["pseudo"]))
-                {
-                    $this->addError('pseudo', self::BAD_FIELDS);
-                }
-                if(empty($this->values["pass"]))
-                {
-                    $this->addError('password', self::BAD_FIELDS);
-                }
-                if(empty($this->values["confirm-pass"]))
-                {
-                    $this->addError('passCheck', self::BAD_FIELDS);
-                }
-                if($this->values["pass"] !== $this->values["confirm-pass"])
-                {
-                    $this->addError('passCheck', self::BAD_PASSWORD);
-                }
+                $fieldsAndRules = [
+                    "email"=>[
+                        "value"=>$params['email'],
+                        "rules"=>[self::RULE_EMAIL, self::RULE_NOTEMPTY]
+                    ],
+                    "pseudo"=>[
+                        "value"=>$params['pseudo'],
+                        "rules"=>[self::RULE_NOTEMPTY]
+                    ],
+                    "pass"=>[
+                        "value"=>$params['pass'],
+                        "rules"=>[self::RULE_NOTEMPTY]
+                    ],
+                    "confirm-pass"=>[
+                        "value"=>$params['confirm-pass'],
+                        "rules"=>[self::RULE_NOTEMPTY, ["rule"=>self::RULE_MATCH,'match'=>'pass']],
+                        'label'=>'Mot de passe'
+                    ]
+                ];
             }
-            return $this->errors;
-        }
-        // -------------------------------------------------------------------
-        public function addError($attribute, $message)
-        {
-            $this->errors[$attribute][] = $message;
-            $this->logger->console("Adding [$attribute] error message [$message]");
-            return;
-        }    
-        // -------------------------------------------------------------------
-        public function getFirstError($attribute)
-        {
-            if(!empty($this->errors)) {
-                if(isset($this->errors["$attribute"][0]))
-                {
-                    return '<p class="myerror">'.$this->errors["$attribute"][0].'</p>';
-                }
-            }
-            return '<p class="hidden"></p>';
-        }
-        // -------------------------------------------------------------------
-        public function getValue($attribute) 
-        {
-            if(isset($this->values["$attribute"])) {
-                return $this->values["$attribute"];
-            }
-            return '';
-        }
-        // -------------------------------------------------------------------
-        /**
-         * Vérifie si les champs sont remplis. 
-         * Si le tableau est vide -> renvoie "True"
-         *
-         * @return boolean
-         */
-        public function hasError()
-        {
-            return !empty($this->errors);
+            return $this->check($fieldsAndRules);
         }
 
-        public function getAllErrors()
-        {
-            return $this->errors;
-        }
+
+        
+        // -------------------------------------------------------------------
 
         public function checkLoginEntries($params)
         {
+            $fieldsAndRules=[];
             if(!empty($params))
             {
-                
-                $this->values["pass"] = $params['pass'];
-                $this->values["pseudo"] = $params['pseudo'];
-
-                if(empty($this->values["pseudo"]))
-                {
-                    $this->addError('loginerror', self::BAD_FILLING);
-                }
-                if(empty($this->values["pass"]))
-                {
-                    $this->addError('loginerror', self::BAD_FILLING);
-                }
+                $fieldsAndRules = [
+                    "pseudo"=>[
+                        "value"=>$params['pseudo'],
+                        "rules"=>[self::RULE_NOTEMPTY]
+                    ],
+                    "pass"=>[
+                        "value"=>$params['pass'],
+                        "rules"=>[self::RULE_NOTEMPTY]
+                    ]
+                ];
             }
-            return $this->errors;
+            return $this->check($fieldsAndRules);
         }
     }
 

@@ -27,7 +27,7 @@
                     ],
                     "pass"=>[
                         "value"=>$params['pass'],
-                        "rules"=>[self::RULE_NOTEMPTY]
+                        "rules"=>[self::RULE_NOTEMPTY, ["rule"=>self::RULE_MIN, 'length'=>6]]
                     ],
                     "confirm-pass"=>[
                         "value"=>$params['confirm-pass'],

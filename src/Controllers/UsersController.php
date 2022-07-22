@@ -84,9 +84,9 @@ class UsersController extends Controller
 
                     if($result)
                     {
-                        // Main::$main->response->redirect('/');
-                        $validator->addError('flashmessage', 'Confirmez votre inscription grâce au mail que nous vous avons envoyé');
-                        $this->render('users/login', "php", 'defaultLogin', ['errorHandler' => $validator]);
+                        Main::$main->response->redirect('/');
+                        // $validator->addError('flashmessage', 'Confirmez votre inscription grâce au mail que nous vous avons envoyé');
+                        // $this->render('users/login', "php", 'defaultLogin', ['errorHandler' => $validator]);
                     }
                     else
                     {

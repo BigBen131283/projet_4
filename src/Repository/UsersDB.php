@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Core\Db;
 use App\Core\Logger;
 use Exception;
+use PDOException;
 
 class UsersDB extends Db
 {
@@ -16,25 +17,40 @@ class UsersDB extends Db
     private const ROLE_READER = 20;
     private const ROLE_SITEADMIN = 30;
 
+    private Logger $logger;
+
+    public function __construct()
+    {
+        $this->logger = new Logger(__CLASS__);
+    }
+
     public function createUser(array $params)
     {        
         $email = $params['email'];
         $password = $params['pass'];
         $pseudo = $params['pseudo'];
                 
-        $this->db = Db::getInstance();
+        try
+        {
+            $this->db = Db::getInstance();
 
-        // INSERT INTO table (liste de champs ex: email, Password, Pseudo, Status, Role) VALUES (?, ?, ?, ?, ?, ?)
-        $statement = $this->db->prepare('INSERT INTO users (email, password, pseudo, status) 
-                                            VALUES (:email, :password, :pseudo, :status)');
-
-        $statement->bindValue(':email', $email);
-        $statement->bindValue(':password', $password);
-        $statement->bindValue(':pseudo', $pseudo);
-        $statement->bindValue(':status', self::STATUS_REGISTERED);
-
-        $statement->execute();
-        return true;        
+            // INSERT INTO table (liste de champs ex: email, Password, Pseudo, Status, Role) VALUES (?, ?, ?, ?, ?, ?)
+            $statement = $this->db->prepare('INSERT INTO users (email, password, pseudo, status) 
+                                                VALUES (:email, :password, :pseudo, :status)');
+    
+            $statement->bindValue(':email', $email);
+            $statement->bindValue(':password', $password);
+            $statement->bindValue(':pseudo', $pseudo);
+            $statement->bindValue(':status', self::STATUS_REGISTERED);
+    
+            $statement->execute();
+            return true; 
+        }
+        catch(PDOException $e)
+        {
+            $this->logger->console($e->getMessage());
+            return false;
+        }       
     }
 
     public function login(array $params)
@@ -44,26 +60,33 @@ class UsersDB extends Db
 
         // $logger = new Logger(UsersDB::class);
         // $logger->console('Je passe là');
-
-        $this->db = Db::getInstance();
-
-        $statement = $this->db->prepare('SELECT id, password FROM users WHERE pseudo = :pseudo AND status='.self::STATUS_CONFIRMED);
-        $statement->bindValue(':pseudo', $pseudo);
-
-        $statement->execute();
-        $credentials = $statement->fetchObject(static::class);
-
-        if(empty($credentials))
+        try
         {
-            return null;
-        }
-        else
-        {
-            if($credentials->password !== $password)
+            $this->db = Db::getInstance();
+
+            $statement = $this->db->prepare('SELECT id, password FROM users WHERE pseudo = :pseudo AND status='.self::STATUS_CONFIRMED);
+            $statement->bindValue(':pseudo', $pseudo);
+
+            $statement->execute();
+            $credentials = $statement->fetchObject(static::class);
+
+            if(empty($credentials))
             {
                 return null;
             }
-            return $credentials;
+            else
+            {
+                if($credentials->password !== $password)
+                {
+                    return null;
+                }
+                return $credentials;
+            }
+        }
+        catch(PDOException $e)
+        {
+            $this->logger->console($e->getMessage());
+            return null;
         }
     }
 

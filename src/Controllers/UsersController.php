@@ -29,28 +29,17 @@ class UsersController extends Controller
             {
                 $logger->console("No error, try login");
                 $dbAccess = new UsersDB();
-                try
+                
+                $credentials = $dbAccess->login($body);
+                if($credentials !== null)
                 {
-                    $credentials = $dbAccess->login($body);
-                    if($credentials !== null)
-                    {
-                        // ici tout est ok
-                        Main::$main->login($credentials->id);
-                        Main::$main->response->redirect('/');
-                        
-
-                    }
-                    else
-                    {
-                        $validator->addError('loginerror', 'Pseudo inconnu ou mot de passe erroné ou compte en attente de validation');
-                        $logger->console($validator->getValue('pseudo'));
-                        $this->render('users/login', "php", 'defaultLogin', ['errorHandler' => $validator]);
-                    }                    
+                    // ici tout est ok
+                    Main::$main->login($credentials->id);
+                    Main::$main->response->redirect('/');
                 }
-                catch(PDOException  $e) 
+                else
                 {
-                    $logger->console($e->getMessage());
-                    $validator->addError('loginerror', 'Problème de base de données'. $e->getCode());
+                    $validator->addError('loginerror', 'Pseudo inconnu ou mot de passe erroné ou compte en attente de validation');
                     $this->render('users/login', "php", 'defaultLogin', ['errorHandler' => $validator]);
                 }
             }
@@ -84,8 +73,9 @@ class UsersController extends Controller
             {
                 $logger->console("No error, insert in DB");
                 $dbAccess = new UsersDB();
-                try{
-                    $dbAccess->createUser($body);
+
+                if($dbAccess->createUser($body))
+                {
                     $email = $body['email'];
                     $pseudo = $body['pseudo'];
                     $mail = new MailTrap($email);
@@ -94,19 +84,21 @@ class UsersController extends Controller
 
                     if($result)
                     {
-                        Main::$main->response->redirect('/');
+                        // Main::$main->response->redirect('/');
+                        $validator->addError('flashmessage', 'Confirmez votre inscription grâce au mail que nous vous avons envoyé');
+                        $this->render('users/login', "php", 'defaultLogin', ['errorHandler' => $validator]);
                     }
                     else
                     {
-                        $this->render('users/register', "php", 'defaultLogin', ['errorHandler' => $validator]);
+                        $validator->addError('flashmessage', 'Oups, pb email');
                     }
                 }
-                catch(PDOException  $e) {
-                    $logger->console($e->getMessage());
-                    $validator->addError('email', 'Email déjà existant.'. $e->getCode());
-                    $this->render('users/register', "php", 'defaultLogin', ['errorHandler' => $validator]);
+                else
+                {
+                    $validator->addError('flashmessage', 'Oups, pb bdd');
                 }
-            }            
+            }    
+            $this->render('users/register', "php", 'defaultLogin', ['errorHandler' => $validator]);        
         }
         $this->render('users/register', "php", 'defaultLogin', ['errorHandler' => $validator]);
     }

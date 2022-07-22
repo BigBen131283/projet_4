@@ -1,6 +1,7 @@
 <form method="post" novalidate action="">
         
         <h1>Inscription</h1>
+        <?php echo $errorHandler->getFirstError('flashmessage'); ?></p>
         <div class="inputBox">
             <input type="email" name="email" required id="email" value="<?php echo $errorHandler->getValue('email') ?>">
             <label for="email">email</label>

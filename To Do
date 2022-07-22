@@ -5,8 +5,8 @@
 
 Bien mettre en place le cheminement
 
-Bien séparer le model, le repository (sql), le validator et le service mail
-Pour le validator on créé un UserValidator qui étant de Validator
+**Bien séparer le model, le repository (sql), le validator et le service mail
+**Pour le validator on créé un UserValidator qui étant de Validator
 
 ** Pour le service mail on créé un Mail qui étant de Mailer ou Mailer est simplement le service qui envoi le mail
 ** Dans Mail tu fais une fonction qui créé le mail et qui appelle le Mailer pour l'envoyer

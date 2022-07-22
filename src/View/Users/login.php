@@ -1,5 +1,6 @@
 <form method="post" novalidate action="">
     <h1>Connexion</h1>
+    <?php echo $errorHandler->getFirstError('flashmessage'); ?></p>
     <div class="inputBox">
         <input type="text" name="pseudo" required id="pseudo" value="<?php echo $errorHandler->getValue('pseudo') ?>">
         <label for="pseudo">Pseudo</label>
@@ -10,6 +11,7 @@
         <label for="pass">Mot de passe</label>
         <p><?php echo $errorHandler->getFirstError('pass'); ?></p>
     </div>
+    <p><?php echo $errorHandler->getFirstError('loginerror'); ?></p>
     <div class="links">
         <button type="submit">Se connecter</button>
         <ul>

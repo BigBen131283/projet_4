@@ -10,6 +10,8 @@
         protected const RULE_NOTEMPTY = 'Ce champ doit être renseigné';
         protected const RULE_ALLNOTEMPTY = 'Tous les champs doivent être renseignés';
         protected const RULE_MATCH = 'Le contenu de ce champ doit être identique à {field}';
+        protected const RULE_MAX = "Ce champ ne doit pas dépasser {nbcar} caractères";
+        protected const RULE_MIN = "Ce champ doit contenir au moins {nbcar} caractères";
         
         private $logger;
 
@@ -49,6 +51,26 @@
                             $message = str_replace('{field}', $checkEntry['label'] ?? $fieldName, $rule);
                             $ref = $fieldsAndRules[$fieldName]["value"];
                             if($checkEntry['value'] !== $ref)
+                            {
+                                $this->addError($key, $message);
+                            }                            
+                        }
+                        if($rule === self::RULE_MIN)
+                        {
+                            $limit = $compositRule["length"];
+                            $length = strlen($checkEntry["value"]);
+                            $message = str_replace('{nbcar}', $limit, $rule);
+                            if($length < $limit)
+                            {
+                                $this->addError($key, $message);
+                            }                            
+                        }
+                        if($rule === self::RULE_MAX)
+                        {
+                            $limit = $compositRule["length"];
+                            $length = strlen($checkEntry["value"]);
+                            $message = str_replace('{nbcar}', $limit, $rule);
+                            if($length > $limit)
                             {
                                 $this->addError($key, $message);
                             }                            

@@ -23,7 +23,7 @@
                     ],
                     "pseudo"=>[
                         "value"=>$params['pseudo'],
-                        "rules"=>[self::RULE_NOTEMPTY]
+                        "rules"=>[self::RULE_NOTEMPTY, ["rule"=>self::RULE_MIN, 'length'=>4], ["rule"=>self::RULE_MAX, 'length'=>8]]
                     ],
                     "pass"=>[
                         "value"=>$params['pass'],

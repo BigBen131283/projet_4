@@ -22,3 +22,14 @@ nav.active
     justify-content: center;
     align-items: center;
 }
+
+nav .menu_toggle
+{
+    display: none;
+}
+
+nav p
+{
+    opacity: 1;
+    display: flex;
+}

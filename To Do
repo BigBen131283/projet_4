@@ -11,6 +11,6 @@ Bien mettre en place le cheminement
 ** Pour le service mail on créé un Mail qui étant de Mailer ou Mailer est simplement le service qui envoi le mail
 ** Dans Mail tu fais une fonction qui créé le mail et qui appelle le Mailer pour l'envoyer
 
-Préférer les try catch dans le repository (UserDb)
+**Préférer les try catch dans le repository (UserDb)
 
 Continuer les feature dans l'ordre après l'inscription

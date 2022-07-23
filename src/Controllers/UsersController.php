@@ -114,6 +114,58 @@ class UsersController extends Controller
 
     public function profil()
     {
+        $request = new Request;
+        $logger = new Logger(__CLASS__);
+
+        $validator = new UsersValidator();
+        
+        if($request->isPost())
+        {
+            $target_dir = "/images/profile_pictures";
+            var_dump($_FILES);
+            $target_file = $target_dir .'\/'.$_FILES["profilepicture"]["name"];
+            $logger->console('***'.$target_file);
+            $allowed = [
+                "jpg" => "image/jpeg",
+                "jpeg" => "image/jpeg",
+                "png" => "image/png"
+            ];
+            $filename = $_FILES["profilepicture"]["name"];
+            $filetype = $_FILES["profilepicture"]["type"];
+            $filesize = $_FILES["profilepicture"]["size"];
+            
+            $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION)); 
+            
+            $logger->console($filetype);
+            if(!isset($allowed[$extension]))
+            {
+                $logger->console("format non autorisé");
+            }
+            $logger->console("format accepté");
+
+            if($filesize > 1024 * 1024)
+            {
+                $logger->console("Fichier trop volumineux");
+            }
+            $logger->console("fichier accepté");
+            
+            // On génère un nom unique
+            $newname = md5(uniqid());
+            // On génère le chemin complet
+            $newfilename = ROOT."/public/images/profile_pictures/$newname.$extension";
+            echo($newfilename);
+
+            // On déplace le fichier de tmp à uploads en le renommant
+            if(!move_uploaded_file($_FILES["profilepicture"]["tmp_name"], $newfilename))
+            {
+                die("L'upload a échoué");
+            }
+
+            //on interdit l'exécution du fichier
+            chmod($newfilename, 0644);
+
+            die;
+        }
         $this->render('users/profil', 'php', 'defaultLogin', ['loggedUser' => Main::$main->getUsersModel()]);
     }
 

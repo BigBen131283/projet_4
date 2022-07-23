@@ -28,6 +28,12 @@ nav .menu_toggle
     display: none;
 }
 
+nav a
+{
+    opacity: 1;
+    display: flex;
+}
+
 nav p
 {
     opacity: 1;

@@ -1,4 +1,4 @@
-<form method="post" novalidate action="">
+<form method="post" novalidate action="" enctype="multipart/form-data">
         
         <h1>Votre profil</h1>
         <div class="inputBox">
@@ -9,13 +9,17 @@
             <input type="text" name="pseudo" required id="pseudo" value="<?php echo $loggedUser->getPseudo('pseudo') ?>">
             <label for="pseudo">Pseudo</label>
         </div>
-        <div class="inputBox">
+        <!-- <div class="inputBox">
             <input type="password" name="pass" required id="pass">
             <label for="pass">Mot de passe</label>
         </div>
         <div class="inputBox">
             <input type="password" name="confirm-pass" required id="confirm-pass">
             <label for="confirm-pass">Confirmer le mot de passe</label>
+        </div> -->
+        <div class="inputBox">
+            <input type="file" name="profilepicture" id="profilepicture">
+            <label for="profilepicture">Photo de profil</label>
         </div>
         <div class="links">
             <button type="submit">Mettre à jour</button>

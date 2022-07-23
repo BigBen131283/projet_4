@@ -1,6 +1,11 @@
 <form method="post" novalidate action="">
     <h1>Connexion</h1>
-    <?php echo $errorHandler->getFirstError('flashmessage'); ?></p>
+    <?php
+        use App\Core\Flash;
+
+        $flash = new Flash();
+        $flash->getFlash('register');
+    ?>
     <div class="inputBox">
         <input type="text" name="pseudo" required id="pseudo" value="<?php echo $errorHandler->getValue('pseudo') ?>">
         <label for="pseudo">Pseudo</label>

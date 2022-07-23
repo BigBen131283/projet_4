@@ -37,6 +37,8 @@ class UsersDB extends Db
             // INSERT INTO table (liste de champs ex: email, Password, Pseudo, Status, Role) VALUES (?, ?, ?, ?, ?, ?)
             $statement = $this->db->prepare('INSERT INTO users (email, password, pseudo, status) 
                                                 VALUES (:email, :password, :pseudo, :status)');
+            
+            $password = password_hash($password, PASSWORD_ARGON2I);
     
             $statement->bindValue(':email', $email);
             $statement->bindValue(':password', $password);
@@ -76,7 +78,7 @@ class UsersDB extends Db
             }
             else
             {
-                if($credentials->password !== $password)
+                if(!password_verify($password, $credentials->password))
                 {
                     return null;
                 }

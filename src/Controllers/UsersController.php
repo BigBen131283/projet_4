@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Core\Request;
 use App\Repository\UsersDB;
 use App\Core\Controller;
+use App\Core\Flash;
 use App\Validator\UsersValidator;
 use App\Core\Logger;
 use App\Core\Main;
@@ -84,7 +85,9 @@ class UsersController extends Controller
 
                     if($result)
                     {
-                        Main::$main->response->redirect('/');
+                        $flash = new Flash();
+                        $flash->addFlash('register', 'Confirmez votre inscription grâce au mail que nous vous avons envoyé');
+                        Main::$main->response->redirect('/users/login');
                         // $validator->addError('flashmessage', 'Confirmez votre inscription grâce au mail que nous vous avons envoyé');
                         // $this->render('users/login', "php", 'defaultLogin', ['errorHandler' => $validator]);
                     }

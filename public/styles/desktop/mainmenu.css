@@ -4,23 +4,31 @@ nav
     flex-direction: row;
 }
 
+nav .sup
+{
+    width: 30%;
+}
+
 nav .sup a
 {
     color: #fff;
     text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0px 20px;
+    font-size: 1rem;
+}
+
+nav .sup a ion-icon
+{
+    font-size: 1.5rem;
 }
 
 nav.active
 {
     width: 100%;
     height: 60px;
-}
-
-.menu_access
-{
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 nav .menu_toggle
@@ -38,4 +46,17 @@ nav p
 {
     opacity: 1;
     display: flex;
+}
+
+.menu_access
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: none;
+}
+
+.menu_access li
+{
+    margin: 0px 20px 0px 20px;
 }

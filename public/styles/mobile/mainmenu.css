@@ -102,6 +102,7 @@ nav .user img
     width: 100%;
     height: 100%;
     min-width: 60px;
+    min-height: 60px;
     background: var(--backgroundclr);
     object-fit: cover;
     object-position: center;

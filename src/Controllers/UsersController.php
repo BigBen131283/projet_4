@@ -117,56 +117,70 @@ class UsersController extends Controller
         $request = new Request;
         $logger = new Logger(__CLASS__);
 
+        $usersModel = Main::$main->getUsersModel();
+        $params = ['email' => $usersModel->getEmail('email'),
+                   'pseudo' => $usersModel->getPseudo('pseudo')];
+
         $validator = new UsersValidator();
-        
+        $validator->checkUpdateEntries($params);
+
         if($request->isPost())
         {
-            $target_dir = "/images/profile_pictures";
-            var_dump($_FILES);
-            $target_file = $target_dir .'\/'.$_FILES["profilepicture"]["name"];
-            $logger->console('***'.$target_file);
-            $allowed = [
-                "jpg" => "image/jpeg",
-                "jpeg" => "image/jpeg",
-                "png" => "image/png"
-            ];
-            $filename = $_FILES["profilepicture"]["name"];
-            $filetype = $_FILES["profilepicture"]["type"];
-            $filesize = $_FILES["profilepicture"]["size"];
+            $body = $request->getBody();
+            $errorList = $validator->checkUpdateEntries($body);
             
-            $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION)); 
-            
-            $logger->console($filetype);
-            if(!isset($allowed[$extension]))
+            if(!$validator->hasError())
             {
-                $logger->console("format non autorisé");
+                $target_dir = "/images/profile_pictures";
+                $target_file = $target_dir .'\/'.$_FILES["profilepicture"]["name"];
+                $logger->console('***'.$target_file);
+                $allowed = [
+                    "jpg" => "image/jpeg",
+                    "jpeg" => "image/jpeg",
+                    "png" => "image/png"
+                ];
+                $filename = $_FILES["profilepicture"]["name"];
+                $filetype = $_FILES["profilepicture"]["type"];
+                $filesize = $_FILES["profilepicture"]["size"];
+                
+                $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION)); 
+                
+                $logger->console($filetype);
+                if(!isset($allowed[$extension]))
+                {
+                    $validator->addError('uploadError', 'Format de fichier non autorisé');
+                    $this->render('users/profil', "php", 'defaultLogin', ['updateUser' => $validator]);
+                    return;
+                }
+                if($filesize > 1024 * 1024)
+                {
+                    $validator->addError('uploadError', 'Fichier trop volumineux');
+                    $logger->console("Fichier trop gros");
+                    $this->render('users/profil', "php", 'defaultLogin', ['updateUser' => $validator]);
+                    return;
+                }
+                
+                // On génère un nom unique
+                $newname = md5(uniqid());
+                // On génère le chemin complet
+                $newfilename = ROOT."/public/images/profile_pictures/$newname.$extension";
+
+                // On déplace le fichier de tmp à uploads en le renommant
+                if(!move_uploaded_file($_FILES["profilepicture"]["tmp_name"], $newfilename))
+                {
+                    $validator->addError('uploadError', 'Oups, un problème est survenu.');
+                    $this->render('users/profil', "php", 'defaultLogin', ['updateUser' => $validator]);
+                }
+                else
+                {
+                    //on interdit l'exécution du fichier
+                    chmod($newfilename, 0644);
+                    $flash = new Flash();
+                    $flash->addFlash('update', 'Profil mis à jour');
+                }
             }
-            $logger->console("format accepté");
-
-            if($filesize > 1024 * 1024)
-            {
-                $logger->console("Fichier trop volumineux");
-            }
-            $logger->console("fichier accepté");
-            
-            // On génère un nom unique
-            $newname = md5(uniqid());
-            // On génère le chemin complet
-            $newfilename = ROOT."/public/images/profile_pictures/$newname.$extension";
-            echo($newfilename);
-
-            // On déplace le fichier de tmp à uploads en le renommant
-            if(!move_uploaded_file($_FILES["profilepicture"]["tmp_name"], $newfilename))
-            {
-                die("L'upload a échoué");
-            }
-
-            //on interdit l'exécution du fichier
-            chmod($newfilename, 0644);
-
-            die;
         }
-        $this->render('users/profil', 'php', 'defaultLogin', ['loggedUser' => Main::$main->getUsersModel()]);
+        $this->render('users/profil', 'php', 'defaultLogin', ['updateUser' => $validator]);
     }
 
     public function registerconfirmed() 

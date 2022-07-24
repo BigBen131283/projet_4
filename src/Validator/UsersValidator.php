@@ -61,6 +61,26 @@
             }
             return $this->check($fieldsAndRules);
         }
+        
+        public function checkUpdateEntries($params)
+        {
+            $fieldsAndRules=[];
+            if(!empty($params))
+            {
+                $fieldsAndRules = [
+                    "email"=>[
+                        "value"=>$params['email'],
+                        "rules"=>[self::RULE_EMAIL, self::RULE_NOTEMPTY]
+                    ],
+                    "pseudo"=>[
+                        "value"=>$params['pseudo'],
+                        "rules"=>[self::RULE_NOTEMPTY]
+                    ],
+
+                ];
+            }
+            return $this->check($fieldsAndRules);
+        }
     }
 
 ?>

@@ -238,6 +238,12 @@ form ul li a:hover::before
     transition-delay: 0.25s;
 }
 
+img
+{
+    max-width: 70%;
+    border-radius: 50%;
+}
+
 @media screen and (max-width: 1024px)
 {
     form

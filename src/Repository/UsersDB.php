@@ -96,7 +96,7 @@ class UsersDB extends Db
     {
         $this->db = Db::getInstance();
 
-        $statement = $this->db->prepare('SELECT id, pseudo, email, role FROM users WHERE id = :id');
+        $statement = $this->db->prepare('SELECT id, pseudo, email, profile_picture, role FROM users WHERE id = :id');
 
         $statement->bindValue(':id', $id);
 
@@ -109,6 +109,27 @@ class UsersDB extends Db
             return $result;
         }
         return null;
+    }
+
+    public function updateUser($id, $email, $pseudo, $picture)
+    {
+        try 
+        {
+            $this->db = Db::getInstance();
+            $statement = $this->db->prepare('UPDATE users 
+                            SET email = :email, pseudo = :pseudo, profile_picture = :pf
+                                WHERE id = :id');
+            $statement->bindValue(':id', $id);
+            $statement->bindValue(':email', $email);
+            $statement->bindValue(':pseudo', $pseudo);
+            $statement->bindValue(':pf', $picture);
+            return $statement->execute();
+        }
+        catch(PDOException $e) 
+        {
+            $this->logger->console($e->getMessage());
+            return false;
+        }
     }
 
     public function confirmRegistration($selector, $token) 

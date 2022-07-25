@@ -10,6 +10,7 @@ use App\Validator\UsersValidator;
 use App\Core\Logger;
 use App\Core\Main;
 use App\Core\MailTrap;
+use Exception;
 use PDOException;
 
 class UsersController extends Controller
@@ -116,67 +117,105 @@ class UsersController extends Controller
     {
         $request = new Request;
         $logger = new Logger(__CLASS__);
-
         $usersModel = Main::$main->getUsersModel();
-        $params = ['email' => $usersModel->getEmail('email'),
-                   'pseudo' => $usersModel->getPseudo('pseudo')];
-
+        $dbAccess = new UsersDB();
         $validator = new UsersValidator();
-        $validator->checkUpdateEntries($params);
+        // get current pseudo, picture and mail values before calling the form
+        // Whenever it's a get or post
+        $validator->addValue("email", $usersModel->getEmail());
+        $validator->addValue("pseudo", $usersModel->getPseudo());
+        $validator->addValue("profile_picture", $usersModel->getProfile_picture());
 
         if($request->isPost())
         {
             $body = $request->getBody();
-            $errorList = $validator->checkUpdateEntries($body);
-            
-            if(!$validator->hasError())
-            {
-                $target_dir = "/images/profile_pictures";
-                $target_file = $target_dir .'\/'.$_FILES["profilepicture"]["name"];
-                $logger->console('***'.$target_file);
-                $allowed = [
-                    "jpg" => "image/jpeg",
-                    "jpeg" => "image/jpeg",
-                    "png" => "image/png"
-                ];
+            if($_FILES['profilepicture']['error'] === UPLOAD_ERR_OK) {  // Upload worked ? 
                 $filename = $_FILES["profilepicture"]["name"];
                 $filetype = $_FILES["profilepicture"]["type"];
                 $filesize = $_FILES["profilepicture"]["size"];
-                
                 $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION)); 
-                
-                $logger->console($filetype);
-                if(!isset($allowed[$extension]))
-                {
-                    $validator->addError('uploadError', 'Format de fichier non autorisé');
-                    $this->render('users/profil', "php", 'defaultLogin', ['updateUser' => $validator]);
-                    return;
-                }
-                if($filesize > 1024 * 1024)
-                {
-                    $validator->addError('uploadError', 'Fichier trop volumineux');
-                    $logger->console("Fichier trop gros");
-                    $this->render('users/profil', "php", 'defaultLogin', ['updateUser' => $validator]);
-                    return;
-                }
-                
-                // On génère un nom unique
-                $newname = md5(uniqid());
-                // On génère le chemin complet
-                $newfilename = ROOT."/public/images/profile_pictures/$newname.$extension";
+                // $logger->console('*** Uploaded file :'.$filename.'.'.$filetype);
+                $validator->addValue("profile_picture", $filename.'.'.$filetype);
 
-                // On déplace le fichier de tmp à uploads en le renommant
-                if(!move_uploaded_file($_FILES["profilepicture"]["tmp_name"], $newfilename))
+                $body['profile_picture'] = "$filename.'.'.$filetype"; // On ajoute manuellement l'image car elle ne s'ajoute automatiquement pas à la construction de $body
+                $errorList = $validator->checkUpdateEntries($body);
+                if(!$validator->hasError())
                 {
-                    $validator->addError('uploadError', 'Oups, un problème est survenu.');
-                    $this->render('users/profil', "php", 'defaultLogin', ['updateUser' => $validator]);
+                    $target_dir = "/images/profile_pictures";
+                    $target_file = $target_dir .'\/'.$_FILES["profilepicture"]["name"];
+                    if($filesize > 1024 * 1024)
+                    {
+                        $validator->addError('uploadError', 'Fichier trop volumineux');
+                        $this->render('users/profil', "php", 'defaultLogin', ['updateUser' => $validator]);
+                        return;
+                    }                    
+                    // On génère un nom unique
+                    $newname = md5(uniqid());
+                    // On génère le chemin complet
+                    $newfilename = ROOT."/public".IMAGEROOT."$newname.$extension";
+    
+                    // On déplace le fichier de tmp à uploads en le renommant
+                    if(!move_uploaded_file($_FILES["profilepicture"]["tmp_name"], $newfilename))
+                    {
+                        $validator->addError('uploadError', 'Déplacement fichier impossible.');
+                        $this->render('users/profil', "php", 'defaultLogin', ['updateUser' => $validator]);
+                    }
+                    else
+                    {   // Finalement on réaffiche la form avec la nouvelle image
+                        // fichier = '/var/www/vhosts/domaine.com/www/fichier.pdf';
+                        // if(file_exists($fichier)){unlink($fichier);}
+                        chmod($newfilename, 0644);  //on interdit l'exécution du fichier protection UNIX de directory et de fichier [owner group others] read write execute 700 111 000 000
+                                                                                                                                                        //                  644 110 100 100
+                                                                                                                                                        //                      rwx rwx rwx  
+                        $previousimage = $usersModel->getProfile_picture();
+                        if(file_exists(ROOT."/public".IMAGEROOT.$previousimage) && ($previousimage !== DEFAULTIMAGE)){
+                            $logger->console('Remove previous picture : '.ROOT."/public".IMAGEROOT.$previousimage);
+                            try 
+                            {
+                                unlink(ROOT."/public".IMAGEROOT.$previousimage); // unlink -> PHP efface l'image de la directory pour éviter de conserver trop d'images dans la base
+                            }
+                            catch(Exception $e) 
+                            {
+                                $logger->console('Cannot remove file');
+                            }
+                        }
+                        $validator->addValue("profile_picture", $newname.'.'.$extension);
+                        if($dbAccess->updateUser($usersModel->getId(), 
+                                            $body['email'],
+                                            $body['pseudo'], 
+                                            $newname.'.'.$extension))
+                        {
+                            $flash = new Flash();
+                            $flash->addFlash('update', 'Profil mis à jour');
+                        }
+                        else 
+                        {
+                            $validator->addError('uploadError', 'Could not update your profile in the DB');
+                        }
+                    }
+                }
+            }
+            else 
+            {
+                if($_FILES['profilepicture']['error'] === UPLOAD_ERR_NO_FILE)
+                {
+                    if($dbAccess->updateUser($usersModel->getId(), 
+                                             $body['email'],
+                                             $body['pseudo'],
+                                             $usersModel->getProfile_picture()))
+                    {
+                        $flash = new Flash();
+                        $flash->addFlash('update', 'Profil mis à jour');
+                    }
+                    else 
+                    {
+                        $validator->addError('uploadError', 'Could not update your profile in the DB');
+                    }
                 }
                 else
                 {
-                    //on interdit l'exécution du fichier
-                    chmod($newfilename, 0644);
-                    $flash = new Flash();
-                    $flash->addFlash('update', 'Profil mis à jour');
+                $validator->addError('uploadError', 'Upload error.');
+                $this->render('users/profil', "php", 'defaultLogin', ['updateUser' => $validator]);
                 }
             }
         }

@@ -6,6 +6,8 @@ use App\Core\Main;
 
 // On définit une constante contenant le dossier racine du projet
 define('ROOT', dirname(__DIR__));
+define('IMAGEROOT', '/images/profile_pictures/');
+define('DEFAULTIMAGE', 'defaultuserpicture.png');
 // var_dump(ROOT);
 // On importe l'autoloader
 require_once ROOT.'./src/Autoloader.php';

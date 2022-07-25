@@ -76,7 +76,11 @@
                         "value"=>$params['pseudo'],
                         "rules"=>[self::RULE_NOTEMPTY]
                     ],
-
+                    "profilepicture"=>[
+                        "value"=>$params['profile_picture'],
+                        // "rules"=>[self::RULE_FILETYPE, ["rule"=>self::RULE_FILESIZE, 'tmax'=>1]]
+                        "rules"=>[self::RULE_FILETYPE]
+                    ]
                 ];
             }
             return $this->check($fieldsAndRules);

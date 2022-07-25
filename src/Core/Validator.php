@@ -12,7 +12,9 @@
         protected const RULE_MATCH = 'Le contenu de ce champ doit être identique à {field}';
         protected const RULE_MAX = "Ce champ ne doit pas dépasser {nbcar} caractères";
         protected const RULE_MIN = "Ce champ doit contenir au moins {nbcar} caractères";
-        
+        protected const RULE_FILESIZE = "Fichier trop volumineux {tmax} Mo";
+        protected const RULE_FILETYPE = "Format autorisés : jpg, jpeg et png";
+
         private $logger;
 
         private $errors = [];
@@ -75,6 +77,28 @@
                                 $this->addError($key, $message);
                             }                            
                         }
+                        if($rule === self::RULE_FILETYPE)
+                        {
+                            if(!empty($_FILES))
+                            {
+                                $target_dir = "/images/profile_pictures";
+                                $target_file = $target_dir .'\/'.$_FILES["profilepicture"]["name"];
+                                $allowed = [
+                                    "jpg" => "image/jpeg",
+                                    "jpeg" => "image/jpeg",
+                                    "png" => "image/png"
+                                ];
+                                $filename = $_FILES["profilepicture"]["name"];
+                                $filetype = $_FILES["profilepicture"]["type"];
+                                $filesize = $_FILES["profilepicture"]["size"];
+                                
+                                $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+                                if(!isset($allowed[$extension]))
+                                {
+                                    $this->addError($key, $rule);
+                                }
+                            }                             
+                        }
                     }
                     $this->values[$key] = $checkEntry["value"];
                 }
@@ -102,6 +126,13 @@
                 }
             }
             return '<p class="hidden"></p>';
+        }
+
+        // -------------------------------------------------------------------
+        public function addValue($attribute, $val) 
+        {
+            $this->values["$attribute"] = $val;
+            return;
         }
 
         // -------------------------------------------------------------------

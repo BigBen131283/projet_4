@@ -7,13 +7,12 @@
 <div class="site">
     <nav class="main_menu">        
         <div class="sup">
-            <div class="user">
-                <img src="/images/profile_pictures/defaultuserpicture.png" alt="Photo de profil" class="profile-picture">
-            </div>
-            <!-- S'affiche à la place de bonjour tant qu'il n'est pas connecté -->
-            <?php if($loggedUser->isLogged()):?>
+            <?php if($loggedUser->isLogged()):?>    
+                <img src="<?php echo IMAGEROOT.$loggedUser->getProfile_picture() ?>" alt="Photo de profil" class="profile-picture">
+                <!-- S'affiche à la place de bonjour tant qu'il n'est pas connecté -->
                 <p class="user_name"><?= 'Bonjour '.$loggedUser->getPseudo(); ?></p>
             <?php else:?>
+                <img src="/images/profile_pictures/defaultuserpicture.png" alt="Photo de profil" class="profile-picture">
                 <a href="/users/login"><ion-icon name="log-in-outline"></ion-icon>Se connecter</a>
             <?php endif;?>
             <div class="menu_toggle"></div>

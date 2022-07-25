@@ -1,6 +1,6 @@
 <form method="post" novalidate action="" enctype="multipart/form-data">
         
-        <img src="/images/profile_pictures/defaultuserpicture.png" alt="Photo de profil">    
+        <img src="<?php echo IMAGEROOT.$updateUser->getValue('profile_picture') ?>" alt="Photo de profil">
 
         <h1>Votre profil</h1>
         <?php

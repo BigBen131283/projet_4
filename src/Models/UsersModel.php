@@ -30,6 +30,7 @@ class UsersModel extends Model
                 $this->email = $user->email;
                 $this->pseudo = $user->pseudo;
                 $this->role = $user->role;
+                $this->profile_picture = $user->profile_picture;
                 $this->isLogged = true;
             }
         }

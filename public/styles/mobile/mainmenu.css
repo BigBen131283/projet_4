@@ -50,16 +50,13 @@ nav .sup
     width: 100%;
 }
 
-nav .user
+nav .sup img
 {
     position: relative;
     border-radius: 50%;
-    border: 6px solid var(--backgroundclr);
-    overflow: hidden;
     width: 60px;
     height: 60px;
-    background: var(--backgroundclr);
-    color: #fff;
+    border: 2px solid var(--backgroundclr);
 }
 
 nav a

@@ -41,6 +41,18 @@ class UsersModel extends Model
         return $this->isLogged;
     }
 
+    public function isAdmin()
+    {
+        if(intval($this->role)===10)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     /**
      * Get the value of id
      */

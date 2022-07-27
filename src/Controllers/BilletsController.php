@@ -2,10 +2,15 @@
     namespace App\Controllers;
 
     use App\Core\Controller;
+    use App\Core\Logger;
+    use App\Core\Request;
+    use App\Core\Main;
     use App\Models\BilletsModel;
+    use App\Repository\BilletDB;
+    use App\Validator\BilletValidator;
 
     class BilletsController extends Controller
-    {
+    {       
         public function index()
         {
             // On instancie le modèle correspondant à la table "billets"
@@ -28,6 +33,37 @@
 
             // On envoie à la vue
             $this->render('billets/chapitre', 'php', 'default',compact('billet'));
+        }
+
+        public function createBillet()
+        {
+            $billetsModel = new BilletsModel;
+            $request = new Request;
+
+            $logger = new Logger(__CLASS__);
+            $validator = new BilletValidator;
+
+            if($request->isPost())
+            {
+                $body = $request->getBody();
+                $errorList = $validator->checkBilletEntries($body);
+
+                if(!$validator->hasError())
+                {
+                    $billetDB = new BilletDB();
+                    
+                    if($billetDB->createBillet($body))
+                    {
+                        // Main::$main->login($credentials->id);
+                        Main::$main->response->redirect('/');
+                    }    
+                }
+                $this->render('billets/createbillet', "php", 'default', ['errorHandler' => $validator]);
+            }
+            else
+            {
+                $this->render('billets/createbillet', "php", 'default', ['errorHandler' => $validator]);
+            }
         }
     }
 ?>

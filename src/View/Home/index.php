@@ -24,9 +24,11 @@
             <!-- S'affichent quand le user est connecté -->
             <?php if($loggedUser->isLogged()):?>
                 <li><a href="/users/profil"><ion-icon name="person-outline"></ion-icon>Mon Profil</a></li>
+                <?php if($loggedUser->isAdmin()):?>
+                    <li><a href="/billets/createbillet"><ion-icon name="clipboard-outline"></ion-icon>Gestion</a></li>
+                <?php endif;?>
                 <li><a href="/users/logout"><ion-icon name="log-out-outline"></ion-icon>Se Déconnecter</a></li>
             <?php endif;?>
-
         </ul>
     </nav>
     <section class="projet" id="accueil">

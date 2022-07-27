@@ -1,6 +1,8 @@
 #auteur
 {
     background: rgba(0,0,0,.5);
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 #auteur h1
@@ -24,7 +26,7 @@
     background: none;
     padding-top: 10px;
     padding-right: 20px;
-    height: 400px;
+    /* height: 400px; */
     transform: translateY(0px);
     transition: all 0.5s;
 }
@@ -34,7 +36,7 @@
     display: flex;
     opacity: 1;
     transform: opacity(1);
-    height: 400px;
+    /* height: 400px; */
     width: auto;
 }
 

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../../public/styles/mobile/admin.css">
+    <title>Admin</title>
+</head>
+<body>
+    <h1>Là où la magie opère</h1>
+    <div class="site">
+        <nav class="main_menu">        
+            <div class="sup">
+                <?php if($loggedUser->isLogged()):?>    
+                    <img src="<?php echo IMAGEROOT.$loggedUser->getProfile_picture() ?>" alt="Photo de profil" class="profile-picture">
+                    <!-- S'affiche à la place de bonjour tant qu'il n'est pas connecté -->
+                    <p class="user_name"><?= 'Bonjour '.$loggedUser->getPseudo(); ?></p>
+                <?php else:?>
+                    <img src="/images/profile_pictures/defaultuserpicture.png" alt="Photo de profil" class="profile-picture">
+                    <a href="/users/login"><ion-icon name="log-in-outline"></ion-icon>Se connecter</a>
+                <?php endif;?>
+                <div class="menu_toggle"></div>
+            </div>
+            <ul class="menu_access">
+                <li><a href="#accueil"><ion-icon name="home-outline"></ion-icon>Accueil</a></li>
+                <li><a href="#auteur"><ion-icon name="body-outline"></ion-icon>L'Auteur</a></li>
+                <li><a href="#adventure"><ion-icon name="book-outline"></ion-icon>L'Aventure</a></li>
+                <!-- S'affichent quand le user est connecté -->
+                <?php if($loggedUser->isLogged()):?>
+                    <li><a href="/users/profil"><ion-icon name="person-outline"></ion-icon>Mon Profil</a></li>
+                    <li><a href="/users/logout"><ion-icon name="log-out-outline"></ion-icon>Se Déconnecter</a></li>
+                <?php endif;?>
+    
+            </ul>
+        </nav>
+    </div>
+</body>
+</html>

@@ -50,6 +50,15 @@ form
     border-radius: 10px;
 }
 
+img
+{
+    max-width: 70%;    
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+    aspect-ratio: 1/1;
+}
+
 form h1
 {
     margin: 0 0 30px;
@@ -238,19 +247,19 @@ form ul li a:hover::before
     transition-delay: 0.25s;
 }
 
-img
-{
-    max-width: 70%;
-    border-radius: 50%;
-    aspect-ratio: 1/1;
-}
 
 @media screen and (max-width: 1024px)
 {
+    body
+    {
+        padding-top: 50px;
+    }
+    
     form
     {
         width: 300px;
         background: rgba(0,0,0,.6);
+        position: relative;
     }
 
     .links button

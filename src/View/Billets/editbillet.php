@@ -1,4 +1,4 @@
-<h1>Espace rédaction</h1>
+<h1>Espace mise à jour</h1>
 <form method="post" novalidate action="">
         
         
@@ -21,7 +21,7 @@
         <div class="links">
             <button type="submit">Publier</button>
             <ul>
-                <li><a href="/home/index" data-text="Accueil">Accueil</a></li>
+                <li><a href="/billet/updatebillet" data-text="Accueil">Accueil</a></li>
             </ul>
         </div>
     </form>

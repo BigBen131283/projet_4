@@ -5,7 +5,7 @@ namespace App\Repository;
 use App\Core\Db;
 use App\Core\Logger;
 use App\Core\Main;
-use Exception;
+use PDO;
 use PDOException;
 
 class BilletDB extends Db
@@ -49,6 +49,37 @@ class BilletDB extends Db
             $this->logger->console($e->getMessage());
             return false;
         }       
+    }
+
+    public function updateBillet($params)
+    {
+        var_dump($params); die;
+        echo ('ici je fais un update du billet '.$params['titre']);
+    }
+
+    public function readBillet($id)
+    {
+        try
+        {
+            $this->db = Db::getInstance();
+            $statement = $this->db->prepare('SELECT title, abstract, chapter FROM billets 
+                                                WHERE id = :id');
+            $statement->bindValue(':id', $id);
+
+            $statement->execute();
+            $result = $statement->fetch(PDO::FETCH_ASSOC);
+    
+            if(!empty($result))
+            {
+                return $result;
+            }
+        }
+        catch(PDOException $e)
+        {
+            $this->logger->console($e->getMessage());
+            return false;
+        }
+
     }
 }
 

@@ -14,7 +14,7 @@
         public function index()
         {
             // On instancie le modèle correspondant à la table "billets"
-            $billetsModel = new BilletsModel;
+            $billetsModel = new BilletsModel();
 
             // On va chercher tous les billets publiés (published = 1)
             $published = $billetsModel->findBy(['published' => 1]);
@@ -26,7 +26,7 @@
         public function chapitre(int $id)
         {
             // On instancie le modèle
-            $billetsModel = new BilletsModel;
+            $billetsModel = new BilletsModel();
 
             // On va chercher un chapitre
             $billet = $billetsModel->find($id);
@@ -37,11 +37,11 @@
 
         public function createBillet()
         {
-            $billetsModel = new BilletsModel;
-            $request = new Request;
+            $billetsModel = new BilletsModel();
+            $request = new Request();
 
             $logger = new Logger(__CLASS__);
-            $validator = new BilletValidator;
+            $validator = new BilletValidator();
 
             if($request->isPost())
             {
@@ -63,6 +63,43 @@
             else
             {
                 $this->render('billets/createbillet', "php", 'default', ['errorHandler' => $validator]);
+            }
+        }
+
+        public function editBillet($id = null)
+        {
+            $billetsModel = new BilletsModel();
+            $request = new Request();
+
+            $logger = new Logger(__CLASS__);
+            $validator = new BilletValidator();
+
+            if($request->isPost())
+            {
+                $body = $request->getBody();
+                $errorList = $validator->checkBilletEntries($body);
+
+                if(!$validator->hasError())
+                {
+                    $billetDB = new BilletDB();
+                    
+                    if($billetDB->updateBillet($body))
+                    {
+                        // Main::$main->login($credentials->id);
+                        Main::$main->response->redirect('/');
+                    }    
+                }
+                $this->render('billets/editbillet', "php", 'default', ['errorHandler' => $validator]);
+            }
+            else
+            {
+                $billetDB = new BilletDB();
+                $data = $billetDB->readBillet($id);
+                $validator->addValue('title', $data['title']);
+                $validator->addValue('abstract', $data['abstract']);
+                $validator->addValue('chapter', $data['chapter']);
+
+                $this->render('billets/editbillet', "php", 'default', ['errorHandler' => $validator]);
             }
         }
     }

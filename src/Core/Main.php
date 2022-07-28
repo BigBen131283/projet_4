@@ -29,9 +29,7 @@ class Main
 
         if($userId)
         {
-            $this->logger->console('User Id : '.$userId);
             $this->usersmodel = new UsersModel($userId);
-            $this->logger->console('User Pseudo : '.$this->usersmodel->getPseudo());
         }
         else
         {

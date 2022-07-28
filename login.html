@@ -8,25 +8,16 @@
     <link rel="stylesheet" href="/styles/login.css">
     <link rel="stylesheet" href="/styles/login/tablett.css" media="screen AND (min-width: 600px)">
     <link rel="stylesheet" href="/styles/login/desktop.css" media="screen AND (min-width: 1024px)">
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="./public/scripts/redac.js"></script>
+
+
 </head>
+
 <body>
-    <form method="post" novalidate>
-        <h1>Connexion</h1>
-        <div class="inputBox">
-            <input type="text" name="pseudo" required id="pseudo">
-            <label for="pseudo">Pseudo</label>
-        </div>
-        <div class="inputBox">
-            <input type="password" name="pass" required id="pass">
-            <label for="pass">Mot de passe</label>
-        </div>
-        <div class="links">
-            <button type="submit">Se connecter</button>
-            <ul>
-                <li><a href="/users/register" data-text="S'inscrire">S'inscrire</a></li>
-                <li><a href="#" data-text="Mot de passe oublié">Mot de passe oublié</a></li>
-            </ul>
-        </div>
-    </form>
+<h1>TinyMCE Quick Start Guide</h1>
+  <form method="post">
+    <textarea id="chapter">Hello, World!</textarea>
+  </form>
 </body>
 </html>

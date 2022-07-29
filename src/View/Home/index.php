@@ -84,6 +84,6 @@
                 </p>
             </div>
         </div>
-        <a href="#">Lire la suite</a>
+        <a href="/billets/chapterlist">Lire la suite</a>
     </section>
 </div>

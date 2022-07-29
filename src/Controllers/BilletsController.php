@@ -11,33 +11,30 @@
 
     class BilletsController extends Controller
     {       
-        public function index()
+        public function chapterlist()
         {
-            // On instancie le modèle correspondant à la table "billets"
-            $billetsModel = new BilletsModel();
+            $billetDB = new BilletDB();
+            $result = $billetDB->publishedBillets();
 
-            // On va chercher tous les billets publiés (published = 1)
-            $published = $billetsModel->findBy(['published' => 1]);
-
-            // On génère la vue
-            $this->render('billets/index', 'php', 'default', ['billets' => $published]);
+            if(!empty($result))
+            {
+                $this->render('billets/chapterlist', 'php', 'default', ['billets' => $result]);
+            }
         }
 
         public function chapitre(int $id)
         {
-            // On instancie le modèle
-            $billetsModel = new BilletsModel();
+            $billetDB = new BilletDB();
+            $result = $billetDB->readBillet($id);
+            
+            // var_dump($result); die;
 
-            // On va chercher un chapitre
-            $billet = $billetsModel->find($id);
-
-            // On envoie à la vue
-            $this->render('billets/chapitre', 'php', 'default',compact('billet'));
+            $this->render('billets/chapitre', 'php', 'default',['billet' => $result]);
         }
 
         public function createBillet()
         {
-            $billetsModel = new BilletsModel();
+        
             $request = new Request();
 
             $logger = new Logger(__CLASS__);
@@ -89,17 +86,17 @@
                         Main::$main->response->redirect('/');
                     }    
                 }
-                $this->render('billets/editbillet', "php", 'default', ['errorHandler' => $validator]);
+                $this->render('billets/editbillet', "php", 'default', ['workInProgress' => $validator]);
             }
             else
             {
                 $billetDB = new BilletDB();
-                $data = $billetDB->readBillet($id);
+                $data = $billetDB->retrieveBillet($id);
                 $validator->addValue('title', $data['title']);
                 $validator->addValue('abstract', $data['abstract']);
                 $validator->addValue('chapter', $data['chapter']);
 
-                $this->render('billets/editbillet', "php", 'default', ['errorHandler' => $validator]);
+                $this->render('billets/editbillet', "php", 'default', ['workInProgress' => $validator]);
             }
         }
     }

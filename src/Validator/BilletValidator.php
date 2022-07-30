@@ -28,6 +28,10 @@
                     "chapter"=>[
                         "value"=>$params['chapter'],
                         "rules"=>[self::RULE_NOTEMPTY]
+                    ],
+                    "publish_at"=>[
+                        "value"=>$params['publish_at'],
+                        "rules"=>[self::RULE_PUBLISHDATE]
                     ]
                 ];
             }

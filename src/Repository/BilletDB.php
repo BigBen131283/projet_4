@@ -25,6 +25,8 @@ class BilletDB extends Db
         $title = $params['title'];
         $abstract = $params['abstract'];
         $chapter = $params['chapter'];
+        $publish_at = $params['publish_at'];
+        $published = 1;
         $usersModel = Main::$main->getUsersModel();
         $userId = $usersModel->getId();
         date_default_timezone_set('Europe/Brussels');
@@ -33,14 +35,22 @@ class BilletDB extends Db
         {
             $this->db = Db::getInstance();
 
-            $statement = $this->db->prepare('INSERT INTO billets (title, abstract, chapter, publish_at, users_id) 
-                                                VALUES (:title, :abstract, :chapter, :publish_at, :users_id)');
+            $wishPublish_at = strtotime($publish_at);
+            $current = strtotime(date('Y-m-d H:i:s'));
+            if($wishPublish_at > $current)
+            {
+                $published = 0;
+            }
+
+            $statement = $this->db->prepare('INSERT INTO billets (title, abstract, chapter, publish_at, users_id, published) 
+                                                VALUES (:title, :abstract, :chapter, :publish_at, :users_id, :published)');
             
             $statement->bindValue(':title', $title);
             $statement->bindValue(':abstract', $abstract);
             $statement->bindValue(':chapter', $chapter);
-            $statement->bindValue(':publish_at', date('Y-m-d H:i:s'));
+            $statement->bindValue(':publish_at', $publish_at);
             $statement->bindValue(':users_id', $userId);
+            $statement->bindValue(':published', $published);
 
             $statement->execute();
             return true; 

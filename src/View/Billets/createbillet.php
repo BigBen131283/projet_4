@@ -20,7 +20,7 @@
         </div>
         <div class="inputBox">
             <label for="publish_at">Date de publication</label>
-            <input type="datetime-local" id="publish_at"><?php echo $errorHandler->getValue('publish_at') ?></input>
+            <input type="datetime-local" name="publish_at" id="publish_at"><?php echo $errorHandler->getValue('publish_at') ?></input>
             <?php echo $errorHandler->getFirstError('publish_at'); ?>
         </div>
         <div class="links">

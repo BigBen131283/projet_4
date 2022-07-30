@@ -100,6 +100,15 @@
                                 }
                             }                             
                         }
+                        if($rule === self::RULE_PUBLISHDATE)
+                        {
+                            $publish = strtotime($checkEntry["value"]);
+                            $current = strtotime(date('Y-m-d H:i:s'));
+                            if($current > $publish)
+                            {
+                                $this->addError($key, $rule); 
+                            }
+                        }
                     }
                     $this->values[$key] = $checkEntry["value"];
                 }

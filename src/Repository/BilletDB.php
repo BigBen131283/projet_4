@@ -27,6 +27,7 @@ class BilletDB extends Db
         $chapter = $params['chapter'];
         $usersModel = Main::$main->getUsersModel();
         $userId = $usersModel->getId();
+        date_default_timezone_set('Europe/Brussels');
         
         try
         {
@@ -138,6 +139,26 @@ class BilletDB extends Db
                 return $result;
             }
             return array();
+        }
+        catch(PDOException $e)
+        {
+            $this->logger->console($e->getMessage());
+            return false;
+        }
+    }
+
+    public function deleteBillet($id)
+    {
+        try
+        {
+            $this->db = Db::getInstance();
+            $statement = $this->db->prepare('DELETE FROM billets 
+                                                WHERE id = :1');
+
+            $statement->bindValue(':1', $id);
+
+            $statement->execute();
+            return true;
         }
         catch(PDOException $e)
         {

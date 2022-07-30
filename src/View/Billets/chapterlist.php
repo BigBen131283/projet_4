@@ -6,3 +6,7 @@
         <p>Publié le : <?= $billet->publish_at?></p>
     </article>
 <?php endforeach?>
+
+<ul>
+    <li><a href="/"><ion-icon name="home-outline"></ion-icon>Accueil</a></li>
+</ul>

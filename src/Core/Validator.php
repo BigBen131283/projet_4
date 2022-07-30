@@ -14,6 +14,7 @@
         protected const RULE_MIN = "Ce champ doit contenir au moins {nbcar} caractères";
         protected const RULE_FILESIZE = "Fichier trop volumineux {tmax} Mo";
         protected const RULE_FILETYPE = "Format autorisés : jpg, jpeg et png";
+        protected const RULE_PUBLISHDATE = "Ce n'est pas retour vers le futur";
 
         private $logger;
 

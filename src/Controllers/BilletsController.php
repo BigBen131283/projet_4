@@ -26,10 +26,11 @@
         {
             $billetDB = new BilletDB();
             $result = $billetDB->readBillet($id);
+            $user = Main::$main->getUsersModel();
             
             // var_dump($result); die;
 
-            $this->render('billets/chapitre', 'php', 'default',['billet' => $result]);
+            $this->render('billets/chapitre', 'php', 'default',['billet' => $result, 'loggedUser' => $user]);
         }
 
         public function createBillet()
@@ -65,7 +66,6 @@
 
         public function editBillet($id = null)
         {
-            $billetsModel = new BilletsModel();
             $request = new Request();
 
             $logger = new Logger(__CLASS__);
@@ -98,6 +98,17 @@
 
                 $this->render('billets/editbillet', "php", 'default', ['workInProgress' => $validator]);
             }
+        }
+
+        public function deleteBillet($id)
+        {
+            $billetDB = new BilletDB();
+
+            if($id)
+            {
+                $billetDB->deleteBillet($id);
+            }
+            $this->chapterlist();
         }
     }
 ?>

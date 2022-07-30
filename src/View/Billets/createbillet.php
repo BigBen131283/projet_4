@@ -18,6 +18,11 @@
             <textarea id="chapter" name="chapter"><?php echo $errorHandler->getValue('chapter') ?></textarea>
             <?php echo $errorHandler->getFirstError('chapter'); ?>
         </div>
+        <div class="inputBox">
+            <label for="publish_at">Date de publication</label>
+            <input type="datetime-local" id="publish_at"><?php echo $errorHandler->getValue('publish_at') ?></input>
+            <?php echo $errorHandler->getFirstError('publish_at'); ?>
+        </div>
         <div class="links">
             <button type="submit">Publier</button>
             <ul>

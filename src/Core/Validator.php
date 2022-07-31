@@ -122,7 +122,7 @@
         public function addError($attribute, $message)
         {
             $this->errors[$attribute][] = $message;
-            $this->logger->console("Adding [$attribute] error message [$message]");
+            // $this->logger->console("Adding [$attribute] error message [$message]");
             return;
         }  
 

@@ -110,5 +110,15 @@
             }
             $this->chapterlist();
         }
+
+        public function checkPublishStatus()
+        {
+            // return json_encode(['published'=>'done']);
+            date_default_timezone_set('Europe/Brussels');
+            $current = strtotime(date('Y-m-d H:i:s'));
+            echo json_encode(['published'=>'done',
+                              'updated' => 15,
+                              'date' => $current]);
+        }
     }
 ?>

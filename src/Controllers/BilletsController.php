@@ -15,10 +15,11 @@
         {
             $billetDB = new BilletDB();
             $result = $billetDB->publishedBillets();
+            $user = Main::$main->getUsersModel();
 
             if(!empty($result))
             {
-                $this->render('billets/chapterlist', 'php', 'default', ['billets' => $result]);
+                $this->render('billets/chapterlist', 'php', 'defaultadventure', ['billets' => $result, 'loggedUser' => $user]);
             }
         }
 
@@ -30,7 +31,7 @@
             
             // var_dump($result); die;
 
-            $this->render('billets/chapitre', 'php', 'default',['billet' => $result, 'loggedUser' => $user]);
+            $this->render('billets/chapitre', 'php', 'defaultadventure',['billet' => $result, 'loggedUser' => $user]);
         }
 
         public function createBillet()
@@ -40,6 +41,7 @@
 
             $logger = new Logger(__CLASS__);
             $validator = new BilletValidator();
+            $user = Main::$main->getUsersModel();
 
             if($request->isPost())
             {
@@ -56,11 +58,11 @@
                         Main::$main->response->redirect('/');
                     }    
                 }
-                $this->render('billets/createbillet', "php", 'default', ['errorHandler' => $validator]);
+                $this->render('billets/createbillet', "php", 'defaultadventure', ['errorHandler' => $validator, 'loggedUser' => $user]);
             }
             else
             {
-                $this->render('billets/createbillet', "php", 'default', ['errorHandler' => $validator]);
+                $this->render('billets/createbillet', "php", 'defaultadventure', ['errorHandler' => $validator,'loggedUser' => $user]);
             }
         }
 
@@ -70,6 +72,7 @@
 
             $logger = new Logger(__CLASS__);
             $validator = new BilletValidator();
+            $user = Main::$main->getUsersModel();
 
             if($request->isPost())
             {
@@ -86,7 +89,7 @@
                         Main::$main->response->redirect('/');
                     }    
                 }
-                $this->render('billets/editbillet', "php", 'default', ['workInProgress' => $validator]);
+                $this->render('billets/editbillet', "php", 'defaultadventure', ['workInProgress' => $validator,'loggedUser' => $user]);
             }
             else
             {
@@ -96,7 +99,7 @@
                 $validator->addValue('abstract', $data['abstract']);
                 $validator->addValue('chapter', $data['chapter']);
 
-                $this->render('billets/editbillet', "php", 'default', ['workInProgress' => $validator]);
+                $this->render('billets/editbillet', "php", 'defaultadventure', ['workInProgress' => $validator,'loggedUser' => $user]);
             }
         }
 

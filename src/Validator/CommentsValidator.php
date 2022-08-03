@@ -1,0 +1,30 @@
+<?php
+
+    namespace App\Validator;
+
+    use App\Core\Validator;
+
+    class CommentsValidator extends Validator
+    {
+        public function __construct()
+        {
+            parent::__construct(__CLASS__);
+        }
+
+        public function checkCommentsEntries(array $params)
+        {
+            $fieldsAndRules=[];
+            if(!empty($params))
+            {
+                $fieldsAndRules = [
+                    "content"=>[
+                        "value"=>$params['content'],
+                        "rules"=>[self::RULE_NOTEMPTY]
+                    ]
+                ];
+            }
+            return $this->check($fieldsAndRules);
+        }
+    }
+
+?>

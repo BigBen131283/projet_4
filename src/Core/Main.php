@@ -90,7 +90,7 @@ class Main
             // On récupère le deuxième paramètre d'URL
             // Permet entre autres de basculer sur les pages d'accueil des différentes sections du site
             $action = (isset($params[0])) ? array_shift($params) : 'index';
-
+            // var_dump($controller, $action); die;
             if(method_exists($controller, $action))
             {
                 // Si il reste des paramètres on les passe à la méthode

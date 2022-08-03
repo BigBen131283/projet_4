@@ -117,10 +117,21 @@
         public function checkPublishStatus()
         {
             // return json_encode(['published'=>'done']);
+            //------------------------------------------------------------------------------
+            //SELECT title , published FROM `billets` ORDER BY publish_at;
+            //UPDATE billets SET published = 1 WHERE published = 0 AND publish_at <= NOW();
+            //SELECT title , published FROM `billets` ORDER BY publish_at;
+            //
+            //mysql -u root --password=root
+            //
+            //------------------------------------------------------------------------------     
+            $billetDB = new BilletDB();
+            
+            $updatedBillets = $billetDB->updatePublishedStatus();
             date_default_timezone_set('Europe/Brussels');
             $current = strtotime(date('Y-m-d H:i:s'));
             echo json_encode(['published'=>'done',
-                              'updated' => 15,
+                              'updated' => $updatedBillets,
                               'date' => $current]);
         }
     }

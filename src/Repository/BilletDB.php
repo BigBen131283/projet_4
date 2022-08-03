@@ -176,6 +176,23 @@ class BilletDB extends Db
             return false;
         }
     }
+
+    public function updatePublishedStatus()
+    {
+        try
+        {
+            $this->db = Db::getInstance();
+            $statement = $this->db->prepare('UPDATE billets SET published = 1 WHERE published = 0 AND publish_at <= NOW()');
+
+            $statement->execute();
+            return $statement->rowCount();
+        }
+        catch(PDOException $e)
+        {
+            $this->logger->console($e->getMessage());
+            return 0;
+        }
+    }
 }
 
 ?>

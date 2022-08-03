@@ -27,7 +27,7 @@ bioToggle.onclick = function(){
 }
 
 //Gestion de la publication différée des billets
-setInterval(checkBilletPublication, 5000);
+setInterval(checkBilletPublication, 30000);
 
 function checkBilletPublication(){
     console.log("checkBillet");

@@ -26,8 +26,8 @@
             if($request->isPost())
             {
                 $body = $request->getBody();
+                $body['billetID'] = $id;
                 $errorList = $validator->checkCommentsEntries($body);
-
                 if(!$validator->hasError())
                 {
                     $commentsDB = new CommentsDB();
@@ -38,13 +38,14 @@
                         Main::$main->response->redirect('/');
                     }    
                 }
-                $this->render('billets/chapitre', "php", 'defaultadventure', ['errorHandler' => $validator, 'loggedUser' => $user, 'billet' => $result]);
+                $this->render('billets/chapitre', "php", 'defaultchapter', ['errorHandler' => $validator, 'loggedUser' => $user, 'billet' => $result]);
             }
             else
             {
                 var_dump($validator, $user);
-                $this->render('billets/chapitre', "php", 'defaultadventure', ['errorHandler' => $validator,'loggedUser' => $user, 'billet' => $result]);
+                $this->render('billets/chapitre', "php", 'defaultchapter', ['errorHandler' => $validator,'loggedUser' => $user, 'billet' => $result]);
             }
         }
+        
     }
 ?>

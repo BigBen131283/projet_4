@@ -7,7 +7,9 @@
     use App\Core\Main;
     use App\Models\BilletsModel;
     use App\Repository\BilletDB;
+    use App\Repository\CommentsDB;
     use App\Validator\BilletValidator;
+    use App\Validator\CommentsValidator;
 
     class BilletsController extends Controller
     {       
@@ -26,12 +28,16 @@
         public function chapitre(int $id)
         {
             $billetDB = new BilletDB();
+            $commentsDB = new CommentsDB();
             $result = $billetDB->readBillet($id);
+            $allComments = $commentsDB->getComments($id);
             $user = Main::$main->getUsersModel();
+            $validator = new CommentsValidator();
             
             // var_dump($result); die;
 
-            $this->render('billets/chapitre', 'php', 'defaultadventure',['billet' => $result, 'loggedUser' => $user]);
+            $this->render('billets/chapitre', 'php', 'defaultchapter',
+            ['errorHandler' => $validator,'billet' => $result, 'loggedUser' => $user, 'comments' => $allComments]);
         }
 
         public function createBillet()
@@ -89,7 +95,7 @@
                         Main::$main->response->redirect('/');
                     }    
                 }
-                $this->render('billets/editbillet', "php", 'defaultadventure', ['workInProgress' => $validator,'loggedUser' => $user]);
+                $this->render('billets/editbillet', "php", 'defaultchapter', ['workInProgress' => $validator,'loggedUser' => $user]);
             }
             else
             {
@@ -99,7 +105,7 @@
                 $validator->addValue('abstract', $data['abstract']);
                 $validator->addValue('chapter', $data['chapter']);
 
-                $this->render('billets/editbillet', "php", 'defaultadventure', ['workInProgress' => $validator,'loggedUser' => $user]);
+                $this->render('billets/editbillet', "php", 'defaultchapter', ['workInProgress' => $validator,'loggedUser' => $user]);
             }
         }
 
@@ -117,14 +123,7 @@
         public function checkPublishStatus()
         {
             // return json_encode(['published'=>'done']);
-            //------------------------------------------------------------------------------
-            //SELECT title , published FROM `billets` ORDER BY publish_at;
-            //UPDATE billets SET published = 1 WHERE published = 0 AND publish_at <= NOW();
-            //SELECT title , published FROM `billets` ORDER BY publish_at;
-            //
-            //mysql -u root --password=root
-            //
-            //------------------------------------------------------------------------------     
+   
             $billetDB = new BilletDB();
             
             $updatedBillets = $billetDB->updatePublishedStatus();

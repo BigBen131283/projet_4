@@ -19,13 +19,13 @@ class CommentsDB extends Db
     }
 
     public function createComment(array $params)
-    {        
+    {   
         $billetID = $params['billetID'];
         $content = $params['content'];
         $usersModel = Main::$main->getUsersModel();
         $userId = $usersModel->getId();
         date_default_timezone_set('Europe/Brussels');
-        
+
         try
         {
             $this->db = Db::getInstance();
@@ -45,6 +45,31 @@ class CommentsDB extends Db
             $this->logger->console($e->getMessage());
             return false;
         }       
+    }
+
+    public function getComments($billetID)
+    {
+        try
+        {
+            $this->db = Db::getInstance();
+            $statement = $this->db->prepare('SELECT content, publish_at, users_id, pseudo FROM comments c, users u 
+                                             WHERE billet_id = :billetID AND users_id = u.id ORDER BY c.publish_at DESC');
+
+            $statement->bindValue(':billetID', $billetID);
+            $statement->execute();
+            $result = $statement->fetchAll();
+
+            if(!empty($result))
+            {
+                return $result;
+            }
+            return array();
+        }
+        catch(PDOException $e)
+        {
+            $this->logger->console($e->getMessage());
+            return false;
+        }
     }
 
 }

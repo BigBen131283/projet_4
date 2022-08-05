@@ -1,8 +1,30 @@
 <div class="site">
+    <?php echo $errorHandler->getFirstError('likestatus'); ?>
     <article>
         <h1> <a href="/billets/chapitre/<?= $billet->id?>"><?= $billet->title?></a></h1>
         <p><?= html_entity_decode(stripslashes($billet->chapter))?></p>
         <p>Publié le : <?= $billet->publish_at?></p>
+
+        <?php if($loggedUser->isLogged()):?>
+        <ul class="likes">
+            <li>
+                <a href="/billets/likeit/<?= $billet->id?>/<?= $loggedUser->getId()?>"><ion-icon name="thumbs-up-outline"></ion-icon></a>
+            </li>
+            <li>
+                <a href="/billets/dislikeit/<?= $billet->id?>/<?= $loggedUser->getId()?>"><ion-icon name="thumbs-down-outline"></ion-icon></a>
+            </li>
+        </ul>
+        <?php else:?>
+            <ul class="likes">
+            <li>
+                <ion-icon name="thumbs-up-outline"></ion-icon>
+            </li>
+            <li>
+                <ion-icon name="thumbs-down-outline"></ion-icon>
+            </li>
+        </ul>
+        <?php endif;?>        
+
         <?php if($loggedUser->isLogged() && $loggedUser->isAdmin()):?>
             <ul>
                 <li><a href="/billets/editbillet/<?= $billet->id?>"><ion-icon name="clipboard-outline"></ion-icon>Editer</a></li>

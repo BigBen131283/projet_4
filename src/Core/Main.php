@@ -96,7 +96,7 @@ class Main
                 // Si il reste des paramètres on les passe à la méthode
                 // (isset($params[0])) ? $controller->$action($params) : $controller->$action();
                 // Ici on récupère les paramètres
-                // var_dump($params);
+                // var_dump($controller, $action); 
                 (isset($params[0])) ? call_user_func_array([$controller, $action] , $params) : $controller->$action();
             }
             else

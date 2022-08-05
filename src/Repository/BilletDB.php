@@ -193,6 +193,66 @@ class BilletDB extends Db
             return 0;
         }
     }
+
+    public function checkHasAnAdvice($userId, $billetId, $flag)
+    {
+        try
+        {
+            $this->db = Db::getInstance();
+            $statement = $this->db->prepare('SELECT billets_id FROM likes WHERE users_id = :userId AND billets_id = :billetId AND like_it = :like_it');
+
+            $statement->bindValue('userId', $userId);
+            $statement->bindValue('billetId', $billetId);
+            $statement->bindValue('like_it', $flag);
+            $statement->execute();
+            return $statement->rowCount();
+        }
+        catch(PDOException $e)
+        {
+            $this->logger->console($e->getMessage());
+            return 0;
+        }
+    }
+
+    public function like($userId, $billetId)
+    {
+        try
+        {
+            $this->db = Db::getInstance();
+
+            $statement = $this->db->prepare('INSERT INTO likes (billets_id, users_id, like_it) VALUES (:billetId, :userId, 1)');
+
+            $statement->bindValue('userId', $userId);
+            $statement->bindValue('billetId', $billetId);
+            return $statement->execute();
+            
+        }
+        catch(PDOException $e)
+        {
+            $this->logger->console($e->getMessage());
+            return 0;
+        }
+    }
+
+    public function dislike($userId, $billetId)
+    {
+        try
+        {
+            $this->db = Db::getInstance();
+
+            $statement = $this->db->prepare('INSERT INTO likes (billets_id, users_id, like_it) VALUES (:billetId, :userId, 0)');
+
+            $statement->bindValue('userId', $userId);
+            $statement->bindValue('billetId', $billetId);
+            return $statement->execute();
+            
+        }
+        catch(PDOException $e)
+        {
+            $this->logger->console($e->getMessage());
+            return 0;
+        }
+    }
 }
 
 ?>

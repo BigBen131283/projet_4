@@ -65,6 +65,8 @@ CREATE TABLE IF NOT EXISTS projet4.billets (
   publish_at DATETIME NOT NULL,
   published TINYINT NOT NULL DEFAULT 1,
   users_id INT NOT NULL,
+  thumbs_up INT(11) NOT NULL DEFAULT 0,
+  thumbs_down INT(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (id))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -86,8 +88,6 @@ CREATE TABLE IF NOT EXISTS projet4.comments (
   id INT NOT NULL AUTO_INCREMENT,
   content VARCHAR(255) NOT NULL,
   publish_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  thumbs_up INT(11) NOT NULL DEFAULT 0,
-  thumbs_down INT(11) NOT NULL DEFAULT 0,
   report INT(11) NOT NULL DEFAULT 30, 
   users_id INT(11) NOT NULL,
   billet_id INT(11) NOT NULL,
@@ -97,11 +97,13 @@ DEFAULT CHARACTER SET = utf8;
 
 -- -----------------------------------------------------
 -- Table projet4.likes
+-- 0 si n'aime pas
+-- 1 si aime
 -- -----------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS projet4.likes(
   users_id INT(11) NOT NULL,
-  comments_id INT(11) NOT NULL,
+  billets_id INT(11) NOT NULL,
   like_it TINYINT (1) NOT NULL
 )
 ENGINE = InnoDB
@@ -119,12 +121,12 @@ ALTER TABLE projet4.comments ADD CONSTRAINT fk_comments_to_billets FOREIGN KEY (
   REFERENCES projet4.billets(id);
 ALTER TABLE projet4.likes ADD CONSTRAINT fk_likes_to_users FOREIGN KEY (users_id)
   REFERENCES projet4.users(id);
-ALTER TABLE projet4.likes ADD CONSTRAINT fk_likes_to_comments FOREIGN KEY (comments_id)
-  REFERENCES projet4.comments(id);
+ALTER TABLE projet4.likes ADD CONSTRAINT fk_likes_to_billets FOREIGN KEY (billets_id)
+  REFERENCES projet4.billets(id);
 
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+-- SET SQL_MODE=@OLD_SQL_MODE;
+-- SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+-- SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 -- -----------------------------------------------------
 -- Log table

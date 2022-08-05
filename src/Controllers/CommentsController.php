@@ -14,7 +14,6 @@
     {       
         public function createComment($id)
         {
-        
             $request = new Request();
             $billetDB = new BilletDB();
             $result = $billetDB->readBillet($id);

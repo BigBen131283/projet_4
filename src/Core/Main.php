@@ -31,10 +31,6 @@ class Main
         {
             $this->usersmodel = new UsersModel($userId);
         }
-        else
-        {
-            $this->logger->console('Anonymous user');
-        }
     }
     
     public function start()

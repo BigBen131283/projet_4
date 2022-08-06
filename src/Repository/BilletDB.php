@@ -270,6 +270,24 @@ class BilletDB extends Db
             return 0;
         }
     }
+
+    public function getCounters($billetId)
+    {
+        try
+        {
+            $this->db = Db::getInstance();
+            $statement = $this->db->prepare('SELECT thumbs_up, thumbs_down FROM `billets` WHERE id = :id');
+
+            $statement->bindValue('id', $billetId);
+            $statement->execute();
+            return $statement->fetch(PDO::FETCH_OBJ);
+        }
+        catch(PDOException $e)
+        {
+            $this->logger->console($e->getMessage());
+            return 0;
+        }
+    }
 }
 
 ?>

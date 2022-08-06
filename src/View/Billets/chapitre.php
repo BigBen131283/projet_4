@@ -7,12 +7,8 @@
 
         <?php if($loggedUser->isLogged()):?>
         <ul class="likes">
-            <li>
-                <a href="/billets/likeit/<?= $billet->id?>/<?= $loggedUser->getId()?>"><ion-icon name="thumbs-up-outline"></ion-icon></a>
-            </li>
-            <li>
-                <a href="/billets/dislikeit/<?= $billet->id?>/<?= $loggedUser->getId()?>"><ion-icon name="thumbs-down-outline"></ion-icon></a>
-            </li>
+            <li id="like"><ion-icon name="thumbs-up-outline"></ion-icon></li>
+            <li id="dislike"><ion-icon name="thumbs-down-outline"></ion-icon></li>
         </ul>
         <?php else:?>
             <ul class="likes">
@@ -33,6 +29,7 @@
         <?php endif;?>        
             </ul>   
     </article>
+    <p id="billetId"><?= $billet->id?></p>
     <?php if($loggedUser->isLogged()):?>
         <form method="post" action="/comments/createcomment/<?= $billet->id?>" novalidate>
             <div class="inputBox">
@@ -54,3 +51,4 @@
     </div>
 </div>
 <!-- https://stackoverflow.com/questions/15976357/php-text-encoding-decoding-tinymce -->
+

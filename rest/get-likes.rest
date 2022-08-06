@@ -1,0 +1,2 @@
+GET http://projet4/billets/jsonGetLikes/12
+Content-Type: application/json

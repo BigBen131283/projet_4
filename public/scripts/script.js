@@ -22,10 +22,11 @@ menuToggle.onclick = function(){
 }
 
 // Biographie de l'auteur
-bioToggle.onclick = function(){
-    biography.classList.toggle('active');
+if(bioToggle){
+    bioToggle.onclick = function(){
+        biography.classList.toggle('active');
+    }
 }
-
 //Gestion de la publication différée des billets
 setInterval(checkBilletPublication, 30000);
 

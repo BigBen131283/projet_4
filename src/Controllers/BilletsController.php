@@ -200,5 +200,18 @@
             $this->render('billets/chapitre', 'php', 'defaultchapter',
                 ['errorHandler' => $validator,'billet' => $result, 'loggedUser' => $user, 'comments' => $allComments]);
         }
+
+        public function jsonGetLikes($billetId)
+        {
+            $billetDB = new BilletDB();
+            $logger = new Logger(__CLASS__);
+            
+            $result = $billetDB->getCounters($billetId);
+            // $logger->console($result); die;
+
+            echo json_encode(['likes'=>$result->thumbs_up,
+                              'dislikes'=>$result->thumbs_down,  
+                              'billetId' => $billetId]);
+        }
     }
 ?>

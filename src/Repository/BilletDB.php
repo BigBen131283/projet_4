@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Core\Db;
 use App\Core\Logger;
 use App\Core\Main;
+use App\Controllers\BilletsController;
 use PDO;
 use PDOException;
 
@@ -182,7 +183,8 @@ class BilletDB extends Db
         try
         {
             $this->db = Db::getInstance();
-            $statement = $this->db->prepare('UPDATE billets SET published = 1 WHERE published = 0 AND publish_at <= NOW()');
+            $statement = $this->db->prepare('UPDATE billets SET published = 1 
+                WHERE published = 0 AND publish_at <= NOW()');
 
             $statement->execute();
             return $statement->rowCount();
@@ -199,7 +201,9 @@ class BilletDB extends Db
         try
         {
             $this->db = Db::getInstance();
-            $statement = $this->db->prepare('SELECT billets_id FROM likes WHERE users_id = :userId AND billets_id = :billetId AND like_it = :like_it');
+            $statement = $this->db->prepare('SELECT billets_id FROM likes 
+                                    WHERE users_id = :userId 
+                                    AND billets_id = :billetId AND like_it = :like_it');
 
             $statement->bindValue('userId', $userId);
             $statement->bindValue('billetId', $billetId);
@@ -221,19 +225,18 @@ class BilletDB extends Db
             $this->db = Db::getInstance();
             if($this->checkHasAnAdvice($userId, $billetId, 0)) // on cherche à savoir s'il y a déjà un dislike
             {
-                $statement = $this->db->prepare('DELETE FROM likes WHERE users_id = :userId AND billets_id = :billetId AND like_it = 0');
+                $statement = $this->db->prepare('DELETE FROM likes 
+                        WHERE users_id = :userId AND billets_id = :billetId AND like_it = 0');
 
                 $statement->bindValue('userId', $userId);
                 $statement->bindValue('billetId', $billetId);
                 return $statement->execute();                    
             }
-
-            $statement = $this->db->prepare('INSERT INTO likes (billets_id, users_id, like_it) VALUES (:billetId, :userId, 1)');
-
+            $statement = $this->db->prepare('INSERT INTO likes (billets_id, users_id, like_it) 
+                                                VALUES (:billetId, :userId, 1)');
             $statement->bindValue('userId', $userId);
             $statement->bindValue('billetId', $billetId);
-            return $statement->execute();
-            
+            return $statement->execute();            
         }
         catch(PDOException $e)
         {
@@ -247,22 +250,19 @@ class BilletDB extends Db
         try
         {
             $this->db = Db::getInstance();
-
             if($this->checkHasAnAdvice($userId, $billetId, 1)) // on cherche à savoir s'il y a déjà un like
             {
-                $statement = $this->db->prepare('DELETE FROM likes WHERE users_id = :userId AND billets_id = :billetId AND like_it = 1');
-
+                $statement = $this->db->prepare('DELETE FROM likes WHERE users_id = :userId 
+                                        AND billets_id = :billetId AND like_it = 1');
                 $statement->bindValue('userId', $userId);
                 $statement->bindValue('billetId', $billetId);
                 return $statement->execute();                    
             }
-
-            $statement = $this->db->prepare('INSERT INTO likes (billets_id, users_id, like_it) VALUES (:billetId, :userId, 0)');
-
+            $statement = $this->db->prepare('INSERT INTO likes (billets_id, users_id, like_it) 
+                                                VALUES (:billetId, :userId, 0)');
             $statement->bindValue('userId', $userId);
             $statement->bindValue('billetId', $billetId);
             return $statement->execute();
-            
         }
         catch(PDOException $e)
         {
@@ -281,6 +281,93 @@ class BilletDB extends Db
             $statement->bindValue('id', $billetId);
             $statement->execute();
             return $statement->fetch(PDO::FETCH_OBJ);
+        }
+        catch(PDOException $e)
+        {
+            $this->logger->console($e->getMessage());
+            return null;
+        }
+    }
+    // Update billet counters.
+    // $actionflag = 1, it's a like
+    // $actionflag = 0, it's a dislike    
+    public function UpdateCounters($billetId, $userid, $actionflag, $actiontype )
+    {
+        try
+        {
+            $this->db = Db::getInstance();
+            // Check user does not already owns likes or dislikes one
+            if($actiontype === BilletsController::ACTION_TYPE_UPDATE) 
+            {
+                $statement = $this->db->prepare('UPDATE likes SET like_it = :likeflag 
+                                                    WHERE billets_id = :billetId 
+                                                        AND users_id = :userId');                
+                $statement->bindValue('userId', $userid);
+                $statement->bindValue('billetId', $billetId);
+                $statement->bindValue('likeflag', $actionflag);
+                $result =  $statement->execute();                
+                if($actionflag === BilletsController::ACTION_LIKE) 
+                { 
+                    $statement = $this->db->prepare('UPDATE billets 
+                                            SET thumbs_up = thumbs_up + 1, 
+                                                thumbs_down =  thumbs_down - 1
+                                            WHERE id = :id;');
+                }
+                else 
+                {
+                    $statement = $this->db->prepare('UPDATE billets 
+                                            SET thumbs_up = thumbs_up - 1, 
+                                                thumbs_down =  thumbs_down + 1
+                                            WHERE id = :id;');
+                }
+                $statement->bindValue('id', $billetId);
+                return $statement->execute();            
+            }
+            if($actiontype === BilletsController::ACTION_TYPE_INSERT) 
+            {
+                $statement = $this->db->prepare('INSERT INTO likes (billets_id, users_id, like_it) 
+                                                    VALUES (:billetId, :userId, :likeit)');                
+                $statement->bindValue('userId', $userid);
+                $statement->bindValue('billetId', $billetId);
+                $statement->bindValue('likeit', $actionflag);
+                $result =  $statement->execute();                
+                if($actionflag === BilletsController::ACTION_LIKE) 
+                { 
+                    $statement = $this->db->prepare('UPDATE billets 
+                                            SET thumbs_up = thumbs_up + 1
+                                            WHERE id = :id;');
+                }
+                else 
+                {
+                    $statement = $this->db->prepare('UPDATE billets 
+                                            SET thumbs_down =  thumbs_down + 1
+                                            WHERE id = :id;');
+                }
+                $statement->bindValue('id', $billetId);
+                return $statement->execute();            
+            }
+            if($actiontype === BilletsController::ACTION_TYPE_DELETE) 
+            {
+                $statement = $this->db->prepare('DELETE FROM likes WHERE billets_id = :billetId 
+                                                                    AND users_id = :userId');                     
+                $statement->bindValue('userId', $userid);
+                $statement->bindValue('billetId', $billetId);
+                $result =  $statement->execute();                
+                if($actionflag === BilletsController::ACTION_LIKE) 
+                { 
+                    $statement = $this->db->prepare('UPDATE billets 
+                                            SET thumbs_up = thumbs_up - 1
+                                            WHERE id = :id;');
+                }
+                else 
+                {
+                    $statement = $this->db->prepare('UPDATE billets 
+                                            SET thumbs_down =  thumbs_down - 1
+                                            WHERE id = :id;');
+                }
+                $statement->bindValue('id', $billetId);
+                return $statement->execute();
+            }
         }
         catch(PDOException $e)
         {

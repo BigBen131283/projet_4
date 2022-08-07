@@ -7,8 +7,35 @@ $(document).ready( () => {
     console.log(billetId);
 
     function thumbsup(){
-        console.log("J'adore");
-        fetch('/billets/jsonGetLikes/'+billetId, {method : 'GET', headers: {"Content-Type": "application/json"}})
+        
+        const params = 
+            {
+                "billetId": billetId,
+                "userid": 36,
+                "actionflag": 1
+            };
+        
+        // let xhr = new XMLHttpRequest();
+        // xhr.open("POST", "/billets/jsonPostUpdateCounter");
+        
+        // xhr.setRequestHeader("Accept", "application/json");
+        // xhr.setRequestHeader("Content-Type", "application/json");
+
+        // xhr.onload = () => console.log(xhr.responseText);
+        // xhr.send(params);
+        
+        fetch("/billets/jsonPostUpdateCounter", {
+        method: 'POST',
+        headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+        },
+        body: `{
+            "billetId": billetId,
+            "userid": 36,
+            "actionflag": 1
+        }`,
+        })
         .then((res) => {
             if (res.ok) {
                 // console.log(res.json());
@@ -19,8 +46,8 @@ $(document).ready( () => {
             console.log(value);
         })
         .catch((err) => {
-            console.log(err);
-        })
+            console.log(err)});
+
     }
 
     function thumbsdown(){

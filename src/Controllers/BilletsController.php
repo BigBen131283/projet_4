@@ -5,14 +5,20 @@
     use App\Core\Logger;
     use App\Core\Request;
     use App\Core\Main;
-    use App\Models\BilletsModel;
     use App\Repository\BilletDB;
     use App\Repository\CommentsDB;
     use App\Validator\BilletValidator;
     use App\Validator\CommentsValidator;
+   
 
     class BilletsController extends Controller
-    {       
+    { 
+        public const ACTION_TYPE_INSERT = 0;
+        public const ACTION_TYPE_UPDATE = 1;
+        public const ACTION_TYPE_DELETE = 2;
+        public const ACTION_LIKE = 1;
+        public const ACTION_DISLIKE = 0;
+        
         public function chapterlist()
         {
             $billetDB = new BilletDB();
@@ -201,17 +207,98 @@
                 ['errorHandler' => $validator,'billet' => $result, 'loggedUser' => $user, 'comments' => $allComments]);
         }
 
+        // JSON GET --------------------------------------------------------
         public function jsonGetLikes($billetId)
         {
             $billetDB = new BilletDB();
-            $logger = new Logger(__CLASS__);
-            
             $result = $billetDB->getCounters($billetId);
-            // $logger->console($result); die;
-
-            echo json_encode(['likes'=>$result->thumbs_up,
-                              'dislikes'=>$result->thumbs_down,  
-                              'billetId' => $billetId]);
+            if($result) 
+            {
+                echo json_encode(['likes'=>$result->thumbs_up,
+                'dislikes'=>$result->thumbs_down,  
+                'message'=> "Billet counters $billetId retrieved",  
+                'error' => false,
+                'billetId' => $billetId]);
+            }
+            else 
+            {
+                echo json_encode(['likes'=> 0,
+                'dislikes'=> 0,  
+                'message'=> "Billet counters request failed for ID : $billetId",
+                'error' => true,
+                'billetId' => $billetId]);
+            }
         }
+        // --------------------------------------------------------
+        // Update billet counters and the likes table
+        // --------------------------------------------------------
+        public function jsonPostUpdateCounter()
+        {
+            // Check we received all required params
+            $params = $this->decodePostRequest();
+            $billetId = isset($params["billetId"]) ? $params["billetId"] : '';
+            $actionflag = isset($params["actionflag"]) ? $params["actionflag"] : '';
+            $userid = isset($params["userid"]) ? $params["userid"] : '';
+            if($billetId === '' || $actionflag === '' || $userid === '') 
+            {
+                echo json_encode(['message'=> "KO : Missing required parameters", 
+                                    'error' => true,
+                                    'billetID' => $billetId,
+                                    'userid' => $userid,
+                                    'actionflag' => $actionflag
+                                ]);
+                return;
+            }
+
+            $billetDB = new BilletDB();
+            $hasliked = $billetDB->checkHasAnAdvice($userid, $billetId,1);
+            $hasdisliked = $billetDB->checkHasAnAdvice($userid, $billetId,0);
+            
+            // $actionflag = 1, it's a like
+            // $actionflag = 0, it's a dislike
+            $actiontype = self::ACTION_TYPE_INSERT;
+            
+            if($actionflag === self::ACTION_LIKE && $hasliked) 
+            {    
+                $actiontype = self::ACTION_TYPE_DELETE;
+            }
+            if($actionflag === self::ACTION_DISLIKE && $hasliked) 
+            {
+                $actiontype = self::ACTION_TYPE_UPDATE;
+            }
+            if($actionflag === self::ACTION_LIKE && $hasdisliked) 
+            {
+                $actiontype = self::ACTION_TYPE_UPDATE;
+            }
+            if($actionflag === self::ACTION_DISLIKE && $hasdisliked) 
+            {
+                $actiontype = self::ACTION_TYPE_DELETE;
+            }
+            
+            // Final update of billet counters
+            $result = $billetDB->UpdateCounters($billetId, $userid, $actionflag, $actiontype);
+            if($result) 
+            {
+                echo json_encode(['message'=> "OK : Billet counters for : $billetId updated", 
+                'userid' => $userid,
+                'error' => false,
+                'billetId' => $billetId]);
+            }
+            else 
+            {
+                echo json_encode(['message'=> "KO : Billet update counters for : $billetId", 
+                        'error' => true,
+                        'billetId' => $billetId]);
+            }
+            return;  
+        }
+        // ------------------------------------------------------------------------
+        // Get the payload from the JSON formatted post request
+        // ------------------------------------------------------------------------
+        public function decodePostRequest()  
+        {
+          $json = file_get_contents('php://input');
+          return json_decode($json, true, 16, JSON_OBJECT_AS_ARRAY | JSON_UNESCAPED_UNICODE);
+        }    
     }
 ?>

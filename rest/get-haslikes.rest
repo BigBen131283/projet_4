@@ -1,0 +1,2 @@
+GET http://p4.fr/billets/jsonGetLikes/1
+Content-Type: application/json

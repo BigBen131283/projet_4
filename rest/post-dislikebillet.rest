@@ -1,0 +1,8 @@
+POST http://projet4/billets/jsonPostUpdateCounter
+Content-Type: application/json
+
+{
+  "billetId": 1,
+  "actionflag": 0,
+  "userid": 36
+}

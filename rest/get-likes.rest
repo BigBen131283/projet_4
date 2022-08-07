@@ -1,2 +1,2 @@
-GET http://projet4/billets/jsonGetLikes/12
+GET http://projet4/billets/jsonGetLikes/1
 Content-Type: application/json

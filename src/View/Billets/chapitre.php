@@ -7,16 +7,24 @@
 
         <?php if($loggedUser->isLogged()):?>
         <ul class="likes">
-            <li id="like"><ion-icon name="thumbs-up-outline"></ion-icon></li>
-            <li id="dislike"><ion-icon name="thumbs-down-outline"></ion-icon></li>
+            <li id="like">
+                <ion-icon name="thumbs-up-outline"></ion-icon>
+                <p class="likescount"></p>
+            </li>
+            <li id="dislike">
+                <ion-icon name="thumbs-down-outline"></ion-icon>
+                <p class="dislikescount"></p>
+            </li>
         </ul>
         <?php else:?>
             <ul class="likes">
             <li>
                 <ion-icon name="thumbs-up-outline"></ion-icon>
+                <p class="likescount"></p>
             </li>
             <li>
                 <ion-icon name="thumbs-down-outline"></ion-icon>
+                <p class="dislikescount"></p>
             </li>
         </ul>
         <?php endif;?>        
@@ -29,7 +37,6 @@
         <?php endif;?>        
             </ul>   
     </article>
-    <p id="billetId"><?= $billet->id?></p>
     <?php if($loggedUser->isLogged()):?>
         <form method="post" action="/comments/createcomment/<?= $billet->id?>" novalidate>
             <div class="inputBox">
@@ -50,5 +57,10 @@
         <?php endforeach ?>
     </div>
 </div>
-<!-- https://stackoverflow.com/questions/15976357/php-text-encoding-decoding-tinymce -->
+<script>
+    // Pass some identifiers to chapitre.js
+    let userid = '<?php echo $loggedUser->getID()?>';
+    let useremail = '<?php echo $loggedUser->getEmail()?>';
+    let billetid = '<?php echo $billet->id?>';
+</script>
 

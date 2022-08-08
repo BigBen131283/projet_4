@@ -140,72 +140,72 @@
                               'date' => $current]);
         }
 
-        public function likeIt($billetId, $userId)
-        {
-            // var_dump($userId, $billetId);die;
-            $billetDB = new BilletDB();
-            $hasLiked = $billetDB->checkHasAnAdvice($userId, $billetId,1);
-            $hasDisliked = $billetDB->checkHasAnAdvice($userId, $billetId,0);
+        // public function likeIt($billetId, $userId)
+        // {
+        //     // var_dump($userId, $billetId);die;
+        //     $billetDB = new BilletDB();
+        //     $hasLiked = $billetDB->checkHasAnAdvice($userId, $billetId,1);
+        //     $hasDisliked = $billetDB->checkHasAnAdvice($userId, $billetId,0);
             
-            $validator = new BilletValidator();
-            $commentsDB = new CommentsDB();
-            $result = $billetDB->readBillet($billetId);
-            $user = Main::$main->getUsersModel();
-            $allComments = $commentsDB->getComments($billetId);
+        //     $validator = new BilletValidator();
+        //     $commentsDB = new CommentsDB();
+        //     $result = $billetDB->readBillet($billetId);
+        //     $user = Main::$main->getUsersModel();
+        //     $allComments = $commentsDB->getComments($billetId);
             
-            if($hasLiked === 0)
-            {
-                if($billetDB->like($userId, $billetId))
-                {
-                    $validator->addError('likestatus', "message de remerciement");
-                    // $this->render('billets/chapitre', 'php', 'defaultchapter',
-                    // ['errorHandler' => $validator,'billet' => $result, 'loggedUser' => $user, 'comments' => $allComments]);
-                }
-                else
-                {
-                    $validator->addError('likestatus', "Problème de connexion");    
-                }
-            }
-            else
-            {
-                $validator->addError('likestatus', "Go to Hell");
-            }
-            $this->render('billets/chapitre', 'php', 'defaultchapter',
-                ['errorHandler' => $validator,'billet' => $result, 'loggedUser' => $user, 'comments' => $allComments]);
-        }
+        //     if($hasLiked === 0)
+        //     {
+        //         if($billetDB->like($userId, $billetId))
+        //         {
+        //             $validator->addError('likestatus', "message de remerciement");
+        //             // $this->render('billets/chapitre', 'php', 'defaultchapter',
+        //             // ['errorHandler' => $validator,'billet' => $result, 'loggedUser' => $user, 'comments' => $allComments]);
+        //         }
+        //         else
+        //         {
+        //             $validator->addError('likestatus', "Problème de connexion");    
+        //         }
+        //     }
+        //     else
+        //     {
+        //         $validator->addError('likestatus', "Go to Hell");
+        //     }
+        //     $this->render('billets/chapitre', 'php', 'defaultchapter',
+        //         ['errorHandler' => $validator,'billet' => $result, 'loggedUser' => $user, 'comments' => $allComments]);
+        // }
 
-        public function dislikeIt($billetId, $userId)
-        {
-            $billetDB = new BilletDB();
-            $hasLiked = $billetDB->checkHasAnAdvice($userId, $billetId,1);
-            $hasDisliked = $billetDB->checkHasAnAdvice($userId, $billetId,0);
+        // public function dislikeIt($billetId, $userId)
+        // {
+        //     $billetDB = new BilletDB();
+        //     $hasLiked = $billetDB->checkHasAnAdvice($userId, $billetId,1);
+        //     $hasDisliked = $billetDB->checkHasAnAdvice($userId, $billetId,0);
             
-            $validator = new BilletValidator();
-            $commentsDB = new CommentsDB();
-            $result = $billetDB->readBillet($billetId);
-            $user = Main::$main->getUsersModel();
-            $allComments = $commentsDB->getComments($billetId);
+        //     $validator = new BilletValidator();
+        //     $commentsDB = new CommentsDB();
+        //     $result = $billetDB->readBillet($billetId);
+        //     $user = Main::$main->getUsersModel();
+        //     $allComments = $commentsDB->getComments($billetId);
             
-            if($hasDisliked === 0)
-            {
-                if($billetDB->dislike($userId, $billetId))
-                {
-                    $validator->addError('likestatus', "Vous n'aimez pas");
-                    // $this->render('billets/chapitre', 'php', 'defaultchapter',
-                    // ['errorHandler' => $validator,'billet' => $result, 'loggedUser' => $user, 'comments' => $allComments]);
-                }
-                else
-                {
-                    $validator->addError('likestatus', "Problème de connexion");    
-                }
-            }
-            else
-            {
-                $validator->addError('likestatus', "On a compris!");
-            }
-            $this->render('billets/chapitre', 'php', 'defaultchapter',
-                ['errorHandler' => $validator,'billet' => $result, 'loggedUser' => $user, 'comments' => $allComments]);
-        }
+        //     if($hasDisliked === 0)
+        //     {
+        //         if($billetDB->dislike($userId, $billetId))
+        //         {
+        //             $validator->addError('likestatus', "Vous n'aimez pas");
+        //             // $this->render('billets/chapitre', 'php', 'defaultchapter',
+        //             // ['errorHandler' => $validator,'billet' => $result, 'loggedUser' => $user, 'comments' => $allComments]);
+        //         }
+        //         else
+        //         {
+        //             $validator->addError('likestatus', "Problème de connexion");    
+        //         }
+        //     }
+        //     else
+        //     {
+        //         $validator->addError('likestatus', "On a compris!");
+        //     }
+        //     $this->render('billets/chapitre', 'php', 'defaultchapter',
+        //         ['errorHandler' => $validator,'billet' => $result, 'loggedUser' => $user, 'comments' => $allComments]);
+        // }
 
         // JSON GET --------------------------------------------------------
         public function jsonGetLikes($billetId)

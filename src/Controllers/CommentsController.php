@@ -17,6 +17,8 @@
             $request = new Request();
             $billetDB = new BilletDB();
             $result = $billetDB->readBillet($id);
+            $commentsDB = new CommentsDB();
+            $allComments = $commentsDB->getComments($id);
 
             $logger = new Logger(__CLASS__);
             $validator = new CommentsValidator();
@@ -37,14 +39,15 @@
                         Main::$main->response->redirect('/');
                     }    
                 }
-                $this->render('billets/chapitre', "php", 'defaultchapter', ['errorHandler' => $validator, 'loggedUser' => $user, 'billet' => $result]);
+                $this->render('billets/chapitre', "php", 'defaultchapter', 
+                        ['errorHandler' => $validator, 'loggedUser' => $user, 'billet' => $result, 'comments' => $allComments]);
             }
             else
             {
                 var_dump($validator, $user);
-                $this->render('billets/chapitre', "php", 'defaultchapter', ['errorHandler' => $validator,'loggedUser' => $user, 'billet' => $result]);
+                $this->render('billets/chapitre', "php", 'defaultchapter', 
+                        ['errorHandler' => $validator, 'loggedUser' => $user, 'billet' => $result, 'comments' =>  $allComments]);
             }
         }
-        
     }
 ?>

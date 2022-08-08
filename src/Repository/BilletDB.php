@@ -218,58 +218,27 @@ class BilletDB extends Db
         }
     }
 
-    // public function like($userId, $billetId)
-    // {
-    //     try
-    //     {
-    //         $this->db = Db::getInstance();
-    //         if($this->checkHasAnAdvice($userId, $billetId, 0)) // on cherche à savoir s'il y a déjà un dislike
-    //         {
-    //             $statement = $this->db->prepare('DELETE FROM likes 
-    //                     WHERE users_id = :userId AND billets_id = :billetId AND like_it = 0');
+    public function checkMyAdvice($userId, $billetId)
+    {
+        try
+        {
+            $this->db = Db::getInstance();
+            $statement = $this->db->prepare('SELECT like_it FROM likes 
+                                    WHERE users_id = :userId 
+                                    AND billets_id = :billetId');
 
-    //             $statement->bindValue('userId', $userId);
-    //             $statement->bindValue('billetId', $billetId);
-    //             return $statement->execute();                    
-    //         }
-    //         $statement = $this->db->prepare('INSERT INTO likes (billets_id, users_id, like_it) 
-    //                                             VALUES (:billetId, :userId, 1)');
-    //         $statement->bindValue('userId', $userId);
-    //         $statement->bindValue('billetId', $billetId);
-    //         return $statement->execute();            
-    //     }
-    //     catch(PDOException $e)
-    //     {
-    //         $this->logger->console($e->getMessage());
-    //         return 0;
-    //     }
-    // }
+            $statement->bindValue('userId', $userId);
+            $statement->bindValue('billetId', $billetId);
 
-    // public function dislike($userId, $billetId)
-    // {
-    //     try
-    //     {
-    //         $this->db = Db::getInstance();
-    //         if($this->checkHasAnAdvice($userId, $billetId, 1)) // on cherche à savoir s'il y a déjà un like
-    //         {
-    //             $statement = $this->db->prepare('DELETE FROM likes WHERE users_id = :userId 
-    //                                     AND billets_id = :billetId AND like_it = 1');
-    //             $statement->bindValue('userId', $userId);
-    //             $statement->bindValue('billetId', $billetId);
-    //             return $statement->execute();                    
-    //         }
-    //         $statement = $this->db->prepare('INSERT INTO likes (billets_id, users_id, like_it) 
-    //                                             VALUES (:billetId, :userId, 0)');
-    //         $statement->bindValue('userId', $userId);
-    //         $statement->bindValue('billetId', $billetId);
-    //         return $statement->execute();
-    //     }
-    //     catch(PDOException $e)
-    //     {
-    //         $this->logger->console($e->getMessage());
-    //         return 0;
-    //     }
-    // }
+            $statement->execute();
+            return $statement->fetch(PDO::FETCH_ASSOC);
+        }
+        catch(PDOException $e)
+        {
+            $this->logger->console($e->getMessage());
+            return null;
+        }
+    }
 
     public function getCounters($billetId)
     {

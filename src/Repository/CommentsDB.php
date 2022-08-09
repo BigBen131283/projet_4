@@ -52,8 +52,8 @@ class CommentsDB extends Db
         try
         {
             $this->db = Db::getInstance();
-            $statement = $this->db->prepare('SELECT content, publish_at, users_id, pseudo FROM comments c, users u 
-                                             WHERE billet_id = :billetID AND users_id = u.id ORDER BY c.publish_at DESC');
+            $statement = $this->db->prepare('SELECT content, publish_at, users_id, pseudo, c.id FROM comments c, users u 
+                                             WHERE billet_id = :billetID AND users_id = u.id AND report >= 30 ORDER BY c.publish_at DESC');
 
             $statement->bindValue(':billetID', $billetID);
             $statement->execute();
@@ -72,6 +72,23 @@ class CommentsDB extends Db
         }
     }
 
+    public function signalComment($id)
+    {
+        try
+        {
+            $this->db = Db::getInstance();
+            $statement = $this->db->prepare('UPDATE comments SET report = 20 
+                                             WHERE id = :id');
+
+            $statement->bindValue(':id', $id);
+            return $statement->execute();
+        }
+        catch(PDOException $e)
+        {
+            $this->logger->console($e->getMessage());
+            return false;
+        }
+    }
 }
 
 ?>

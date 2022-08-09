@@ -8,11 +8,11 @@
         <?php if($loggedUser->isLogged()):?>
         <ul class="likes">
             <li id="like">
-                <ion-icon name="thumbs-up-outline"></ion-icon>
+                <ion-icon name="thumbs-up-outline" id="iconlike"></ion-icon>
                 <p class="likescount"></p>
             </li>
             <li id="dislike">
-                <ion-icon name="thumbs-down-outline"></ion-icon>
+                <ion-icon name="thumbs-down-outline" id="icondislike"></ion-icon>
                 <p class="dislikescount"></p>
             </li>
         </ul>
@@ -49,11 +49,11 @@
     <?php endif;?>
     <div class="comment">
         <h2>Commentaires des lecteurs</h2>
-        
         <?php foreach($comments as $comment): ?>
             <h2><?= $comment->pseudo?></h2>
             <p class="content"><?= html_entity_decode(stripslashes($comment->content))?></p>
             <p class="publication"><?= $comment->publish_at?></p>
+            <a href="/comments/signalcomment/<?= $billet->id?>/<?= $comment->id?>">Signaler</a>
         <?php endforeach ?>
     </div>
 </div>

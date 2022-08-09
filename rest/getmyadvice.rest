@@ -1,2 +1,2 @@
-GET http://projet4/billets/jsonGetMyAdvice/37/1
+GET http://projet4/billets/jsonGetMyAdvice/34/1
 Content-Type: application/json

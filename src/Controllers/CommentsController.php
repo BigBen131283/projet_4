@@ -49,5 +49,22 @@
                         ['errorHandler' => $validator, 'loggedUser' => $user, 'billet' => $result, 'comments' =>  $allComments]);
             }
         }
+
+        public function signalComment($billetId, $commentsId)
+        {
+            $commentsDB = new CommentsDB();
+            $billetDB = new BilletDB();
+            $validator = new CommentsValidator();
+
+            $result = $billetDB->readBillet($billetId);
+            $allComments = $commentsDB->getComments($billetId);
+            $user = Main::$main->getUsersModel();
+
+            if($commentsDB->signalComment($commentsId))
+            {
+                $this->render('billets/chapitre', "php", 'defaultchapter', 
+                        ['errorHandler' => $validator, 'loggedUser' => $user, 'billet' => $result, 'comments' => $allComments]);
+            }
+        }
     }
 ?>

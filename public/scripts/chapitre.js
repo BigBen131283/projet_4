@@ -1,6 +1,7 @@
 $(document).ready( () => {
-    setInterval(checkCounters, 5000);
+    setInterval(checkCounters, 30000);
     checkCounters();
+    checkmyCounters();
 
     $("#like").click(thumbsup);
     $("#dislike").click(thumbsdown);
@@ -31,6 +32,8 @@ $(document).ready( () => {
         })
         .then((value) => {
             console.log(value);
+            checkCounters();
+            checkmyCounters();
         })
         .catch((err) => {
             console.log(`Request error **** : ${err}`)});
@@ -58,6 +61,8 @@ $(document).ready( () => {
         })
         .then((value) => {
             console.log(value);
+            checkCounters();
+            checkmyCounters();
         })
         .catch((err) => {
             console.log(`Request error **** : ${err}`)
@@ -85,6 +90,41 @@ $(document).ready( () => {
             $('.dislikescount').each((index, element) => {
                 element.textContent = value.dislikes;
             })
+        })
+        .catch((err) => {
+            console.log(`Request error **** : ${err}`)
+        });
+    }
+
+    function checkmyCounters(){
+        fetch("/billets/jsonGetMyAdvice/"+userid+"/"+billetid, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then((res) => {
+            if (res.ok) {
+                return res.json();
+            }
+        })
+        .then((value) => {
+            console.log(value);
+            if(value.status){
+                if(value.result === "1"){
+                    $("#iconlike").attr("name", "thumbs-up");
+                    $("#icondislike").attr("name", "thumbs-down-outline");
+                }
+                else{
+                    $("#icondislike").attr("name", "thumbs-down");
+                    $("#iconlike").attr("name", "thumbs-up-outline");    
+                }
+            }
+            else{
+                $("#iconlike").attr("name", "thumbs-up-outline");
+                $("#icondislike").attr("name", "thumbs-down-outline");
+            }
         })
         .catch((err) => {
             console.log(`Request error **** : ${err}`)

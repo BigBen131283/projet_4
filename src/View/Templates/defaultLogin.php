@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="/styles/login/desktop.css" media="screen AND (min-width: 1024px)"> -->
 </head>
 
-<body>
+<body class="sitepage">
     <?= $contenu?>
 </body>
 

@@ -23,7 +23,7 @@
 
 
 
-<body>
+<body class="sitepage">
     <nav class="main_menu">
         <div class="sup">
             <?php if($loggedUser->isLogged()):?>    

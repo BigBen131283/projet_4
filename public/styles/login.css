@@ -259,7 +259,6 @@ form ul li a:hover::before
     {
         width: 300px;
         background: rgba(0,0,0,.6);
-        position: relative;
     }
 
     .links button

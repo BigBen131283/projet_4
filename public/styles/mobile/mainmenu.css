@@ -15,9 +15,18 @@
     --btnclr: #29fd53;
 }
 
-nav
+.homepage .site nav 
 {
     position: sticky;
+}
+
+.sitepage nav 
+{
+    position: fixed;
+}
+
+nav
+{
     display: flex;
     flex-direction: column;
     justify-content: space-between;

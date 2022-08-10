@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="/styles/project.css">
     <link rel="stylesheet" href="/styles/lastpost.css">
     <script type="module" src="/scripts/script.js"></script>
+    <script type="module" src="/scripts/parallax.js"></script>
     <script type="module" src="/scripts/redac.js"></script>
     <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>

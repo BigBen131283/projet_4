@@ -1,0 +1,14 @@
+body
+{
+    width: 100%;
+    min-height: 100vh;
+    background-image: url(/images/admin3.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.sidebar
+{
+    display: none;
+}

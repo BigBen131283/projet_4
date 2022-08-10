@@ -38,10 +38,26 @@
     </section>
     <section class="dashboard">
         <div class="statistics">
-
+            <h1>Statistiques</h1>
+            <div class="statbox" id="billets_stats">
+                <h2 class="box-title">Billets publiés</h2>
+                <p class="data"><?= '18'?></p>
+            </div>
+            <div class="statbox" id="member_stats">
+                <h2 class="box-title">Membres inscrits</h2>
+                <p class="data"><?= '1675'?></p>
+            </div>
+            <div class="statbox" id="comments_stats">
+                <h2 class="box-title">Commentaires publiés</h2>
+                <p class="data"><?= '253'?></p>
+            </div>
+            <div class="statbox" id="modo_stats">
+                <h2 class="box-title">Modération en attente</h2>
+                <p class="data"><?= '14'?></p>
+            </div>
         </div>
         <div class="siteadmin">
-            
+
         </div>
     </section>
 </div>

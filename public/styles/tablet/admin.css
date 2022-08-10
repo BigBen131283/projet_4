@@ -1,0 +1,43 @@
+body
+{
+    width: 100%;
+    min-height: 100vh;
+    background-image: url(/images/admin3.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.statistics
+{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.statistics h1
+{
+    border-bottom: none;
+    text-transform: uppercase;
+    color: var(--secondaryclr);
+    font-size: 2.8rem;
+    letter-spacing: 2.5px;
+    -webkit-text-stroke: none;
+    text-shadow: none;
+    -webkit-text-stroke: 0px var(--secondaryclr);
+}
+
+.statistics .statbox
+{
+    width: 45%;
+    margin: 10px 5px 10px 5px;
+}
+
+.statistics .statbox h2
+{
+    font-size: 1.3rem;
+    padding-top: 10px;
+}

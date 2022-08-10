@@ -29,3 +29,87 @@ html
     scroll-behavior: smooth;
 }
 
+body
+{
+    background: var(--backgroundclr);
+}
+
+.site
+{
+    padding-top: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.dashboard
+{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.statistics
+{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.statistics h1
+{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 20px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--alternatebgclr);
+    text-transform: uppercase;
+    color: var(--backgroundclr);
+    /* color: var(--primaryclr); */
+    font-size: 2.5rem;
+    letter-spacing: 2.5px;
+    -webkit-text-stroke: 1px var(--primaryclr);
+    text-shadow: var(--primaryclr) 1px 0 10px;
+}
+
+.statistics .statbox
+{
+    width: 90%;
+    height: 100px;
+    background: rgba(255,255,255,0.8);
+    border-radius: 20px;
+    margin: 10px 0 10px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.statistics .statbox h2
+{
+    height: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+    color: var(--h1clr);
+    letter-spacing: 2px;
+}
+
+.statistics .statbox p
+{
+    height: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--primaryclr);
+    letter-spacing: 5px;
+}

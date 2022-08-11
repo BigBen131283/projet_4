@@ -8,26 +8,28 @@ body
     background-size: cover;
 }
 
-.statistics
-{
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-    align-items: center;
-}
-
-.statistics h1
+.dashboard h1
 {
     border-bottom: none;
     text-transform: uppercase;
+    background-color: rgba(255,255,255,0.8);
+    border-radius: 20px;
     color: var(--secondaryclr);
     font-size: 2.8rem;
     letter-spacing: 2.5px;
     -webkit-text-stroke: none;
     text-shadow: none;
     -webkit-text-stroke: 0px var(--secondaryclr);
+}
+
+.statistics
+{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
 }
 
 .statistics .statbox
@@ -39,5 +41,6 @@ body
 .statistics .statbox h2
 {
     font-size: 1.3rem;
+    color: var(--secondaryclr);
     padding-top: 10px;
 }

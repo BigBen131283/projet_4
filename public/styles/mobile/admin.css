@@ -130,7 +130,7 @@ body
 .siteadmin .adminbox
 {
     width: 90%;
-    height: 100px;
+    height: auto;
     background: rgba(255,255,255,0.8);
     border-radius: 20px;
     margin: 10px 0 10px 0;

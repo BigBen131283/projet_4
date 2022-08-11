@@ -50,12 +50,40 @@ class CommentsDB extends Db
     public function getComments($billetID)
     {
         try
+        {   
+            $this->db = Db::getInstance();
+
+            $statement = $this->db->prepare('SELECT content, publish_at, users_id, pseudo, c.id, c.report FROM comments c, users u 
+                                            WHERE billet_id = :billetID AND users_id = u.id AND report >= 30 ORDER BY c.publish_at DESC');
+            
+            $statement->bindValue(':billetID', $billetID);
+            $statement->execute();
+            $result = $statement->fetchAll();
+
+            if(!empty($result))
+            {
+                return $result;
+            }
+            return array();
+        }
+        catch(PDOException $e)
+        {
+            $this->logger->console($e->getMessage());
+            return false;
+        }
+    }
+
+    public function getSignaledComments()
+    {
+        try
         {
             $this->db = Db::getInstance();
-            $statement = $this->db->prepare('SELECT content, publish_at, users_id, pseudo, c.id FROM comments c, users u 
-                                             WHERE billet_id = :billetID AND users_id = u.id AND report >= 30 ORDER BY c.publish_at DESC');
 
-            $statement->bindValue(':billetID', $billetID);
+            $statement = $this->db->prepare('SELECT content, c.publish_at, c.users_id, c.id, pseudo, billet_id, title 
+                                             FROM comments c, users u, billets b 
+                                             WHERE c.users_id = u.id AND c.billet_id = b.id AND c.report = 20 
+                                             ORDER BY c.publish_at DESC;');
+                        
             $statement->execute();
             $result = $statement->fetchAll();
 
@@ -78,6 +106,42 @@ class CommentsDB extends Db
         {
             $this->db = Db::getInstance();
             $statement = $this->db->prepare('UPDATE comments SET report = 20 
+                                             WHERE id = :id');
+
+            $statement->bindValue(':id', $id);
+            return $statement->execute();
+        }
+        catch(PDOException $e)
+        {
+            $this->logger->console($e->getMessage());
+            return false;
+        }
+    }
+
+    public function acceptComment($id)
+    {
+        try
+        {
+            $this->db = Db::getInstance();
+            $statement = $this->db->prepare('UPDATE comments SET report = 40 
+                                             WHERE id = :id');
+
+            $statement->bindValue(':id', $id);
+            return $statement->execute();
+        }
+        catch(PDOException $e)
+        {
+            $this->logger->console($e->getMessage());
+            return false;
+        }
+    }
+
+    public function rejectComment($id)
+    {
+        try
+        {
+            $this->db = Db::getInstance();
+            $statement = $this->db->prepare('UPDATE comments SET report = 10 
                                              WHERE id = :id');
 
             $statement->bindValue(':id', $id);

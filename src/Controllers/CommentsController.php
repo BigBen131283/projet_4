@@ -36,7 +36,7 @@
                     if($commentsDB->createComment($body))
                     {
                         // Main::$main->login($credentials->id);
-                        Main::$main->response->redirect('/');
+                        Main::$main->response->redirect('/billets/chapitre/'.$id);
                     }    
                 }
                 $this->render('billets/chapitre', "php", 'defaultchapter', 
@@ -57,11 +57,12 @@
             $validator = new CommentsValidator();
 
             $result = $billetDB->readBillet($billetId);
-            $allComments = $commentsDB->getComments($billetId);
+            
             $user = Main::$main->getUsersModel();
 
             if($commentsDB->signalComment($commentsId))
             {
+                $allComments = $commentsDB->getComments($billetId);
                 $this->render('billets/chapitre', "php", 'defaultchapter', 
                         ['errorHandler' => $validator, 'loggedUser' => $user, 'billet' => $result, 'comments' => $allComments]);
             }

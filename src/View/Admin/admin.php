@@ -58,7 +58,20 @@
         </div>
         <div class="siteadmin">
             <div class="adminbox" id="members"></div>
-            <div class="adminbox" id="moderate"></div>
+            <div class="adminbox" id="moderate">
+                <?php foreach($signaledComments as $comment):?>
+                    <article>
+                        <h2><a href="/billets/chapitre/<?= $comment->billet_id?>"><?= $comment->title?></a></h2>
+                        <p class="comment"><?= html_entity_decode(stripslashes($comment->content))?></p>
+                        <p class="date"><?= $comment->publish_at?></p>
+                        <p class="pseudo"><?= $comment->pseudo?></p>
+                        <div class="advice">
+                            <a href="/admin/rejectcomment/<?= $comment->id?>">Supprimer</a>
+                            <a href="/admin/acceptcomment/<?= $comment->id?>">Autoriser</a>
+                        </div>
+                    </article>
+                <?php endforeach?>
+            </div>
             <div class="adminbox" id="chapters"></div>
             <div class="adminbox" id="write"></div>
         </div>

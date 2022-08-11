@@ -53,7 +53,11 @@
             <h2><?= $comment->pseudo?></h2>
             <p class="content"><?= html_entity_decode(stripslashes($comment->content))?></p>
             <p class="publication"><?= $comment->publish_at?></p>
-            <a href="/comments/signalcomment/<?= $billet->id?>/<?= $comment->id?>">Signaler</a>
+            <?php if($comment->report === '30'):?>
+                <a href="/comments/signalcomment/<?= $billet->id?>/<?= $comment->id?>">Signaler</a>
+            <?php else:?>
+                <p>Ce commentaire a été modéré</p>
+            <?php endif;?>
         <?php endforeach ?>
     </div>
 </div>

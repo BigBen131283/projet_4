@@ -40,7 +40,7 @@
         <?php if($loggedUser->isLogged()):?>
             <li><a href="/users/profil"><ion-icon name="person-outline"></ion-icon>Mon Profil</a></li>
             <?php if($loggedUser->isAdmin()):?>
-                <li><a href="/billets/createbillet"><ion-icon name="clipboard-outline"></ion-icon>Gestion</a></li>
+                <li><a href="/admin/admin"><ion-icon name="settings-outline"></ion-icon>Gestion</a></li>
             <?php endif;?>
             <li><a href="/users/logout"><ion-icon name="log-out-outline"></ion-icon>Se Déconnecter</a></li>
         <?php endif;?>

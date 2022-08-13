@@ -50,10 +50,12 @@
         {
         
             $request = new Request();
+            $commentsDB = new CommentsDB();
 
             $logger = new Logger(__CLASS__);
             $validator = new BilletValidator();
             $user = Main::$main->getUsersModel();
+            $signaledComments = $commentsDB->getSignaledComments();
 
             if($request->isPost())
             {
@@ -67,14 +69,16 @@
                     if($billetDB->createBillet($body))
                     {
                         // Main::$main->login($credentials->id);
-                        Main::$main->response->redirect('/');
+                        Main::$main->response->redirect('/admin/admin');
                     }    
                 }
-                $this->render('billets/createbillet', "php", 'defaultadventure', ['errorHandler' => $validator, 'loggedUser' => $user]);
+                $this->render('admin/admin', 'php', 'defaultadmin', ['loggedUser'=>$user, 'signaledComments'=>$signaledComments, 
+                                                                    'errorHandler'=>$validator]);
             }
             else
             {
-                $this->render('billets/createbillet', "php", 'defaultadventure', ['errorHandler' => $validator,'loggedUser' => $user]);
+                $this->render('admin/admin', 'php', 'defaultadmin', ['loggedUser'=>$user, 'signaledComments'=>$signaledComments, 
+                                                                    'errorHandler'=>$validator]);
             }
         }
 

@@ -1,6 +1,20 @@
+:root
+{
+    --clr: #222327;
+    --backgroundclr: #333;
+    --alternatebgclr: #fdfdfd;
+    --h1clr: #333;
+    --pclr: #fdfdfd;
+    --primaryclr: #59B8A2;
+    --secondaryclr: #1C3253;
+    --thirdclr: #bbb5ac;
+    --fourthclr: #ffd101;
+}
+
 .dashboard
 {
     width: calc(100% - 350px);
+    border-bottom: 1px solid var(--alternatebgclr);
 }
 
 .dashboard h1
@@ -16,4 +30,176 @@
 .statistics .statbox
 {
     border-radius: 0px;
+}
+
+.siteadmin #members, .siteadmin #write
+{
+    display: flex;
+}
+
+.siteadmin
+{
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px 0;
+}
+
+.siteadmin .adminbox
+{
+    width: 32%;
+    border-radius: 0;
+}
+
+.siteadmin .adminbox::-webkit-scrollbar
+{
+    display: none;
+}
+
+.siteadmin .adminbox article .advice a
+{
+    transition: 0.5s;
+}
+
+.siteadmin .adminbox article .advice a:hover
+{
+    letter-spacing: 0.15em;
+    cursor: pointer;
+    background-color: var(--secondaryclr);
+    color: var(--alternatebgclr);
+    box-shadow: 0 0 10px var(--primaryclr),
+                0 0 20px var(--primaryclr),
+                0 0 40px var(--primaryclr);
+}
+
+.dashboard #write
+{
+    display: flex;
+    width: 100%;
+    min-height: 400px;
+    margin: 30px 0px;
+    background: rgba(255,255,255,0.8);
+    padding: 20px 10px;
+}
+
+.dashboard #write form
+{
+    background: rgba(0,0,0,.8);
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.dashboard #write form .inputBox
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    padding: 5px 15px;
+}
+
+.dashboard #write form .inputBox input
+{
+    width: 100%;
+    font-size: 16px;
+    color: var(--pclr);
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: none;
+    border-bottom: 1px solid var(--thirdclr);
+    outline: none;
+    background: transparent;
+}
+
+.dashboard #write form .inputBox textarea
+{
+    width: 100%;
+    height: auto;
+    font-size: 16px;
+    color: var(--pclr);
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: none;
+    border-bottom: 1px solid var(--thirdclr);
+    outline: none;
+    background: transparent;
+}
+
+.dashboard #write form .inputBox .tox
+{
+    width: 100%;
+}
+
+.dashboard #write form .inputBox label
+{
+    font-size: 16px;
+    color: var(--primaryclr);
+    pointer-events: none;
+    transition: .5s;
+}
+
+.dashboard #write form p
+{
+    color: var(--thirdclr);
+    animation: glow 2s linear infinite;
+}
+
+@keyframes glow
+{
+    0%
+    {
+        text-shadow: 0 0 10px var(--primaryclr);
+    }
+    25%
+    {
+        text-shadow: 0 0 10px var(--primaryclr),
+                     0 0 20px var(--primaryclr);
+    }
+    50%
+    {
+        text-shadow: 0 0 10px var(--primaryclr),
+                     0 0 20px var(--primaryclr),
+                     0 0 40px var(--primaryclr);
+    }
+    75%
+    {
+        text-shadow: 0 0 10px var(--primaryclr),
+                     0 0 20px var(--primaryclr);
+    }
+    100%
+    {
+        text-shadow: 0 0 10px var(--primaryclr);
+    }
+}
+
+.dashboard #write form .publish
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    width: 100px;
+    margin: 20px;
+    font-size: 0.8rem;
+    font-weight: 400;
+    text-decoration: none;
+    color: var(--backgroundclr);
+    background-color: var(--alternatebgclr);
+    border: 3px solid var(--primaryclr);
+    border-radius: 20px;
+    transition: 0.5s;
+}
+
+.dashboard #write form .publish:hover
+{
+    letter-spacing: 0.15em;
+    cursor: pointer;
+    background-color: var(--secondaryclr);
+    color: var(--alternatebgclr);
+    box-shadow: 0 0 10px var(--primaryclr),
+                0 0 20px var(--primaryclr),
+                0 0 40px var(--primaryclr);
 }

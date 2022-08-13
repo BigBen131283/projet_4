@@ -62,18 +62,45 @@
                 <?php foreach($signaledComments as $comment):?>
                     <article>
                         <h2><a href="/billets/chapitre/<?= $comment->billet_id?>"><?= $comment->title?></a></h2>
-                        <p class="comment"><?= html_entity_decode(stripslashes($comment->content))?></p>
-                        <p class="date"><?= $comment->publish_at?></p>
-                        <p class="pseudo"><?= $comment->pseudo?></p>
+                        <div class="comment"><?= html_entity_decode(stripslashes($comment->content))?></div>
+                        <div class="auth">
+                            <p class="pseudo"><?= $comment->pseudo?></p>    
+                            <p class="date"><?= $comment->publish_at?></p>
+                        </div>
                         <div class="advice">
-                            <a href="/admin/rejectcomment/<?= $comment->id?>">Supprimer</a>
                             <a href="/admin/acceptcomment/<?= $comment->id?>">Autoriser</a>
+                            <a href="/admin/rejectcomment/<?= $comment->id?>">Supprimer</a>
                         </div>
                     </article>
                 <?php endforeach?>
             </div>
             <div class="adminbox" id="chapters"></div>
-            <div class="adminbox" id="write"></div>
+        </div>
+        <div id="write">
+            <form action="/billets/createbillet" method="post" novalidate>
+                <?php echo $errorHandler->getFirstError('flashmessage'); ?>
+                <div class="inputBox">
+                    <label for="title">Titre</label>
+                    <input type="text" name="title" required id="title" value="<?php echo $errorHandler->getValue('title')?>">
+                    <?php echo $errorHandler->getFirstError('publish_at'); ?>
+                </div>
+                <div class="inputBox">
+                    <label for="abstract">Résumé</label>
+                    <textarea name="abstract" id="abstract"><?php echo $errorHandler->getValue('abstract')?></textarea>
+                    <?php echo $errorHandler->getFirstError('publish_at'); ?>
+                </div>
+                <div class="inputBox">
+                    <label for="chapter">Texte</label>
+                    <textarea name="chapter" id="chapter"><?php echo $errorHandler->getValue('chapter')?></textarea>
+                    <?php echo $errorHandler->getFirstError('publish_at'); ?>
+                </div>
+                <div class="inputBox">
+                    <label for="publish_at">Date de publication</label>
+                    <input type="datetime-local" name="publish_at" id="publish_at" value="<?php echo $errorHandler->getValue('publish_at')?>">
+                    <?php echo $errorHandler->getFirstError('publish_at'); ?>
+                </div>
+                <button class="publish" type="submit">Publier</button>
+            </form>
         </div>
     </section>
 </div>

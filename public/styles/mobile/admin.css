@@ -131,10 +131,94 @@ body
 {
     width: 90%;
     height: auto;
+    min-height: 400px;
+    max-height: 600px;
+    overflow: scroll;
     background: rgba(255,255,255,0.8);
-    border-radius: 20px;
+    border-radius: 5px;
     margin: 10px 0 10px 0;
+    padding: 5px 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.siteadmin #members, .siteadmin #chapters, .siteadmin #write
+{
+    display: none;
+}
+
+#write
+{
+    display: none;
+}
+
+.siteadmin .adminbox article
+{
+    background-color: var(--backgroundclr);
+    width: 100%;
+    margin: 10px 0px;
+    border-radius: 5px;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.siteadmin .adminbox article h2
+{
+    width: 100%;
+    padding: 10px;
+}
+
+.siteadmin .adminbox article h2 a
+{
+    text-decoration: none;
+    color: var(--primaryclr);
+    font-size: 1rem;
+}
+
+.siteadmin .adminbox article .comment
+{
+    color: var(--pclr);
+    width: 90%;
+    padding: 5px 0;
+    border-top: 1px solid var(--pclr);
+    border-bottom: 1px solid var(--pclr);
+}
+
+.siteadmin .adminbox article .auth
+{
+    width: 100%;
+    padding: 2px 5px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: nowrap;
+    color: var(--primaryclr);
+    font-size: 0.8rem;
+}
+
+.siteadmin .adminbox article .advice
+{
+    display: flex;
+    justify-content: center;
+    margin: 5px;
+}
+
+.siteadmin .adminbox article .advice a
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    width: 100px;
+    margin: 0px 10px;
+    font-size: 0.8rem;
+    font-weight: 400;
+    text-decoration: none;
+    color: var(--backgroundclr);
+    background-color: var(--alternatebgclr);
+    border: 3px solid var(--primaryclr);
+    border-radius: 20px;
 }

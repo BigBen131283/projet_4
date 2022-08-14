@@ -82,17 +82,21 @@
                 <div class="inputBox">
                     <label for="title">Titre</label>
                     <input type="text" name="title" required id="title" value="<?php echo $errorHandler->getValue('title')?>">
-                    <?php echo $errorHandler->getFirstError('publish_at'); ?>
+                    <?php echo $errorHandler->getFirstError('title'); ?>
                 </div>
                 <div class="inputBox">
                     <label for="abstract">Résumé</label>
                     <textarea name="abstract" id="abstract"><?php echo $errorHandler->getValue('abstract')?></textarea>
-                    <?php echo $errorHandler->getFirstError('publish_at'); ?>
+                    <?php echo $errorHandler->getFirstError('abstract'); ?>
+                </div>
+                <div class="inputBox">
+                    <label for="chapterpicture">Photo</label>
+                    <input type="file" name="chapterpicture" id="chapterpicture">
                 </div>
                 <div class="inputBox">
                     <label for="chapter">Texte</label>
                     <textarea name="chapter" id="chapter"><?php echo $errorHandler->getValue('chapter')?></textarea>
-                    <?php echo $errorHandler->getFirstError('publish_at'); ?>
+                    <?php echo $errorHandler->getFirstError('chapter'); ?>
                 </div>
                 <div class="inputBox">
                     <label for="publish_at">Date de publication</label>

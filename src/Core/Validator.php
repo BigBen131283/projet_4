@@ -135,7 +135,7 @@
                     return '<p class="myerror">'.$this->errors["$attribute"][0].'</p>';
                 }
             }
-            return '<p class="hidden"></p>';
+            return;
         }
 
         // -------------------------------------------------------------------

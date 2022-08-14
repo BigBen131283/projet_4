@@ -133,7 +133,7 @@ body
     height: auto;
     min-height: 400px;
     max-height: 600px;
-    overflow: scroll;
+    overflow: auto;
     background: rgba(255,255,255,0.8);
     border-radius: 5px;
     margin: 10px 0 10px 0;

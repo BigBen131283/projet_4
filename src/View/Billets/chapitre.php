@@ -2,17 +2,20 @@
     <?php echo $errorHandler->getFirstError('likestatus'); ?>
     <article>
         <h1> <a href="/billets/chapitre/<?= $billet->id?>"><?= $billet->title?></a></h1>
+        <img src="/images/chapter_pictures/<?= 'default.jpg'?>" alt="Illustration">
         <p><?= html_entity_decode(stripslashes($billet->chapter))?></p>
-        <p>Publié le : <?= $billet->publish_at?></p>
+        <p class="publish_at">Publié le : <?= $billet->publish_at?></p>
 
         <?php if($loggedUser->isLogged()):?>
         <ul class="likes">
             <li id="like">
                 <ion-icon name="thumbs-up-outline" id="iconlike"></ion-icon>
+                <p>J'aime</p>
                 <p class="likescount"></p>
             </li>
             <li id="dislike">
                 <ion-icon name="thumbs-down-outline" id="icondislike"></ion-icon>
+                <p>Je n'aime pas</p>
                 <p class="dislikescount"></p>
             </li>
         </ul>
@@ -20,10 +23,12 @@
             <ul class="likes">
             <li>
                 <ion-icon name="thumbs-up-outline"></ion-icon>
+                <p>J'aime</p>
                 <p class="likescount"></p>
             </li>
             <li>
                 <ion-icon name="thumbs-down-outline"></ion-icon>
+                <p>Je n'aime pas</p>
                 <p class="dislikescount"></p>
             </li>
         </ul>
@@ -47,17 +52,21 @@
             <button type="submit">Commenter</button>
         </form>
     <?php endif;?>
-    <div class="comment">
+    <div class="comments">
         <h2>Commentaires des lecteurs</h2>
         <?php foreach($comments as $comment): ?>
-            <h2><?= $comment->pseudo?></h2>
-            <p class="content"><?= html_entity_decode(stripslashes($comment->content))?></p>
-            <p class="publication"><?= $comment->publish_at?></p>
-            <?php if($comment->report === '30'):?>
-                <a href="/comments/signalcomment/<?= $billet->id?>/<?= $comment->id?>">Signaler</a>
-            <?php else:?>
-                <p>Ce commentaire a été modéré</p>
-            <?php endif;?>
+            <div class="comment">
+                <p class="content"><?= html_entity_decode(stripslashes($comment->content))?></p>
+                <div class="identity">
+                    <h3><?= $comment->pseudo?></h3>
+                    <p class="publication"><?= $comment->publish_at?></p>
+                </div>
+                <?php if($comment->report === '30'):?>
+                    <a class="signal" href="/comments/signalcomment/<?= $billet->id?>/<?= $comment->id?>">Signaler</a>
+                <?php else:?>
+                    <p class="modo">Ce commentaire a été modéré</p>
+                <?php endif;?>
+            </div>
         <?php endforeach ?>
     </div>
 </div>

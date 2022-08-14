@@ -41,6 +41,7 @@ body
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 0px 15px;
 }
 
 article
@@ -48,49 +49,258 @@ article
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 90%;
+    width: 100%;
     margin-top: 70px;
+}
+
+article h1
+{
+    padding: 20px 0px 15px;
+    border-bottom: 1px solid var(--backgroundclr);
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
 }
 
 article h1 a
 {
     color: var(--primaryclr);
     text-decoration: none;
+    width: 100%;
 }
 
-article ul
+article img
+{
+    padding: 10px;
+    border-bottom: 1px solid var(--backgroundclr);
+}
+
+article p
+{
+    text-align: justify;
+    padding-bottom: 10px;
+}
+
+article p.publish_at
+{
+    padding: 20px 5px;
+    border-top: 1px solid var(--backgroundclr);
+    border-bottom: 1px solid var(--backgroundclr);
+}
+
+article ul.likes
 {
     list-style: none;
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 10px 0px;
+    border-bottom: 1px solid var(--backgroundclr);
+}
+
+article ul.likes li
+{
+    width: 100%;
+    padding: 5px 0px;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
 }
 
-article ul li
+article ul.likes li ion-icon
 {
+    width: 20%;
+    font-size: 1.5rem;
+}
+
+article ul.likes li p
+{
+    width: 40%;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
+    padding-bottom: 0px;
+    color: var(--backgroundclr);
+}
+
+article ul.likes li p.likescount, article ul.likes li p.dislikescount
+{
+    justify-content: center;
+    font-weight: bold;
 }
 
 article .likes #like
 {
-    font-size: 2rem;
     color: green;
 }
 
 article .likes #dislike
 {
-    font-size: 2rem;
     color: red;
 }
 
-article .likes #dislike p, article .likes #like p
+form
 {
-    color: var(--clr);
+    width: 100%;
+    padding: 10px 8px;
+    border-bottom: 1px solid var(--backgroundclr);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-article .likes #dislike ion-icon
+.inputBox
 {
-    text-decoration-color: red;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.inputBox label
+{
+    color: var(--primaryclr);
+    margin: 10px 0px;
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.inputBox textarea
+{
+    margin: 10px 0px;
+    width: 90%;
+}
+
+.inputBox .tox
+{
+    width: 100%;
+}
+
+.myerror
+{
+    width: 100%;
+    padding: 12px 0px 0px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: justify;
+    color: var(--secondaryclr);
+    animation: glow 2s linear infinite;
+}
+
+@keyframes glow
+{
+    0%
+    {
+        text-shadow: 0 0 10px var(--primaryclr);
+    }
+    25%
+    {
+        text-shadow: 0 0 10px var(--primaryclr),
+                     0 0 20px var(--primaryclr);
+    }
+    50%
+    {
+        text-shadow: 0 0 10px var(--primaryclr),
+                     0 0 20px var(--primaryclr),
+                     0 0 40px var(--primaryclr);
+    }
+    75%
+    {
+        text-shadow: 0 0 10px var(--primaryclr),
+                     0 0 20px var(--primaryclr);
+    }
+    100%
+    {
+        text-shadow: 0 0 10px var(--primaryclr);
+    }
+}
+
+form button
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    width: 100px;
+    margin: 20px;
+    font-size: 0.8rem;
+    font-weight: 400;
+    text-decoration: none;
+    color: var(--alternatebgclr);
+    background-color: var(--secondaryclr);
+    border: 3px solid var(--primaryclr);
+    border-radius: 20px;
+}
+
+.comments
+{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 20px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--backgroundclr);
+}
+
+.comments h2
+{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--secondaryclr);
+    font-size: 1.2rem;
+    padding: 10px 0px;
+}
+
+.comments .comment
+{
+    width: 100%;
+    background: rgba(0,0,0,.4);
+    padding: 10px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.comments .comment .content, .comments .comment p
+{
+    text-align: justify;
+    color: var(--pclr);
+}
+
+.comments .identity, .comments .identity p
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--secondaryclr);
+    width: 100%;
+}
+
+.comments .identity h3
+{
+    font-weight: 400;
+}
+
+.comments .comment .signal
+{
+    text-decoration: none;
+    width: 100px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+    border: 3px solid var(--primaryclr);
 }

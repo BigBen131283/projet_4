@@ -32,6 +32,10 @@
                     "publish_at"=>[
                         "value"=>$params['publish_at'],
                         "rules"=>[self::RULE_PUBLISHDATE]
+                    ],
+                    "chapter_picture"=>[
+                        "value"=>$params['chapter_picture'],
+                        "rules"=>[["rule"=>self::RULE_FILETYPE,'location'=>'chapter_pictures']]
                     ]
                 ];
             }

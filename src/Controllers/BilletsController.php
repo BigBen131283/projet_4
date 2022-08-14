@@ -39,8 +39,6 @@
             $allComments = $commentsDB->getComments($id);
             $user = Main::$main->getUsersModel();
             $validator = new CommentsValidator();
-            
-            // var_dump($result); die;
 
             $this->render('billets/chapitre', 'php', 'defaultchapter',
             ['errorHandler' => $validator,'billet' => $result, 'loggedUser' => $user, 'comments' => $allComments]);
@@ -60,6 +58,8 @@
             if($request->isPost())
             {
                 $body = $request->getBody();
+                $result = $this->uploadImage($validator);
+                $body = array_merge($body, $result);
                 $errorList = $validator->checkBilletEntries($body);
 
                 if(!$validator->hasError())
@@ -116,6 +116,61 @@
                 $validator->addValue('chapter', $data['chapter']);
 
                 $this->render('billets/editbillet', "php", 'defaultchapter', ['workInProgress' => $validator,'loggedUser' => $user]);
+            }
+        }
+
+        protected function uploadImage($validator)
+        {
+            $result = array();
+
+            if($_FILES['chapter_picture']['error'] === UPLOAD_ERR_OK) 
+            { 
+                $filename = $_FILES["chapter_picture"]["name"];
+                $filetype = $_FILES["chapter_picture"]["type"];
+                $filesize = $_FILES["chapter_picture"]["size"];
+                $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION)); 
+                // $logger->console('*** Uploaded file :'.$filename.'.'.$filetype);
+                // $validator->addValue("chapter_picture", $filename.'.'.$extension);
+                $validator->addValue("chapter_picture", $filename);
+                
+                $target_dir = "/images/chapter_pictures";
+                $target_file = $target_dir .'\/'.$_FILES["chapter_picture"]["name"];
+                if($filesize > 1024 * 1024)
+                {
+                    $validator->addError('uploadError', 'Fichier trop volumineux');
+                    return $result;
+                }                    
+                // On génère un nom unique
+                $newname = md5(uniqid());
+                // On génère le chemin complet
+                $newfilename = ROOT."/public".IMAGEROOTCHAPTER."$newname.$extension";
+
+                // On déplace le fichier de tmp à uploads en le renommant
+                if(!move_uploaded_file($_FILES["chapter_picture"]["tmp_name"], $newfilename))
+                {
+                    $validator->addError('uploadError', 'Déplacement fichier impossible.');
+                    return $result;
+                }
+                else
+                {   
+                    chmod($newfilename, 0644);  
+
+                    $validator->addValue("chapter_picture", $newname.'.'.$extension);
+                    $result['chapter_picture'] = $newname.'.'.$extension;
+                    return $result;
+                }
+            }
+            else 
+            {
+                if($_FILES['chapter_picture']['error'] === UPLOAD_ERR_NO_FILE)
+                {
+                    $validator->addError('uploadError', 'No file.');
+                }
+                else
+                {
+                    $validator->addError('uploadError', 'Upload error.');
+                }
+                return $result;
             }
         }
 

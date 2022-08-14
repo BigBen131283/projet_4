@@ -28,6 +28,7 @@ class BilletDB extends Db
         $chapter = $params['chapter'];
         $publish_at = $params['publish_at'];
         $published = 1;
+        $chapterpicture = $params['chapter_picture'];
         $usersModel = Main::$main->getUsersModel();
         $userId = $usersModel->getId();
         date_default_timezone_set('Europe/Brussels');
@@ -43,8 +44,8 @@ class BilletDB extends Db
                 $published = 0;
             }
 
-            $statement = $this->db->prepare('INSERT INTO billets (title, abstract, chapter, publish_at, users_id, published) 
-                                                VALUES (:title, :abstract, :chapter, :publish_at, :users_id, :published)');
+            $statement = $this->db->prepare('INSERT INTO billets (title, abstract, chapter, publish_at, users_id, published, chapter_picture) 
+                                                VALUES (:title, :abstract, :chapter, :publish_at, :users_id, :published, :chapter_picture)');
             
             $statement->bindValue(':title', $title);
             $statement->bindValue(':abstract', $abstract);
@@ -52,6 +53,7 @@ class BilletDB extends Db
             $statement->bindValue(':publish_at', $publish_at);
             $statement->bindValue(':users_id', $userId);
             $statement->bindValue(':published', $published);
+            $statement->bindValue(':chapter_picture', $chapterpicture);
 
             $statement->execute();
             return true; 
@@ -90,7 +92,7 @@ class BilletDB extends Db
         try
         {
             $this->db = Db::getInstance();
-            $statement = $this->db->prepare('SELECT id, title, abstract, chapter FROM billets 
+            $statement = $this->db->prepare('SELECT id, title, abstract, chapter, chapter_picture FROM billets 
                                                 WHERE id = :id');
             $statement->bindValue(':id', $id);
 
@@ -138,7 +140,7 @@ class BilletDB extends Db
         try
         {
             $this->db = Db::getInstance();
-            $statement = $this->db->prepare('SELECT id, title, abstract, publish_at FROM billets 
+            $statement = $this->db->prepare('SELECT id, title, abstract, publish_at, chapter_picture FROM billets 
                                                 WHERE published = 1');
 
             $statement->execute();

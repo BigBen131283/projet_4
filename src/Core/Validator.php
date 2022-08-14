@@ -82,16 +82,19 @@
                         {
                             if(!empty($_FILES))
                             {
-                                $target_dir = "/images/profile_pictures";
-                                $target_file = $target_dir .'\/'.$_FILES["profilepicture"]["name"];
+                                $location = $compositRule["location"];
+                                $indice = substr($location, 0, strlen($location)-1);
+                                $target_dir = "/images/$location";
+                                // var_dump($indice); die;
+                                $target_file = $target_dir .'\/'.$_FILES["$indice"]["name"];
                                 $allowed = [
                                     "jpg" => "image/jpeg",
                                     "jpeg" => "image/jpeg",
                                     "png" => "image/png"
                                 ];
-                                $filename = $_FILES["profilepicture"]["name"];
-                                $filetype = $_FILES["profilepicture"]["type"];
-                                $filesize = $_FILES["profilepicture"]["size"];
+                                $filename = $_FILES["$indice"]["name"];
+                                $filetype = $_FILES["$indice"]["type"];
+                                $filesize = $_FILES["$indice"]["size"];
                                 
                                 $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
                                 if(!isset($allowed[$extension]))

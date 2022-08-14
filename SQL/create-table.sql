@@ -67,6 +67,7 @@ CREATE TABLE IF NOT EXISTS projet4.billets (
   users_id INT NOT NULL,
   thumbs_up INT(11) NOT NULL DEFAULT 0,
   thumbs_down INT(11) NOT NULL DEFAULT 0,
+  chapter_picture VARCHAR(64) NOT NULL DEFAULT 'default.jpg',
   PRIMARY KEY (id))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;

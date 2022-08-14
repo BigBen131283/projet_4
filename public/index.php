@@ -8,6 +8,8 @@ use App\Core\Main;
 define('ROOT', dirname(__DIR__));
 define('IMAGEROOT', '/images/profile_pictures/');
 define('DEFAULTIMAGE', 'defaultuserpicture.png');
+define('IMAGEROOTCHAPTER', '/images/chapter_pictures/');
+define('DEFAULTIMAGECHAPTER', 'default.jpg');
 // var_dump(ROOT);
 // On importe l'autoloader
 require_once ROOT.'./src/Autoloader.php';

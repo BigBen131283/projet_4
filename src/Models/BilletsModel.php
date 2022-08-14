@@ -12,6 +12,7 @@ class BilletsModel extends Model
     protected $publish_at;
     protected $published;
     protected $users_id;
+    protected $chapter_image;
 
     public function __construct()
     {
@@ -134,6 +135,17 @@ class BilletsModel extends Model
     public function setUsers_id($users_id):self
     {
         $this->users_id = $users_id;
+        return $this;
+    }
+
+    public function getChapterImage()
+    {
+        return $this->chapter_image;
+    }
+
+    public function setChapterImage($chapter_image)
+    {
+        $this->chapter_image = $chapter_image;
         return $this;
     }
 }

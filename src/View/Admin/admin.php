@@ -77,7 +77,7 @@
             <div class="adminbox" id="chapters"></div>
         </div>
         <div id="write">
-            <form action="/billets/createbillet" method="post" novalidate>
+            <form action="/billets/createbillet" method="post" novalidate enctype="multipart/form-data">
                 <?php echo $errorHandler->getFirstError('flashmessage'); ?>
                 <div class="inputBox">
                     <label for="title">Titre</label>
@@ -90,8 +90,10 @@
                     <?php echo $errorHandler->getFirstError('abstract'); ?>
                 </div>
                 <div class="inputBox">
-                    <label for="chapterpicture">Photo</label>
-                    <input type="file" name="chapterpicture" id="chapterpicture">
+                    <label for="chapter_picture">Photo</label>
+                    <input type="file" name="chapter_picture" id="chapterpicture">
+                    <?php echo $errorHandler->getFirstError('uploadError'); ?>
+                    <?php echo $errorHandler->getFirstError('chapter_picture'); ?>
                 </div>
                 <div class="inputBox">
                     <label for="chapter">Texte</label>

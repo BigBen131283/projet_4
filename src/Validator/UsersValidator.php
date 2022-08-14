@@ -79,7 +79,7 @@
                     "profilepicture"=>[
                         "value"=>$params['profile_picture'],
                         // "rules"=>[self::RULE_FILETYPE, ["rule"=>self::RULE_FILESIZE, 'tmax'=>1]]
-                        "rules"=>[self::RULE_FILETYPE]
+                        "rules"=>["rule"=>self::RULE_FILETYPE,'location'=>'profile_pictures']
                     ]
                 ];
             }

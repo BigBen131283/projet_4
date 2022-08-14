@@ -4,7 +4,7 @@
     <?php foreach($billets as $billet):?>
         <article>
             <h2> <a href="/billets/chapitre/<?= $billet->id?>"><?= $billet->title?></a></h2>
-            <img src="/images/chapter_pictures/default.jpg" alt="illustration">
+            <img src="/images/chapter_pictures/<?= $billet->chapter_picture?>" alt="illustration">
             <p>Publié le : <?= $billet->publish_at?></p>
         </article>
     <?php endforeach?>

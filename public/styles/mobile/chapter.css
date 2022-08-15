@@ -266,6 +266,7 @@ form button
     width: 100%;
     background: rgba(0,0,0,.4);
     padding: 10px;
+    margin: 7px 0px;
     border-radius: 20px;
     display: flex;
     flex-direction: column;
@@ -275,6 +276,7 @@ form button
 
 .comments .comment .content, .comments .comment p
 {
+    width: 100%;
     text-align: justify;
     color: var(--pclr);
 }
@@ -282,15 +284,22 @@ form button
 .comments .identity, .comments .identity p
 {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
     color: var(--secondaryclr);
     width: 100%;
 }
 
-.comments .identity h3
+.comments .identity h3, .comments .identity p
 {
     font-weight: 400;
+    font-size: 0.85rem;
+}
+
+.comments .identity p
+{
+    text-align: right;
 }
 
 .comments .comment .signal
@@ -303,4 +312,13 @@ form button
     align-items: center;
     padding: 8px;
     border: 3px solid var(--primaryclr);
+    border-radius: 20px;
+    background: var(--alternatebgclr);
+    color: var(--secondaryclr);
+    font-weight: 500;
+}
+
+.tox-notifications-container
+{
+    display: none;
 }

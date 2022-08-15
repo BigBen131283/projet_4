@@ -40,6 +40,8 @@
             $user = Main::$main->getUsersModel();
             $validator = new CommentsValidator();
 
+            // var_dump($result); die;
+
             $this->render('billets/chapitre', 'php', 'defaultchapter',
             ['errorHandler' => $validator,'billet' => $result, 'loggedUser' => $user, 'comments' => $allComments]);
         }

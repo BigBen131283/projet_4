@@ -2,7 +2,7 @@
     <?php echo $errorHandler->getFirstError('likestatus'); ?>
     <article>
         <h1> <a href="/billets/chapitre/<?= $billet->id?>"><?= $billet->title?></a></h1>
-        <img src="/images/chapter_pictures/<?= 'default.jpg'?>" alt="Illustration">
+        <img src="/images/chapter_pictures/<?= $billet->chapter_picture?>" alt="Illustration">
         <p><?= html_entity_decode(stripslashes($billet->chapter))?></p>
         <p class="publish_at">Publié le : <?= $billet->publish_at?></p>
 
@@ -61,10 +61,10 @@
                     <h3><?= $comment->pseudo?></h3>
                     <p class="publication"><?= $comment->publish_at?></p>
                 </div>
-                <?php if($comment->report === '30'):?>
+                <?php if($loggedUser->isLogged() && $comment->report === '30'):?>
                     <a class="signal" href="/comments/signalcomment/<?= $billet->id?>/<?= $comment->id?>">Signaler</a>
                 <?php else:?>
-                    <p class="modo">Ce commentaire a été modéré</p>
+                    <p class="modo">Ce commentaire a été modéré</p>        
                 <?php endif;?>
             </div>
         <?php endforeach ?>

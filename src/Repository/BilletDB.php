@@ -116,7 +116,7 @@ class BilletDB extends Db
         try
         {
             $this->db = Db::getInstance();
-            $statement = $this->db->prepare('SELECT id, title, chapter, publish_at FROM billets 
+            $statement = $this->db->prepare('SELECT id, title, chapter, publish_at, chapter_picture FROM billets 
                                                 WHERE id = :id');
             $statement->bindValue(':id', $id);
 

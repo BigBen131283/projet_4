@@ -1,0 +1,60 @@
+body
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: url(/images/alaska6.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    min-height: 100vh;
+}
+
+.site
+{
+    width: 90%;
+    max-height: 90vh;
+    margin-top: 60px;
+    overflow: auto;
+    background: rgba(255,255,255,0.8);
+}
+
+article
+{
+    margin-top: 0;
+}
+
+article ul.likes
+{
+    flex-direction: row;
+}
+
+article ul.likes li p.likescount, article ul.likes li p.dislikescount
+{
+    justify-content: flex-start;
+}
+
+article ul.likes li p
+{
+    width: 200px;
+}
+
+form button
+{
+    height: 40px;
+    width: 130px;
+    font-weight: 500;
+    font-size: .9rem;
+}
+
+.comments .comment
+{
+    background: rgba(0,0,0,.7);
+    width: 50%;
+}
+
+.comments .identity, .comments .identity p
+{
+    color: var(--primaryclr);
+}

@@ -2,6 +2,8 @@ nav
 {
     width: 100%;
     flex-direction: row;
+    height: 60px;
+    max-height: none;
 }
 
 nav .sup

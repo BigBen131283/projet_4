@@ -1,0 +1,60 @@
+.site
+{
+    width: 70%;
+    max-width: 1200px;
+}
+
+.site::-webkit-scrollbar
+{
+    display: none;
+}
+
+article img
+{
+    max-height: 200px;
+    object-fit: cover;
+    object-position: center;
+    cursor: pointer;
+    transition: max-height 0.5s;
+}
+
+article img:hover
+{
+    max-height: 600px;
+    transition: max-height 0.5s;
+}
+
+article ul.likes #like, article ul.likes #dislike
+{
+    cursor: pointer;
+}
+
+form button
+{
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+form button:hover
+{
+    letter-spacing: 2.5px;
+    box-shadow: 0 0 10px var(--primaryclr),
+                0 0 20px var(--primaryclr),
+                0 0 40px var(--primaryclr);
+}
+
+.comments .comment .signal
+{
+    transition: all 0.5s;
+}
+
+.comments .comment .signal:hover
+{
+    letter-spacing: 2px;
+    box-shadow: 0 0 10px var(--primaryclr),
+                0 0 20px var(--primaryclr),
+                0 0 40px var(--primaryclr);
+    color: var(--pclr);
+    background: var(--secondaryclr);
+}
+

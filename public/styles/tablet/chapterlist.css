@@ -43,6 +43,10 @@ body
 .site
 {
     width: 90%;
+    height: auto;
+    max-height: 90vh;
+    overflow-x: hidden;
+    overflow-y: auto;
     background: rgba(255,255,255,.5);
     max-width: 1024px;
 }

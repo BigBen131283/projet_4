@@ -19,6 +19,7 @@ class UsersController extends Controller
     {
         $request = new Request;
         $logger = new Logger(Users::class);
+        $user = Main::$main->getUsersModel();
 
         $validator = new UsersValidator();
         if($request->isPost())
@@ -37,24 +38,24 @@ class UsersController extends Controller
                 {
                     // ici tout est ok
                     Main::$main->login($credentials->id);
-                    Main::$main->response->redirect('/');
+                    Main::$main->response->redirect('/#accueil');
                 }
                 else
                 {
                     $validator->addError('loginerror', 'Pseudo inconnu ou mot de passe erroné ou compte en attente de validation');
-                    $this->render('users/login', "php", 'defaultLogin', ['errorHandler' => $validator]);
+                    $this->render('users/login', "php", 'defaultLogin', ['loggedUser'=>$user, 'errorHandler' => $validator]);
                 }
             }
             else
             {
-                $this->render('users/login', "php", 'defaultLogin', ['errorHandler' => $validator]);
+                $this->render('users/login', "php", 'defaultLogin', ['loggedUser'=>$user, 'errorHandler' => $validator]);
             }
         }
         else
         {   
             // This is perhaps a get, send an empty error array
 
-            $this->render('users/login', "php", 'defaultLogin', ['errorHandler' => $validator]);
+            $this->render('users/login', "php", 'defaultLogin', ['loggedUser'=>$user, 'errorHandler' => $validator]);
         }
     }
 
@@ -62,6 +63,7 @@ class UsersController extends Controller
     {
         $request = new Request;
         $logger = new Logger(Users::class);
+        $user = Main::$main->getUsersModel();
 
         $validator = new UsersValidator();
         if($request->isPost())
@@ -102,15 +104,15 @@ class UsersController extends Controller
                     $validator->addError('flashmessage', 'Oups, pb bdd');
                 }
             }    
-            $this->render('users/register', "php", 'defaultLogin', ['errorHandler' => $validator]);        
+            $this->render('users/register', "php", 'defaultLogin', ['loggedUser'=>$user, 'errorHandler' => $validator]);        
         }
-        $this->render('users/register', "php", 'defaultLogin', ['errorHandler' => $validator]);
+        $this->render('users/register', "php", 'defaultLogin', ['loggedUser'=>$user, 'errorHandler' => $validator]);
     }
 
     public function logout()
     {
         Main::$main->logout();
-        Main::$main->response->redirect('/');
+        Main::$main->response->redirect('/#accueil');
     }
 
     public function profil()
@@ -120,6 +122,7 @@ class UsersController extends Controller
         $usersModel = Main::$main->getUsersModel();
         $dbAccess = new UsersDB();
         $validator = new UsersValidator();
+        $user = Main::$main->getUsersModel();
         // get current pseudo, picture and mail values before calling the form
         // Whenever it's a get or post
         $validator->addValue("email", $usersModel->getEmail());
@@ -146,7 +149,7 @@ class UsersController extends Controller
                     if($filesize > 1024 * 1024)
                     {
                         $validator->addError('uploadError', 'Fichier trop volumineux');
-                        $this->render('users/profil', "php", 'defaultLogin', ['updateUser' => $validator]);
+                        $this->render('users/profil', "php", 'defaultLogin', ['loggedUser'=>$user, 'updateUser' => $validator]);
                         return;
                     }                    
                     // On génère un nom unique
@@ -158,7 +161,7 @@ class UsersController extends Controller
                     if(!move_uploaded_file($_FILES["profilepicture"]["tmp_name"], $newfilename))
                     {
                         $validator->addError('uploadError', 'Déplacement fichier impossible.');
-                        $this->render('users/profil', "php", 'defaultLogin', ['updateUser' => $validator]);
+                        $this->render('users/profil', "php", 'defaultLogin', ['loggedUser'=>$user, 'updateUser' => $validator]);
                     }
                     else
                     {   // Finalement on réaffiche la form avec la nouvelle image
@@ -215,11 +218,11 @@ class UsersController extends Controller
                 else
                 {
                 $validator->addError('uploadError', 'Upload error.');
-                $this->render('users/profil', "php", 'defaultLogin', ['updateUser' => $validator]);
+                $this->render('users/profil', "php", 'defaultLogin', ['loggedUser'=>$user, 'updateUser' => $validator]);
                 }
             }
         }
-        $this->render('users/profil', 'php', 'defaultLogin', ['updateUser' => $validator]);
+        $this->render('users/profil', 'php', 'defaultLogin', ['loggedUser'=>$user, 'updateUser' => $validator]);
     }
 
     public function registerconfirmed() 
@@ -236,17 +239,17 @@ class UsersController extends Controller
             if($request->isGet()&& $selector) {
                 if($usersDB->confirmRegistration($selector, $token)) {
                     $logger->db('User registration confirmation failed');
-                    Main::$main->response->redirect('/');
+                    Main::$main->response->redirect('/#accueil');
                 }
             }
             else {
                 $logger->db('Invalid register confirmation request');
-                Main::$main->response->redirect('/');
+                Main::$main->response->redirect('/#accueil');
             }
         }
         catch(PDOException  $e) {
             $logger->db($e->getMessage());
-            Main::$main->response->redirect('/');
+            Main::$main->response->redirect('/#accueil');
         }
         $logger->db('Confirmation request processed for ');
         Main::$main->response->redirect('/users/login');

@@ -34,6 +34,5 @@
         </div>
         <div class="links">
             <button type="submit">Mettre à jour</button>
-            <button><a href="/home/index">Retour</a></button>
         </div>
     </form>

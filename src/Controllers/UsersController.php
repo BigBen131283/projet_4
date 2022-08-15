@@ -132,10 +132,10 @@ class UsersController extends Controller
         if($request->isPost())
         {
             $body = $request->getBody();
-            if($_FILES['profilepicture']['error'] === UPLOAD_ERR_OK) {  // Upload worked ? 
-                $filename = $_FILES["profilepicture"]["name"];
-                $filetype = $_FILES["profilepicture"]["type"];
-                $filesize = $_FILES["profilepicture"]["size"];
+            if($_FILES['profile_picture']['error'] === UPLOAD_ERR_OK) {  // Upload worked ? 
+                $filename = $_FILES["profile_picture"]["name"];
+                $filetype = $_FILES["profile_picture"]["type"];
+                $filesize = $_FILES["profile_picture"]["size"];
                 $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION)); 
                 // $logger->console('*** Uploaded file :'.$filename.'.'.$filetype);
                 $validator->addValue("profile_picture", $filename.'.'.$filetype);
@@ -145,7 +145,7 @@ class UsersController extends Controller
                 if(!$validator->hasError())
                 {
                     $target_dir = "/images/profile_pictures";
-                    $target_file = $target_dir .'\/'.$_FILES["profilepicture"]["name"];
+                    $target_file = $target_dir .'\/'.$_FILES["profile_picture"]["name"];
                     if($filesize > 1024 * 1024)
                     {
                         $validator->addError('uploadError', 'Fichier trop volumineux');
@@ -158,7 +158,7 @@ class UsersController extends Controller
                     $newfilename = ROOT."/public".IMAGEROOT."$newname.$extension";
     
                     // On déplace le fichier de tmp à uploads en le renommant
-                    if(!move_uploaded_file($_FILES["profilepicture"]["tmp_name"], $newfilename))
+                    if(!move_uploaded_file($_FILES["profile_picture"]["tmp_name"], $newfilename))
                     {
                         $validator->addError('uploadError', 'Déplacement fichier impossible.');
                         $this->render('users/profil', "php", 'defaultLogin', ['loggedUser'=>$user, 'updateUser' => $validator]);
@@ -200,7 +200,7 @@ class UsersController extends Controller
             }
             else 
             {
-                if($_FILES['profilepicture']['error'] === UPLOAD_ERR_NO_FILE)
+                if($_FILES['profile_picture']['error'] === UPLOAD_ERR_NO_FILE)
                 {
                     if($dbAccess->updateUser($usersModel->getId(), 
                                              $body['email'],

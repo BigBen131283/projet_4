@@ -85,7 +85,6 @@
                                 $location = $compositRule["location"];
                                 $indice = substr($location, 0, strlen($location)-1);
                                 $target_dir = "/images/$location";
-                                // var_dump($indice); die;
                                 $target_file = $target_dir .'\/'.$_FILES["$indice"]["name"];
                                 $allowed = [
                                     "jpg" => "image/jpeg",

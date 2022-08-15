@@ -76,10 +76,10 @@
                         "value"=>$params['pseudo'],
                         "rules"=>[self::RULE_NOTEMPTY]
                     ],
-                    "profilepicture"=>[
+                    "profile_picture"=>[
                         "value"=>$params['profile_picture'],
                         // "rules"=>[self::RULE_FILETYPE, ["rule"=>self::RULE_FILESIZE, 'tmax'=>1]]
-                        "rules"=>["rule"=>self::RULE_FILETYPE,'location'=>'profile_pictures']
+                        "rules"=>[["rule"=>self::RULE_FILETYPE,'location'=>'profile_pictures']]
                     ]
                 ];
             }

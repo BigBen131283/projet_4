@@ -61,10 +61,10 @@
                     <h3><?= $comment->pseudo?></h3>
                     <p class="publication"><?= $comment->publish_at?></p>
                 </div>
-                <?php if($loggedUser->isLogged() && $comment->report === '30'):?>
-                    <a class="signal" href="/comments/signalcomment/<?= $billet->id?>/<?= $comment->id?>">Signaler</a>
-                <?php else:?>
-                    <p class="modo">Ce commentaire a été modéré</p>        
+                    <?php if($loggedUser->isLogged() && $comment->report === '30'):?>
+                        <a class="signal" href="/comments/signalcomment/<?= $billet->id?>/<?= $comment->id?>">Signaler</a>
+                    <?php elseif($loggedUser->isLogged() && $comment->report === '40'):?>
+                        <p class="modo">Ce commentaire a été modéré</p>
                 <?php endif;?>
             </div>
         <?php endforeach ?>

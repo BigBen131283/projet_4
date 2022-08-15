@@ -111,6 +111,21 @@
                                 $this->addError($key, $rule); 
                             }
                         }
+                        if($rule === self::RULE_FILESIZE)
+                        {
+                            if(!empty($_FILES))
+                            {
+                                $indice = $compositRule["fileaccesskey"];
+                                $filesize = $_FILES["$indice"]["size"];                                                                
+                                $limit = $compositRule["tmax"];
+                                
+                                if($filesize > $limit * 1024 * 1024)
+                                {
+                                    $message = str_replace('{tmax}', $limit, $rule);
+                                    $this->addError($key, $message);
+                                }
+                            }                             
+                        }
                     }
                     $this->values[$key] = $checkEntry["value"];
                 }

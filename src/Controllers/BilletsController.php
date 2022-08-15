@@ -59,19 +59,27 @@
 
             if($request->isPost())
             {
+                $filename = $_FILES["chapter_picture"]["name"];
+                $filetype = $_FILES["chapter_picture"]["type"];
+                $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+                
                 $body = $request->getBody();
-                $result = $this->uploadImage($validator);
-                $body = array_merge($body, $result);
+                $body["chapter_picture"] = $filename.'.'.$filetype;
                 $errorList = $validator->checkBilletEntries($body);
 
                 if(!$validator->hasError())
                 {
                     $billetDB = new BilletDB();
-                    
-                    if($billetDB->createBillet($body))
+                    $newfilename = $this->uploadImage();
+
+                    if($newfilename)
                     {
-                        // Main::$main->login($credentials->id);
-                        Main::$main->response->redirect('/admin/admin');
+                        $body["chapter_picture"] = $newfilename;
+                        if($billetDB->createBillet($body))
+                        {
+                            // Main::$main->login($credentials->id);
+                            Main::$main->response->redirect('/admin/admin');
+                        }
                     }    
                 }
                 $this->render('admin/admin', 'php', 'defaultadmin', ['loggedUser'=>$user, 'signaledComments'=>$signaledComments, 
@@ -121,27 +129,19 @@
             }
         }
 
-        protected function uploadImage($validator)
+        protected function uploadImage()
         {
-            $result = array();
 
             if($_FILES['chapter_picture']['error'] === UPLOAD_ERR_OK) 
             { 
                 $filename = $_FILES["chapter_picture"]["name"];
-                $filetype = $_FILES["chapter_picture"]["type"];
-                $filesize = $_FILES["chapter_picture"]["size"];
                 $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION)); 
                 // $logger->console('*** Uploaded file :'.$filename.'.'.$filetype);
-                // $validator->addValue("chapter_picture", $filename.'.'.$extension);
-                $validator->addValue("chapter_picture", $filename);
+     
                 
                 $target_dir = "/images/chapter_pictures";
                 $target_file = $target_dir .'\/'.$_FILES["chapter_picture"]["name"];
-                if($filesize > 1024 * 1024)
-                {
-                    $validator->addError('uploadError', 'Fichier trop volumineux');
-                    return $result;
-                }                    
+               
                 // On génère un nom unique
                 $newname = md5(uniqid());
                 // On génère le chemin complet
@@ -150,29 +150,25 @@
                 // On déplace le fichier de tmp à uploads en le renommant
                 if(!move_uploaded_file($_FILES["chapter_picture"]["tmp_name"], $newfilename))
                 {
-                    $validator->addError('uploadError', 'Déplacement fichier impossible.');
-                    return $result;
+                    return null;
                 }
                 else
                 {   
                     chmod($newfilename, 0644);  
-
-                    $validator->addValue("chapter_picture", $newname.'.'.$extension);
-                    $result['chapter_picture'] = $newname.'.'.$extension;
-                    return $result;
+                    return "$newname.$extension";
                 }
             }
             else 
             {
                 if($_FILES['chapter_picture']['error'] === UPLOAD_ERR_NO_FILE)
                 {
-                    $validator->addError('uploadError', 'No file.');
+                    return null;
                 }
                 else
                 {
-                    $validator->addError('uploadError', 'Upload error.');
+                    return null;
                 }
-                return $result;
+                return null;
             }
         }
 

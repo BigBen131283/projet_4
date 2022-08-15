@@ -143,15 +143,7 @@ class UsersController extends Controller
                 $body['profile_picture'] = "$filename.'.'.$filetype"; // On ajoute manuellement l'image car elle ne s'ajoute automatiquement pas à la construction de $body
                 $errorList = $validator->checkUpdateEntries($body);
                 if(!$validator->hasError())
-                {
-                    $target_dir = "/images/profile_pictures";
-                    $target_file = $target_dir .'\/'.$_FILES["profile_picture"]["name"];
-                    if($filesize > 1024 * 1024)
-                    {
-                        $validator->addError('uploadError', 'Fichier trop volumineux');
-                        $this->render('users/profil', "php", 'defaultLogin', ['loggedUser'=>$user, 'updateUser' => $validator]);
-                        return;
-                    }                    
+                {            
                     // On génère un nom unique
                     $newname = md5(uniqid());
                     // On génère le chemin complet

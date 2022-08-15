@@ -83,7 +83,7 @@
                             if(!empty($_FILES))
                             {
                                 $location = $compositRule["location"];
-                                $indice = substr($location, 0, strlen($location)-1);
+                                $indice = $compositRule["fileaccesskey"];
                                 $target_dir = "/images/$location";
                                 $target_file = $target_dir .'\/'.$_FILES["$indice"]["name"];
                                 $allowed = [

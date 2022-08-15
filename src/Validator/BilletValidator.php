@@ -35,7 +35,7 @@
                     ],
                     "chapter_picture"=>[
                         "value"=>$params['chapter_picture'],
-                        "rules"=>[["rule"=>self::RULE_FILETYPE,'location'=>'chapter_pictures']]
+                        "rules"=>[["rule"=>self::RULE_FILETYPE,'location'=>'chapter_pictures', 'fileaccesskey' => 'chapter_picture']]
                     ]
                 ];
             }

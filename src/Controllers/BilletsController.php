@@ -245,6 +245,33 @@
             }
         }
 
+                // JSON GET --------------------------------------------------------
+                public function jsonGetBillet($billetId)
+                {
+                    $billetDB = new BilletDB();
+                    $result = $billetDB->readBillet($billetId);
+                    if($result) 
+                    {
+                        echo json_encode([
+                        'billetId' => $result->id,
+                        'title' => $result->title,
+                        'abstract' => $result->abstract,
+                        'chapter' => $result->chapter,
+                        'publish_at' => $result->publish_at,
+                        'chapter_picture' => $result->chapter_picture,
+                        'message'=> "Billet reçu : $billetId",
+                        'error' => false
+                        ]);
+                    }
+                    else 
+                    {
+                        echo json_encode([  
+                        'message'=> "Billet counters request failed for ID : $billetId",
+                        'error' => true
+                        ]);
+                    }
+                }
+
         // --------------------------------------------------------
         // Update billet counters and the likes table
         // --------------------------------------------------------

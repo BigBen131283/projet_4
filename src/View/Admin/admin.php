@@ -74,7 +74,18 @@
                     </article>
                 <?php endforeach?>
             </div>
-            <div class="adminbox" id="chapters"></div>
+            <div class="adminbox" id="chapters">
+            <?php foreach($adminBillets as $billet):?>
+                    <article>
+                        <h2><a href="/billets/chapitre/<?= $billet->id?>"><?= $billet->title?></a></h2>
+                        <p class="date"><?= $billet->publish_at?></p>
+                        <ul class="modify">
+                            <li class="selectbillet" id="editbillet<?= $billet->id?>">Editer</li>
+                            <li class="selectbillet" id="deletebillet<?= $billet->id?>">Supprimer</li>
+                        </ul>
+                    </article>
+                <?php endforeach?>
+            </div>
         </div>
         <div id="write">
             <form action="/billets/createbillet" method="post" novalidate enctype="multipart/form-data">

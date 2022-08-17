@@ -116,7 +116,7 @@ class BilletDB extends Db
         try
         {
             $this->db = Db::getInstance();
-            $statement = $this->db->prepare('SELECT id, title, chapter, publish_at, chapter_picture FROM billets 
+            $statement = $this->db->prepare('SELECT id, title, abstract, chapter, publish_at, chapter_picture FROM billets 
                                                 WHERE id = :id');
             $statement->bindValue(':id', $id);
 
@@ -142,6 +142,30 @@ class BilletDB extends Db
             $this->db = Db::getInstance();
             $statement = $this->db->prepare('SELECT id, title, abstract, publish_at, chapter_picture FROM billets 
                                                 WHERE published = 1');
+
+            $statement->execute();
+            $result = $statement->fetchAll();
+            // var_dump($result);die;
+
+            if(!empty($result))
+            {
+                return $result;
+            }
+            return array();
+        }
+        catch(PDOException $e)
+        {
+            $this->logger->console($e->getMessage());
+            return false;
+        }
+    }
+
+    public function adminBillets()
+    {
+        try
+        {
+            $this->db = Db::getInstance();
+            $statement = $this->db->prepare('SELECT id, title, publish_at FROM billets ORDER BY publish_at DESC');
 
             $statement->execute();
             $result = $statement->fetchAll();

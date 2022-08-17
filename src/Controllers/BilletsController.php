@@ -70,9 +70,8 @@
                 if(!$validator->hasError())
                 {
                     $billetDB = new BilletDB();
-                    $newfilename = $this->uploadImage();
-
-                    if($newfilename)
+                    $newfilename = $this->uploadImage($validator);
+                    if(!$validator->hasError())
                     {
                         $body["chapter_picture"] = $newfilename;
                         if($billetDB->createBillet($body))
@@ -129,9 +128,9 @@
             }
         }
 
-        protected function uploadImage()
+        protected function uploadImage($validator)
         {
-
+            
             if($_FILES['chapter_picture']['error'] === UPLOAD_ERR_OK) 
             { 
                 $filename = $_FILES["chapter_picture"]["name"];
@@ -150,7 +149,8 @@
                 // On déplace le fichier de tmp à uploads en le renommant
                 if(!move_uploaded_file($_FILES["chapter_picture"]["tmp_name"], $newfilename))
                 {
-                    return null;
+                    $validator->addError("chapter_picture", "Une erreur est survenue lors de l'enregistrement du fichier.");
+                    return;
                 }
                 else
                 {   
@@ -162,14 +162,16 @@
             {
                 if($_FILES['chapter_picture']['error'] === UPLOAD_ERR_NO_FILE)
                 {
-                    return null;
+                    $validator->addError("chapter_picture", "Merci de choisir une photo.");
+                    return;
                 }
-                else
+                if($_FILES['chapter_picture']['error'] === UPLOAD_ERR_INI_SIZE)
                 {
-                    return null;
+                    $validator->addError("chapter_picture", "Fichier trop volumineux (Limite Serveur 5MB).");
+                    return;
                 }
-                return null;
             }
+            return;
         }
 
         public function deleteBillet($id)

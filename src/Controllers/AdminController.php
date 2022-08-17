@@ -13,6 +13,7 @@
             $user = Main::$main->getUsersModel();
             $commentsDB = new CommentsDB();
             $validator = new BilletValidator();
+            ini_set('upload_max_filesize', 5);
             
             $signaledComments = $commentsDB->getSignaledComments();
             // var_dump($signaledComments); die;

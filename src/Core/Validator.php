@@ -80,10 +80,11 @@
                         }
                         if($rule === self::RULE_FILETYPE)
                         {
-                            if(!empty($_FILES))
+                            $indice = $compositRule["fileaccesskey"];
+
+                            if($_FILES[$indice]['error'] !== UPLOAD_ERR_NO_FILE)
                             {
                                 $location = $compositRule["location"];
-                                $indice = $compositRule["fileaccesskey"];
                                 $target_dir = "/images/$location";
                                 $target_file = $target_dir .'\/'.$_FILES["$indice"]["name"];
                                 $allowed = [
@@ -113,12 +114,13 @@
                         }
                         if($rule === self::RULE_FILESIZE)
                         {
-                            if(!empty($_FILES))
+                            $indice = $compositRule["fileaccesskey"];
+                            
+                            if($_FILES[$indice]['error'] !== UPLOAD_ERR_NO_FILE)
                             {
-                                $indice = $compositRule["fileaccesskey"];
                                 $filesize = $_FILES["$indice"]["size"];                                                                
                                 $limit = $compositRule["tmax"];
-                                
+
                                 if($filesize > $limit * 1024 * 1024)
                                 {
                                     $message = str_replace('{tmax}', $limit, $rule);
@@ -130,8 +132,6 @@
                     $this->values[$key] = $checkEntry["value"];
                 }
             }
-            // $this->logger->log($this->errors);
-            // die;
             return $this->errors;
         }
         

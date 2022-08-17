@@ -22,22 +22,20 @@
 .displayed_bio
 {
     display: none;
-    opacity: 0;
     background: none;
     padding-top: 10px;
     padding-right: 20px;
     /* height: 400px; */
-    transform: translateY(0px);
+    transform: max-height 0 opacity 0;
     transition: all 0.5s;
 }
 
 .displayed_bio.active
 {
     display: flex;
-    opacity: 1;
-    transform: opacity(1);
     /* height: 400px; */
     width: auto;
+    transform: max-height 500px opacity 1;
 }
 
 .box
@@ -45,6 +43,13 @@
     width: 400px;
     height: 400px;
     min-width: 400px;
+    translate: 0px;
+    transition: all 0.5s;
+}
+
+.box.active
+{
+    translate: -50px;
 }
 
 .box:hover .content img

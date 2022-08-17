@@ -4,7 +4,8 @@
 const menuToggle = document.querySelector('.menu_toggle');
 const navigation = document.querySelector('.main_menu');
 const bioToggle = document.querySelector('.bio_toggle');
-const biography = document.querySelector('.displayed_bio')
+const biography = document.querySelector('.displayed_bio');
+const picture = document.querySelector('.box');
 
 
 
@@ -18,6 +19,7 @@ menuToggle.onclick = function(){
 if(bioToggle){
     bioToggle.onclick = function(){
         biography.classList.toggle('active');
+        picture.classList.toggle('active');
     }
 }
 //Gestion de la publication différée des billets

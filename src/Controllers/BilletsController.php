@@ -61,7 +61,6 @@
             {
                 $filename = $_FILES["chapter_picture"]["name"];
                 $filetype = $_FILES["chapter_picture"]["type"];
-                $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
                 
                 $body = $request->getBody();
                 $body["chapter_picture"] = $filename.'.'.$filetype;
@@ -94,37 +93,41 @@
         public function editBillet($id = null)
         {
             $request = new Request();
+            $commentsDB = new CommentsDB();
+            $billetDB = new BilletDB();
 
             $logger = new Logger(__CLASS__);
             $validator = new BilletValidator();
             $user = Main::$main->getUsersModel();
+            $signaledComments = $commentsDB->getSignaledComments();
+            $adminBillets = $billetDB->adminBillets();
 
             if($request->isPost())
-            {
+            {                
+                $filename = $_FILES["chapter_picture"]["name"];
+                $filetype = $_FILES["chapter_picture"]["type"];
+                
                 $body = $request->getBody();
+                $body["chapter_picture"] = $filename.'.'.$filetype;
                 $errorList = $validator->checkBilletEntries($body);
-
+                
                 if(!$validator->hasError())
-                {
+                {                   
                     $billetDB = new BilletDB();
-                    
-                    if($billetDB->updateBillet($body))
-                    {
-                        // Main::$main->login($credentials->id);
-                        Main::$main->response->redirect('/');
-                    }    
-                }
-                $this->render('billets/editbillet', "php", 'defaultchapter', ['workInProgress' => $validator,'loggedUser' => $user]);
-            }
-            else
-            {
-                $billetDB = new BilletDB();
-                $data = $billetDB->retrieveBillet($id);
-                $validator->addValue('title', $data['title']);
-                $validator->addValue('abstract', $data['abstract']);
-                $validator->addValue('chapter', $data['chapter']);
+                    $newfilename = $this->uploadImage($validator);
 
-                $this->render('billets/editbillet', "php", 'defaultchapter', ['workInProgress' => $validator,'loggedUser' => $user]);
+                    if(!$validator->hasError())
+                    {
+                        $body["chapter_picture"] = $newfilename;
+                        if($billetDB->updateBillet($body))
+                        {
+                            // Main::$main->login($credentials->id);
+                            Main::$main->response->redirect('/admin/admin');
+                        }
+                    }
+                }
+                $this->render('admin/admin', 'php', 'defaultadmin', ['loggedUser'=>$user, 'signaledComments'=>$signaledComments, 
+                                                                    'errorHandler'=>$validator, 'adminBillets'=>$adminBillets]);
             }
         }
 

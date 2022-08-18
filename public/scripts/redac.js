@@ -2,7 +2,7 @@
 
 tinymce.init(
     {
-        selector: '#chapter, #content',
+        selector: '#chapterid, #content',
         plugins: 
         [
           'a11ychecker','advlist','advcode','advtable','autolink','checklist','export',

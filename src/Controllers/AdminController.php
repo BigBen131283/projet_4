@@ -3,8 +3,8 @@
 
     use App\Core\Controller;
     use App\Core\Main;
-use App\Repository\BilletDB;
-use App\Repository\CommentsDB;
+    use App\Repository\BilletDB;
+    use App\Repository\CommentsDB;
     use App\Validator\BilletValidator;
 
     class AdminController extends Controller

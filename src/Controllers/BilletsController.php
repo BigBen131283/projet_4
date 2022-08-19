@@ -51,11 +51,13 @@
         
             $request = new Request();
             $commentsDB = new CommentsDB();
+            $billetDB = new BilletDB();
 
             $logger = new Logger(__CLASS__);
             $validator = new BilletValidator();
             $user = Main::$main->getUsersModel();
             $signaledComments = $commentsDB->getSignaledComments();
+            $adminBillets = $billetDB->adminBillets();
 
             if($request->isPost())
             {
@@ -81,12 +83,12 @@
                     }    
                 }
                 $this->render('admin/admin', 'php', 'defaultadmin', ['loggedUser'=>$user, 'signaledComments'=>$signaledComments, 
-                                                                    'errorHandler'=>$validator]);
+                                                                    'errorHandler'=>$validator, 'adminBillets'=>$adminBillets]);
             }
             else
             {
                 $this->render('admin/admin', 'php', 'defaultadmin', ['loggedUser'=>$user, 'signaledComments'=>$signaledComments, 
-                                                                    'errorHandler'=>$validator]);
+                                                                    'errorHandler'=>$validator, 'adminBillets'=>$adminBillets]);
             }
         }
 

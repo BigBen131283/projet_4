@@ -1,6 +1,26 @@
-let editmode = false;
+
+console.log(window.location.pathname);
+let urlParse = window.location.pathname.split('/');
+let nbParse = urlParse.length;
+let action = urlParse[nbParse - 1];
+console.log(action);
+let editmode = true
+
+if(action === 'createbillet' || action === 'admin'){
+    editmode = false;
+}
+
 
 $(document).ready( () => {
+    
+    if(isNaN(action)){
+        displayButtons();
+    }
+    else
+    {
+        displayButtons(action);
+    }
+        
     
     $(".selectbillet").each((index, element) => {
         $(element).click( () => { actionRequest(element) ;} );
@@ -75,32 +95,44 @@ $(document).ready( () => {
                             break;        
                     }
                });
-
-               if(!editmode) { // Already changed the interface buttons ?
-                    $('button .publish').html('Mettre à jour');
-                    $('#write form').attr('action', '/billets/editbillet/'+ billetid);
-                    let clearbutton = document.createElement("button");
-                    clearbutton.textContent = "Annulation";
-                    clearbutton.id = "clearbutton";
-                    clearbutton.classList.add("publish");
-                    
-                    $('.controls').append(clearbutton);        // Add the clear button
-                    $('#clearbutton').click( (event) => {
-                        event.preventDefault();     // No propagation of event when just clearing fields
-                        $('#write .inputBox input, #write .inputBox textarea').each( (index, element) => {
-                            if(element.id !== 'fileid')
-                                $(element).val(' ');
-                        });
-                        $('#clearbutton').remove();
-                        $('button, .publish').html('Publier');
-                        editmode = false;
-                    });
-                    editmode = true;
-                }
+               editmode = true;
+               clearErrorMessages();
+               displayButtons(billetid);
             })
             .catch((e) => {
                console.log(e);
             })
         }
-    }    
+    }
+
+    function displayButtons(billetid = ' '){
+        if(editmode) { // Already changed the interface buttons ?
+            $('.publish').html('Mettre à jour');
+            $('#write form').attr('action', '/billets/editbillet/'+ billetid);
+            let clearbutton = document.createElement("button");
+            clearbutton.textContent = "Annulation";
+            clearbutton.id = "clearbutton";
+            clearbutton.classList.add("publish");
+            
+            $('.controls').append(clearbutton);        // Add the clear button
+            $('#clearbutton').click( (event) => {
+                event.preventDefault();     // No propagation of event when just clearing fields
+                $('#write .inputBox input, #write .inputBox textarea').each( (index, element) => {
+                    if(element.id !== 'fileid')
+                        $(element).val(' ');
+                });
+                clearErrorMessages();
+                $('#clearbutton').remove();
+                $('.publish').html('Publier');
+                $('#write form').attr('action', '/billets/createbillet/');
+                editmode = false;
+            });
+        }
+    }
+    
+    function clearErrorMessages(){
+        $('.myerror').each( (index, element) => {
+            $(element).text(' ');
+        })
+    }
 });

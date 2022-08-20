@@ -175,7 +175,7 @@
     }
 }
 
-.dashboard #write form .publish
+.dashboard #write form .publish ,.dashboard #write form .edit
 {
     display: flex;
     justify-content: center;
@@ -193,7 +193,7 @@
     transition: 0.5s;
 }
 
-.dashboard #write form .publish:hover
+.dashboard #write form .publish:hover, .dashboard #write form .edit:hover
 {
     letter-spacing: 0.15em;
     cursor: pointer;
@@ -202,4 +202,14 @@
     box-shadow: 0 0 10px var(--primaryclr),
                 0 0 20px var(--primaryclr),
                 0 0 40px var(--primaryclr);
+}
+
+.dashboard #write form .controls
+{
+    display: none;
+}
+
+.dashboard #write form .controls.active
+{
+    display: flex;
 }

@@ -116,8 +116,12 @@
                     <input type="datetime-local" name="publish_at" id="dateid" value="<?php echo $errorHandler->getValue('publish_at')?>">
                     <?php echo $errorHandler->getFirstError('publish_at'); ?>
                 </div>
-                <div class="controls">
+                <div id="publish" class="controls active">
                     <button class="publish" type="submit">Publier</button>
+                </div>
+                <div id="edit" class="controls">
+                    <button class="edit" type="submit">Modifier</button>
+                    <button id="clearbutton" class="edit" type="submit">Annuler</button>
                 </div>
             </form>
         </div>

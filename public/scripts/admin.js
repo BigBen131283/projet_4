@@ -1,3 +1,18 @@
+tinymce.init(
+    {
+        selector: '#chapterid, #content',
+        plugins: 
+        [
+          'a11ychecker','advlist','advcode','advtable','autolink','checklist','export',
+          'lists','link','image','charmap','preview','anchor','searchreplace','visualblocks',
+          'powerpaste','fullscreen','formatpainter','insertdatetime','media','table','help','wordcount'
+        ],
+        toolbar: 'undo redo | formatpainter casechange blocks | bold italic backcolor | ' +
+          'alignleft aligncenter alignright alignjustify | ' +
+          'bullist numlist checklist outdent indent | removeformat | a11ycheck code table help'
+    });
+
+
 
 console.log(window.location.pathname);
 let urlParse = window.location.pathname.split('/');
@@ -12,7 +27,7 @@ if(action === 'createbillet' || action === 'admin'){
 
 
 $(document).ready( () => {
-    
+
     if(isNaN(action)){
         displayButtons();
     }
@@ -88,7 +103,7 @@ $(document).ready( () => {
                             console.log('Should load /images/chapter_pictures/' + databillet.chapter_picture + ' somewhere in the page');
                             break;
                         case 'chapterid':
-                            $('#tinymce').val(databillet.chapter);
+                            tinymce.get("chapterid").setContent(databillet.chapter);
                             break;
                         case 'dateid':
                             $('#' + element.id).val(databillet.publish_at);
@@ -107,14 +122,11 @@ $(document).ready( () => {
 
     function displayButtons(billetid = ' '){
         if(editmode) { // Already changed the interface buttons ?
-            $('.publish').html('Mettre à jour');
-            $('#write form').attr('action', '/billets/editbillet/'+ billetid);
-            let clearbutton = document.createElement("button");
-            clearbutton.textContent = "Annulation";
-            clearbutton.id = "clearbutton";
-            clearbutton.classList.add("publish");
             
-            $('.controls').append(clearbutton);        // Add the clear button
+            $('#write form').attr('action', '/billets/editbillet/'+ billetid);
+            $('#edit').addClass('active');
+            $('#publish').removeClass('active');
+            
             $('#clearbutton').click( (event) => {
                 event.preventDefault();     // No propagation of event when just clearing fields
                 $('#write .inputBox input, #write .inputBox textarea').each( (index, element) => {
@@ -122,10 +134,10 @@ $(document).ready( () => {
                         $(element).val(' ');
                 });
                 clearErrorMessages();
-                $('#clearbutton').remove();
-                $('.publish').html('Publier');
                 $('#write form').attr('action', '/billets/createbillet/');
                 editmode = false;
+                $('#publish').addClass('active');
+                $('#edit').removeClass('active');
             });
         }
     }

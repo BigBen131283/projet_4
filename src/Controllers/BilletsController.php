@@ -24,6 +24,7 @@
             $billetDB = new BilletDB();
             $result = $billetDB->publishedBillets();
             $user = Main::$main->getUsersModel();
+            // var_dump($result);die;
 
             if(!empty($result))
             {
@@ -260,8 +261,8 @@
                         echo json_encode([
                         'billetId' => $result->id,
                         'title' => $result->title,
-                        'abstract' => $result->abstract,
-                        'chapter' => $result->chapter,
+                        'abstract' => html_entity_decode(stripslashes($result->abstract)),
+                        'chapter' => html_entity_decode(stripslashes($result->chapter)),
                         'publish_at' => $result->publish_at,
                         'chapter_picture' => $result->chapter_picture,
                         'message'=> "Billet reçu : $billetId",

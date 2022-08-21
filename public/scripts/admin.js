@@ -1,18 +1,3 @@
-tinymce.init(
-    {
-        selector: '#chapterid, #content',
-        plugins: 
-        [
-          'a11ychecker','advlist','advcode','advtable','autolink','checklist','export',
-          'lists','link','image','charmap','preview','anchor','searchreplace','visualblocks',
-          'powerpaste','fullscreen','formatpainter','insertdatetime','media','table','help','wordcount'
-        ],
-        toolbar: 'undo redo | formatpainter casechange blocks | bold italic backcolor | ' +
-          'alignleft aligncenter alignright alignjustify | ' +
-          'bullist numlist checklist outdent indent | removeformat | a11ycheck code table help'
-    });
-
-
 
 console.log(window.location.pathname);
 let urlParse = window.location.pathname.split('/');
@@ -21,13 +6,15 @@ let action = urlParse[nbParse - 1];
 console.log(action);
 let editmode = true
 
+
 if(action === 'createbillet' || action === 'admin'){
     editmode = false;
 }
 
 
 $(document).ready( () => {
-
+    initTinyMce('#abstractid', 200);
+    initTinyMce('#chapterid', 400);
     if(isNaN(action)){
         displayButtons();
     }
@@ -35,15 +22,10 @@ $(document).ready( () => {
     {
         displayButtons(action);
     }
-        
-    
     $(".selectbillet").each((index, element) => {
         $(element).click( () => { actionRequest(element) ;} );
     })
 
-
-    // $("#editbillet").click(editbillet);
-    // $("#").click();
     // --------------------------------------------------------------------------
     function actionRequest(element){
         const idsplit = element.id.split('-');      // Check wich billet was selected and for which action 
@@ -68,6 +50,10 @@ $(document).ready( () => {
                 break;
         }
 
+        var stringToHTML = function (str) {
+            var d = $(str);
+            return d;
+        }
         function editbillet(billetid) {
             const url = '/billets/jsonGetBillet/' + billetid;
             console.log('Edit : call ' + url);
@@ -89,37 +75,65 @@ $(document).ready( () => {
                }
             })
             .then((databillet) => {     // Update the edit fields
-               console.log(databillet);
-               $('#write .inputBox input, #write .inputBox textarea').each( (index, element) => {
+                $('#write .inputBox input, #write .inputBox textarea').each( (index, element) => {
                     console.log(element.id);
                     switch (element.id) {
                         case 'titleid':
                             $('#' + element.id).val(databillet.title);
                             break;
                         case 'abstractid':
-                            $('#' + element.id).val(databillet.abstract);
+                            //$('#' + element.id).html(databillet.abstract);
+                            tinymce.get("abstractid").setContent(databillet.abstract);
                             break;
                         case 'fileid':
                             console.log('Should load /images/chapter_pictures/' + databillet.chapter_picture + ' somewhere in the page');
                             break;
                         case 'chapterid':
+                            //$('#' + element.id).html(databillet.chapter);
                             tinymce.get("chapterid").setContent(databillet.chapter);
+                            tinymce.execCommand("mceRepaint");
                             break;
                         case 'dateid':
                             $('#' + element.id).val(databillet.publish_at);
                             break;        
                     }
-               });
-               editmode = true;
-               clearErrorMessages();
-               displayButtons(billetid);
+                });
+                editmode = true;
+                clearErrorMessages();
+                displayButtons(billetid);
             })
             .catch((e) => {
                console.log(e);
             })
         }
     }
-
+    function initTinyMce(selector, theheight) {
+        tinymce.init(
+            {
+                //selector: '#chapterid, #abstractid',
+                selector: selector,
+                placeholder: 'Là où la magie opère...',
+                height: theheight,
+                plugins: 
+                [
+                  'advlist','autolink', 'lists','link','image','charmap','preview','anchor','searchreplace','visualblocks',
+                  'fullscreen','insertdatetime','media','table','help','wordcount'
+                ],
+                toolbar: 'undo redo | formatpainter casechange blocks | bold italic backcolor | ' +
+                  'alignleft aligncenter alignright alignjustify | bullist numlist checklist | help',
+                  setup: (editor) => {
+                    editor.on('init', (e) => {
+                        console.log('**** Init ' + e);
+                    }),
+                    editor.on('change', (e) => {
+                        console.log('**** Change ' + e);
+                    }),
+                    editor.on('click', (e) => {
+                        console.log('**** Click ' + e);
+                    })
+                  }
+            });
+    }
     function displayButtons(billetid = ' '){
         if(editmode) { // Already changed the interface buttons ?
             
@@ -129,11 +143,8 @@ $(document).ready( () => {
             
             $('#clearbutton').click( (event) => {
                 event.preventDefault();     // No propagation of event when just clearing fields
-                $('#write .inputBox input, #write .inputBox textarea').each( (index, element) => {
-                    if(element.id !== 'fileid')
-                        $(element).val(' ');
-                });
                 clearErrorMessages();
+                clearFields();
                 $('#write form').attr('action', '/billets/createbillet/');
                 editmode = false;
                 $('#publish').addClass('active');
@@ -141,7 +152,12 @@ $(document).ready( () => {
             });
         }
     }
-    
+    function clearFields() {
+        $('#write .inputBox input, #write .inputBox textarea').each( (index, element) => {
+            if(element.id !== 'fileid')
+                $(element).val(' ');
+        });
+    }
     function clearErrorMessages(){
         $('.myerror').each( (index, element) => {
             $(element).text(' ');

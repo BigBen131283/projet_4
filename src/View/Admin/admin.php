@@ -65,7 +65,7 @@
                         <div class="comment"><?= html_entity_decode(stripslashes($comment->content))?></div>
                         <div class="auth">
                             <p class="pseudo"><?= $comment->pseudo?></p>    
-                            <p class="date"><?= $comment->publish_at?></p>
+                            <p class="date"><?= $comment->formatted_date?></p>
                         </div>
                         <div class="advice">
                             <a href="/admin/acceptcomment/<?= $comment->id?>">Autoriser</a>
@@ -78,7 +78,7 @@
             <?php foreach($adminBillets as $billet):?>
                     <article>
                         <h2><a href="/billets/chapitre/<?= $billet->id?>"><?= $billet->title?></a></h2>
-                        <p class="date"><?= $billet->publish_at?></p>
+                        <p class="date"><?= $billet->formatted_date?></p>
                         <ul class="modify">
                             <li class="selectbillet" id="editbillet-<?= $billet->id?>">Editer</li>
                             <li class="selectbillet" id="deletebillet-<?= $billet->id?>">Supprimer</li>

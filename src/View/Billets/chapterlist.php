@@ -5,7 +5,7 @@
         <article>
             <h2> <a href="/billets/chapitre/<?= $billet->id?>"><?= $billet->title?></a></h2>
             <img src="/images/chapter_pictures/<?= $billet->chapter_picture?>" alt="illustration">
-            <p>Publié le : <?= $billet->publish_at?></p>
+            <p>Publié le <?= $billet->formatted_date?></p>
         </article>
     <?php endforeach?>
 </div>

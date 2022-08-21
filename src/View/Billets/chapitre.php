@@ -4,7 +4,7 @@
         <h1> <a href="/billets/chapitre/<?= $billet->id?>"><?= $billet->title?></a></h1>
         <img src="/images/chapter_pictures/<?= $billet->chapter_picture?>" alt="Illustration">
         <p><?= html_entity_decode(stripslashes($billet->chapter))?></p>
-        <p class="publish_at">Publié le : <?= $billet->publish_at?></p>
+        <p class="publish_at">Publié le <?= $billet->formatted_date?></p>
 
         <?php if($loggedUser->isLogged()):?>
         <ul class="likes">
@@ -32,16 +32,9 @@
                 <p class="dislikescount"></p>
             </li>
         </ul>
-        <?php endif;?>        
-
-        <?php if($loggedUser->isLogged() && $loggedUser->isAdmin()):?>
-            <ul>
-                <li><a href="/billets/editbillet/<?= $billet->id?>"><ion-icon name="clipboard-outline"></ion-icon>Editer</a></li>
-                <li><a href="/billets/deletebillet/<?= $billet->id?>"><ion-icon name="trash-outline"></ion-icon>Effacer</a></li>
-                <!-- <li><a href="/comments/createcomment/<?= $billet->id?>">Commenter</a></li> -->
-        <?php endif;?>        
-            </ul>   
+        <?php endif;?>           
     </article>
+    
     <?php if($loggedUser->isLogged()):?>
         <form method="post" action="/comments/createcomment/<?= $billet->id?>" novalidate>
             <div class="inputBox">
@@ -59,7 +52,7 @@
                 <p class="content"><?= html_entity_decode(stripslashes($comment->content))?></p>
                 <div class="identity">
                     <h3><?= $comment->pseudo?></h3>
-                    <p class="publication"><?= $comment->publish_at?></p>
+                    <p class="publication"><?= $comment->formatted_date?></p>
                 </div>
                     <?php if($loggedUser->isLogged() && $comment->report === '30'):?>
                         <a class="signal" href="/comments/signalcomment/<?= $billet->id?>/<?= $comment->id?>">Signaler</a>

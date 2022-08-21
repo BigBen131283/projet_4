@@ -34,7 +34,7 @@
         </div>
         <ul class="menu_access">
             <li><a href="/#accueil"><ion-icon name="home-outline"></ion-icon>Accueil</a></li>
-            <li><a href="#auteur"><ion-icon name="body-outline"></ion-icon>L'Auteur</a></li>
+            <li><a href="/#auteur"><ion-icon name="body-outline"></ion-icon>L'Auteur</a></li>
             <li><a href="/billets/chapterlist"><ion-icon name="book-outline"></ion-icon>L'Aventure</a></li>
             <!-- S'affichent quand le user est connecté -->
             <?php if($loggedUser->isLogged()):?>

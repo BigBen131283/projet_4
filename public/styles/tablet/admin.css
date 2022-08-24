@@ -45,7 +45,7 @@ body
     padding-top: 10px;
 }
 
-.siteadmin #chapters
+.siteadmin .chapters
 {
     display: flex;
 }

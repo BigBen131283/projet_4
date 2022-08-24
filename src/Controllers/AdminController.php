@@ -27,15 +27,22 @@
         public function acceptComment($commentsId)
         {
             $commentsDB = new CommentsDB();
-            
-            $user = Main::$main->getUsersModel();
-            $validator = new BilletValidator();
+
 
             if($commentsDB->acceptComment($commentsId))
             {
+                $user = Main::$main->getUsersModel();
+                $validator = new BilletValidator();
+                $billetDB = new BilletDB();
+                $adminBillets = $billetDB->adminBillets();
+
                 $signaledComments = $commentsDB->getSignaledComments();
-                $this->render('admin/admin', 'php', 'defaultadmin', ['loggedUser'=>$user, 'signaledComments'=>$signaledComments, 
-                                                                    'errorHandler'=>$validator]);
+                $this->render('admin/admin', 'php', 'defaultadmin', [
+                    'loggedUser'=>$user, 
+                    'signaledComments'=>$signaledComments, 
+                    'errorHandler'=>$validator, 
+                    'adminBillets'=>$adminBillets
+                ]);
             }
         }
 
@@ -43,14 +50,22 @@
         {
             $commentsDB = new CommentsDB();
             
-            $user = Main::$main->getUsersModel();
-            $validator = new BilletValidator();
 
             if($commentsDB->rejectComment($commentsId))
             {
+                
+                $user = Main::$main->getUsersModel();
+                $validator = new BilletValidator();
+                $billetDB = new BilletDB();
+                $adminBillets = $billetDB->adminBillets();
+
                 $signaledComments = $commentsDB->getSignaledComments();
-                $this->render('admin/admin', 'php', 'defaultadmin', ['loggedUser'=>$user, 'signaledComments'=>$signaledComments, 
-                                                                    'errorHandler'=>$validator]);
+                $this->render('admin/admin', 'php', 'defaultadmin', [
+                    'loggedUser'=>$user, 
+                    'signaledComments'=>$signaledComments, 
+                    'errorHandler'=>$validator, 
+                    'adminBillets'=>$adminBillets
+                ]);
             }
         }
     }

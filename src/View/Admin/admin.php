@@ -3,13 +3,13 @@
         <div class="side-navigation">
             <div class="sidebarToggle"></div>
             <ul>
-                <li class="list active" style="--clr:#f44336">
+                <li class="list active btnAll" style="--clr:#f44336">
                     <a href="#">
                         <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
                         <span class="text">Home</span>
                     </a>
                 </li>
-                <li class="list" style="--clr:#ffa117">
+                <li class="list " style="--clr:#ffa117">
                     <a href="#">
                         <span class="icon"><ion-icon name="person-outline"></ion-icon></span>
                         <span class="text">Membres</span>
@@ -57,8 +57,8 @@
             </div>
         </div>
         <div class="siteadmin">
-            <div class="adminbox" id="members"></div>
-            <div class="adminbox" id="moderate">
+            <div class="adminbox members" id="members"></div>
+            <div class="adminbox moderate" id="moderate">
                 <?php foreach($signaledComments as $comment):?>
                     <article>
                         <h2><a href="/billets/chapitre/<?= $comment->billet_id?>"><?= $comment->title?></a></h2>
@@ -74,7 +74,7 @@
                     </article>
                 <?php endforeach?>
             </div>
-            <div class="adminbox" id="chapters">
+            <div class="adminbox chapters" id="chapters">
             <?php foreach($adminBillets as $billet):?>
                     <article>
                         <h2><a href="/billets/chapitre/<?= $billet->id?>"><?= $billet->title?></a></h2>
@@ -87,7 +87,7 @@
                 <?php endforeach?>
             </div>
         </div>
-        <div id="write">
+        <div class="write">
             <form action="/billets/createbillet" method="post" novalidate enctype="multipart/form-data">
                 <?php echo $errorHandler->getFirstError('flashmessage'); ?>
                 <div class="inputBox">

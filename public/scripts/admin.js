@@ -75,7 +75,7 @@ $(document).ready( () => {
                }
             })
             .then((databillet) => {     // Update the edit fields
-                $('#write .inputBox input, #write .inputBox textarea').each( (index, element) => {
+                $('.write .inputBox input, .write .inputBox textarea').each( (index, element) => {
                     console.log(element.id);
                     switch (element.id) {
                         case 'titleid':
@@ -137,7 +137,7 @@ $(document).ready( () => {
     function displayButtons(billetid = ' '){
         if(editmode) { // Already changed the interface buttons ?
             
-            $('#write form').attr('action', '/billets/editbillet/'+ billetid);
+            $('.write form').attr('action', '/billets/editbillet/'+ billetid);
             $('#edit').addClass('active');
             $('#publish').removeClass('active');
             
@@ -145,7 +145,7 @@ $(document).ready( () => {
                 event.preventDefault();     // No propagation of event when just clearing fields
                 clearErrorMessages();
                 clearFields();
-                $('#write form').attr('action', '/billets/createbillet/');
+                $('.write form').attr('action', '/billets/createbillet/');
                 editmode = false;
                 $('#publish').addClass('active');
                 $('#edit').removeClass('active');
@@ -153,7 +153,7 @@ $(document).ready( () => {
         }
     }
     function clearFields() {
-        $('#write .inputBox input, #write .inputBox textarea').each( (index, element) => {
+        $('.write .inputBox input, .write .inputBox textarea').each( (index, element) => {
             if(element.id !== 'fileid')
                 $(element).val(' ');
         });

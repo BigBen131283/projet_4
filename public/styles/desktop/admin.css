@@ -32,7 +32,7 @@
     border-radius: 0px;
 }
 
-.siteadmin #members, .siteadmin #write
+.siteadmin .members, .siteadmin .write
 {
     display: flex;
 }
@@ -71,7 +71,7 @@
                 0 0 40px var(--primaryclr);
 }
 
-.dashboard #write
+.dashboard .write
 {
     display: flex;
     width: 100%;
@@ -81,7 +81,7 @@
     padding: 20px 10px;
 }
 
-.dashboard #write form
+.dashboard .write form
 {
     background: rgba(0,0,0,.8);
     padding: 5px;
@@ -91,7 +91,7 @@
     width: 100%;
 }
 
-.dashboard #write form .inputBox
+.dashboard .write form .inputBox
 {
     display: flex;
     flex-direction: column;
@@ -101,7 +101,7 @@
     padding: 5px 15px;
 }
 
-.dashboard #write form .inputBox input
+.dashboard .write form .inputBox input
 {
     width: 100%;
     font-size: 16px;
@@ -114,7 +114,7 @@
     background: transparent;
 }
 
-.dashboard #write form .inputBox textarea
+.dashboard .write form .inputBox textarea
 {
     width: 100%;
     height: auto;
@@ -128,12 +128,12 @@
     background: transparent;
 }
 
-.dashboard #write form .inputBox .tox
+.dashboard .write form .inputBox .tox
 {
     width: 100%;
 }
 
-.dashboard #write form .inputBox label
+.dashboard .write form .inputBox label
 {
     font-size: 16px;
     color: var(--primaryclr);
@@ -141,7 +141,7 @@
     transition: .5s;
 }
 
-.dashboard #write form p
+.dashboard .write form p
 {
     color: var(--thirdclr);
     animation: glow 2s linear infinite;
@@ -175,7 +175,7 @@
     }
 }
 
-.dashboard #write form .publish ,.dashboard #write form .edit
+.dashboard .write form .publish ,.dashboard .write form .edit
 {
     display: flex;
     justify-content: center;
@@ -193,7 +193,7 @@
     transition: 0.5s;
 }
 
-.dashboard #write form .publish:hover, .dashboard #write form .edit:hover
+.dashboard .write form .publish:hover, .dashboard .write form .edit:hover
 {
     letter-spacing: 0.15em;
     cursor: pointer;
@@ -204,12 +204,12 @@
                 0 0 40px var(--primaryclr);
 }
 
-.dashboard #write form .controls
+.dashboard .write form .controls
 {
     display: none;
 }
 
-.dashboard #write form .controls.active
+.dashboard .write form .controls.active
 {
     display: flex;
 }

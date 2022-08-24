@@ -143,12 +143,12 @@ body
     align-items: center;
 }
 
-.siteadmin #members, .siteadmin #chapters, .siteadmin #write
+.siteadmin .members, .siteadmin .chapters, .siteadmin .write
 {
     display: none;
 }
 
-#write
+.write
 {
     display: none;
 }

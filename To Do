@@ -1,16 +1,15 @@
-*Terminer le tuto (framework mvc si besoin)
----Jeter un oeil à gitflow si intéressé
+En update rendre l'image facultative
 
-** Terminer l'inscription
+En update, annulation ne vide pas les champs tinyMCE
 
-Bien mettre en place le cheminement
+En create, pas de date sélectionnée  = date du clic par défaut
 
-**Bien séparer le model, le repository (sql), le validator et le service mail
-**Pour le validator on créé un UserValidator qui étant de Validator
+En update, ne pas modifier la date de création mais indiquer une date de modification ou alors classer les billets par Id
 
-** Pour le service mail on créé un Mail qui étant de Mailer ou Mailer est simplement le service qui envoi le mail
-** Dans Mail tu fais une fonction qui créé le mail et qui appelle le Mailer pour l'envoyer
+Voir date en Français
 
-**Préférer les try catch dans le repository (UserDb)
+Mettre la gestion du mot de passe en place (oublie / perdu)
 
-Continuer les feature dans l'ordre après l'inscription
+Mettre en place la vérification des accès
+
+Terminer la mise en place les animations et des effets en css

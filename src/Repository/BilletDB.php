@@ -209,7 +209,7 @@ class BilletDB extends Db
             $statement->bindValue(':1', $id);
 
             $statement->execute();
-            return true;
+            return $statement->rowCount();
         }
         catch(PDOException $e)
         {

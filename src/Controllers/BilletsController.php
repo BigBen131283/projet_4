@@ -211,17 +211,6 @@
             return;
         }
 
-        public function deleteBillet($id)
-        {
-            $billetDB = new BilletDB();
-
-            if($id)
-            {
-                $billetDB->deleteBillet($id);
-            }
-            $this->chapterlist();
-        }
-
         public function checkPublishStatus()
         {
             // return json_encode(['published'=>'done']);
@@ -234,6 +223,32 @@
             echo json_encode(['published'=>'done',
                               'updated' => $updatedBillets,
                               'date' => $current]);
+        }
+
+        // JSON GET --------------------------------------------------------
+
+        public function jsonDeleteBillet()
+        {
+            $params = $this->decodePostRequest();
+            $billetId = isset($params["billetId"]) ? $params["billetId"] : '';
+            $billetDB = new BilletDB();
+
+            if($billetId !== '' && $billetDB->deleteBillet($billetId))
+            {
+                echo json_encode([  
+                    'message'=> "Billet $billetId effacé.",  
+                    'error' => false,
+                    'billetId' => $billetId
+                ]);
+            }
+            else
+            {
+                echo json_encode([  
+                    'message'=> "Impossible d'effacer le billet $billetId.",  
+                    'error' => true,
+                    'billetId' => $billetId
+                ]);
+            }
         }
 
         // JSON GET --------------------------------------------------------

@@ -36,24 +36,20 @@ $(document).ready( () => {
         const deleteaction = 'deletebillet';
         const editaction = 'editbillet';
 
-        console.log(`You selected ${billetid} for ${action}`);
+        // console.log(`You selected ${billetid} for ${action}`);
 
         switch (action) {
             case editaction:
                 editbillet(billetid);
                 break;
             case deleteaction:
-                console.log('Delete ' + billetid);
+                deletebillet(billetid);
                 break;
             default:
                 console.log('Unrecognized request ' + action);
                 break;
         }
 
-        var stringToHTML = function (str) {
-            var d = $(str);
-            return d;
-        }
         function editbillet(billetid) {
             const url = '/billets/jsonGetBillet/' + billetid;
             console.log('Edit : call ' + url);
@@ -105,7 +101,38 @@ $(document).ready( () => {
                console.log(e);
             })
         }
+
+        function deletebillet(billetId) {
+            const url = '/billets/jsonDeleteBillet/';
+            const params = {
+                "billetId": billetId
+            };
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(params)
+            })
+            .then((res) => {
+               if (res.ok) {
+                   return res.json();
+               }
+               else {
+                   console.log(res.status);
+                   return;
+               }
+            })
+            .then((res)=>{
+                console.log(res.message);
+            })
+            .catch((e) => {
+               console.log(e);
+            })
+        }
     }
+    
     function initTinyMce(selector, theheight) {
         tinymce.init(
             {

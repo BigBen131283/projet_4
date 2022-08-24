@@ -1,0 +1,6 @@
+POST http://projet4/billets/jsonDeleteBillet
+Content-Type: application/json
+
+{
+  "billetId": 256
+}

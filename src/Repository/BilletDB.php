@@ -67,28 +67,38 @@ class BilletDB extends Db
 
     public function updateBillet($params)
     {
-        $title = $params['title'];
-        $abstract = $params['abstract'];
-        $chapter = $params['chapter'];
-        $chapter_picture = $params['chapter_picture'];
-        $usersModel = Main::$main->getUsersModel();
-        $userId = $usersModel->getId();
-
-        $this->db = Db::getInstance();
-        $statement = $this->db->prepare('UPDATE billets 
-                                         SET abstract = :abstract, chapter = :chapter, publish_at = :publish_at, 
-                                             users_id = :users_id, chapter_picture = :chapter_picture
-                                         WHERE title = :title');
-        
-        $statement->bindValue(':title', $title);
-        $statement->bindValue(':abstract', $abstract);
-        $statement->bindValue(':chapter', $chapter);
-        $statement->bindValue(':chapter_picture', $chapter_picture);
-        $statement->bindValue(':publish_at', date('Y-m-d H:i:s'));
-        $statement->bindValue(':users_id', $userId);
-
-        $statement->execute();
-        return true;
+        try
+        {
+            $id = $params['id'];
+            $title = $params['title'];
+            $abstract = $params['abstract'];
+            $chapter = $params['chapter'];
+            $chapter_picture = $params['chapter_picture'];
+            $usersModel = Main::$main->getUsersModel();
+            $userId = $usersModel->getId();
+    
+            $this->db = Db::getInstance();
+            $statement = $this->db->prepare('UPDATE billets 
+                                             SET title = :title, abstract = :abstract, chapter = :chapter, publish_at = :publish_at, 
+                                                 users_id = :users_id, chapter_picture = :chapter_picture
+                                             WHERE id = :id');
+            
+            $statement->bindValue(':id', $id);
+            $statement->bindValue(':title', $title);
+            $statement->bindValue(':abstract', $abstract);
+            $statement->bindValue(':chapter', $chapter);
+            $statement->bindValue(':chapter_picture', $chapter_picture);
+            $statement->bindValue(':publish_at', date('Y-m-d H:i:s'));
+            $statement->bindValue(':users_id', $userId);
+    
+            $statement->execute();
+            return true;
+        }
+        catch (PDOException $e)
+        {
+            $this->logger->console($e->getMessage());
+            return false;
+        }
     }
 
     public function retrieveBillet($id)

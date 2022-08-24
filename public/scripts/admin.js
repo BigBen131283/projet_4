@@ -91,7 +91,6 @@ $(document).ready( () => {
                         case 'chapterid':
                             //$('#' + element.id).html(databillet.chapter);
                             tinymce.get("chapterid").setContent(databillet.chapter);
-                            tinymce.execCommand("mceRepaint");
                             break;
                         case 'dateid':
                             $('#' + element.id).val(databillet.publish_at);
@@ -123,13 +122,13 @@ $(document).ready( () => {
                   'alignleft aligncenter alignright alignjustify | bullist numlist checklist | help',
                   setup: (editor) => {
                     editor.on('init', (e) => {
-                        console.log('**** Init ' + e);
+                        // console.log('**** Init ' + e);
                     }),
                     editor.on('change', (e) => {
-                        console.log('**** Change ' + e);
+                        // console.log('**** Change ' + e);
                     }),
                     editor.on('click', (e) => {
-                        console.log('**** Click ' + e);
+                        // console.log('**** Click ' + e);
                     })
                   }
             });
@@ -157,6 +156,8 @@ $(document).ready( () => {
             if(element.id !== 'fileid')
                 $(element).val(' ');
         });
+        tinymce.get("chapterid").setContent(' ');
+        tinymce.get("abstractid").setContent(' ');
     }
     function clearErrorMessages(){
         $('.myerror').each( (index, element) => {

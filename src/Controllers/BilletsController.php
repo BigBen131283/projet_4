@@ -9,6 +9,7 @@
     use App\Repository\CommentsDB;
     use App\Validator\BilletValidator;
     use App\Validator\CommentsValidator;
+    use Exception;
    
 
     class BilletsController extends Controller
@@ -112,21 +113,51 @@
                 
                 $body = $request->getBody();
                 $body["chapter_picture"] = $filename.'.'.$filetype;
+                // Set the publish date to NOW if the user did not changed it 
+                // because it's most probably in the past now !! 
+                date_default_timezone_set('Europe/Brussels');
+                $previouspubdate = strtotime($body["publish_at"]);
+                $current = strtotime(date('Y-m-d H:i:s'));
+                if($current > $previouspubdate) {
+                    $body["publish_at"] = date('Y-m-d H:i:s');
+                }
                 $errorList = $validator->checkBilletEntries($body);
-                
+
                 if(!$validator->hasError())
-                {                   
-                    $billetDB = new BilletDB();
+                {
+                    // Get the current image in case the user did not change it
+                    $editedbillet = $billetDB->retrieveBillet($id);
+                    $previousimage = $editedbillet["chapter_picture"];
                     $newfilename = $this->uploadImage($validator);
 
+                    // If no image selected by user, use current
+                    $imagechanged = false;
                     if(!$validator->hasError())
                     {
                         $body["chapter_picture"] = $newfilename;
-                        if($billetDB->updateBillet($body))
+                        $imagechanged = true;
+                    }
+                    else 
+                    { // User did not change the image, so get the current one                        
+                        $body["chapter_picture"] = $previousimage;
+                    }
+                    
+                    $body['id'] = $id;
+                    
+                    if($billetDB->updateBillet($body))
+                    {
+                        if($imagechanged)
                         {
-                            // Main::$main->login($credentials->id);
-                            Main::$main->response->redirect('/admin/admin');
+                            try 
+                            {
+                                unlink(ROOT."/public".IMAGEROOTCHAPTER.$previousimage);
+                            }
+                            catch(Exception $e) 
+                            {
+                                $logger->console('Cannot remove file');
+                            }                        
                         }
+                        Main::$main->response->redirect('/admin/admin');
                     }
                 }
                 $this->render('admin/admin', 'php', 'defaultadmin', ['loggedUser'=>$user, 'signaledComments'=>$signaledComments, 

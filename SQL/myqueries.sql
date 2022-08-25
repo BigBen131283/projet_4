@@ -22,3 +22,5 @@ SELECT content, publish_at, users_id, pseudo FROM comments c, users u WHERE bill
 SELECT content, c.publish_at, c.users_id, pseudo, billet_id, title FROM comments c, users u, billets b 
                 WHERE c.users_id = u.id AND c.billet_id = b.id AND c.report = 20 
                 ORDER BY c.publish_at DESC;
+
+SELECT COUNT(*) FROM users WHERE STATUS = 20

@@ -7,6 +7,7 @@
     use App\Core\Main;
     use App\Repository\BilletDB;
     use App\Repository\CommentsDB;
+    use App\Repository\AdminDB;
     use App\Validator\BilletValidator;
     use App\Validator\CommentsValidator;
     use Exception;
@@ -54,12 +55,14 @@
             $request = new Request();
             $commentsDB = new CommentsDB();
             $billetDB = new BilletDB();
+            $AdminDb = new AdminDB();
 
             $logger = new Logger(__CLASS__);
             $validator = new BilletValidator();
             $user = Main::$main->getUsersModel();
             $signaledComments = $commentsDB->getSignaledComments();
             $adminBillets = $billetDB->adminBillets();
+            $statistics = $AdminDb->siteStatistics();
 
             if($request->isPost())
             {
@@ -84,13 +87,23 @@
                         }
                     }    
                 }
-                $this->render('admin/admin', 'php', 'defaultadmin', ['loggedUser'=>$user, 'signaledComments'=>$signaledComments, 
-                                                                    'errorHandler'=>$validator, 'adminBillets'=>$adminBillets]);
+                $this->render('admin/admin', 'php', 'defaultadmin', [
+                    'loggedUser'=>$user, 
+                    'signaledComments'=>$signaledComments, 
+                    'errorHandler'=>$validator, 
+                    'adminBillets'=>$adminBillets,
+                    'statistics'=>$statistics
+                ]);
             }
             else
             {
-                $this->render('admin/admin', 'php', 'defaultadmin', ['loggedUser'=>$user, 'signaledComments'=>$signaledComments, 
-                                                                    'errorHandler'=>$validator, 'adminBillets'=>$adminBillets]);
+                $this->render('admin/admin', 'php', 'defaultadmin', [
+                    'loggedUser'=>$user, 
+                    'signaledComments'=>$signaledComments, 
+                    'errorHandler'=>$validator, 
+                    'adminBillets'=>$adminBillets,
+                    'statistics'=>$statistics
+                ]);
             }
         }
 
@@ -99,12 +112,14 @@
             $request = new Request();
             $commentsDB = new CommentsDB();
             $billetDB = new BilletDB();
+            $AdminDb = new AdminDB();
 
             $logger = new Logger(__CLASS__);
             $validator = new BilletValidator();
             $user = Main::$main->getUsersModel();
             $signaledComments = $commentsDB->getSignaledComments();
             $adminBillets = $billetDB->adminBillets();
+            $statistics = $AdminDb->siteStatistics();
 
             if($request->isPost())
             {                
@@ -160,8 +175,13 @@
                         Main::$main->response->redirect('/admin/admin');
                     }
                 }
-                $this->render('admin/admin', 'php', 'defaultadmin', ['loggedUser'=>$user, 'signaledComments'=>$signaledComments, 
-                                                                    'errorHandler'=>$validator, 'adminBillets'=>$adminBillets]);
+                $this->render('admin/admin', 'php', 'defaultadmin', [
+                    'loggedUser'=>$user, 
+                    'signaledComments'=>$signaledComments, 
+                    'errorHandler'=>$validator, 
+                    'adminBillets'=>$adminBillets,
+                    'statistics'=>$statistics
+                ]);
             }
         }
 

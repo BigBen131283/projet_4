@@ -154,7 +154,8 @@ class BilletDB extends Db
         try
         {
             $this->db = Db::getInstance();
-            $statement = $this->db->prepare('SELECT id, title, abstract, publish_at, chapter_picture, DATE_FORMAT(publish_at, "%W %d %M, %H:%i") formatted_date FROM billets 
+            $statement = $this->db->prepare('SELECT id, title, abstract, publish_at, chapter_picture, DATE_FORMAT(publish_at, "%W %d %M, %H:%i") formatted_date 
+                                                FROM billets 
                                                 WHERE published = 1');
 
             $statement->execute();
@@ -179,7 +180,9 @@ class BilletDB extends Db
         try
         {
             $this->db = Db::getInstance();
-            $statement = $this->db->prepare('SELECT id, title, publish_at, DATE_FORMAT(publish_at, "%W %d %M, %H:%i") formatted_date FROM billets ORDER BY publish_at DESC');
+            $statement = $this->db->prepare('SELECT id, title, publish_at, DATE_FORMAT(publish_at, "%W %d %M, %H:%i") formatted_date 
+                                                FROM billets 
+                                                ORDER BY publish_at DESC');
 
             $statement->execute();
             if($assocFlag)

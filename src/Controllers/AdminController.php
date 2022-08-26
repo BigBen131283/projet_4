@@ -89,12 +89,27 @@ class AdminController extends Controller
         $billetDB = new BilletDB();
         $statistics = $AdminDb->siteStatistics();
         $adminBillets = $billetDB->adminBillets(true);
-                
+        $bcount = count($adminBillets);
+
+        $final = array();
+
+        foreach ($adminBillets as $key => $value) {
+            $final["$key"] = array();
+            $final["$key"][0] = $value['title'];
+            $final["$key"][1] = $value['publish_at'];
+            $final["$key"][2] = $value['id'];
+        }
+        echo json_encode($final);
+        http_response_code(200);
+        return;
+
         echo json_encode([
-            'allBillets' => $adminBillets
+            'first' => $adminBillets[0],
+            'billetcount' => $bcount
         ]);
         http_response_code(200);
         return;
+
         // if($statistics !== null)
         // {
         //     echo json_encode([

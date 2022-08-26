@@ -250,24 +250,44 @@
         public function jsonDeleteBillet()
         {
             $params = $this->decodePostRequest();
-            $billetId = isset($params["billetId"]) ? $params["billetId"] : '';
+            if(!isset($params["billetId"])) 
+            {
+                echo json_encode([  
+                    'message'=> "ID du billet non communiqué.",  
+                    'error' => true
+                ]);
+                http_response_code(400);    // Bad request
+                return;
+            }
+            $billetId = $params["billetId"];
             $billetDB = new BilletDB();
-
-            if($billetId !== '' && $billetDB->deleteBillet($billetId))
+            $result = $billetDB->deleteBillet($billetId);
+            /*
+                echo json_encode([  
+                    'message'=> "Debug",  
+                    'error' => false,
+                    'json payload' => $params,
+                    'billetid' => $params["billetId"],
+                    'db action status' => $result
+                ]);
+                http_response_code(200);    // All is fine
+                return;
+            */
+            if( $result === 1)
             {
                 echo json_encode([  
                     'message'=> "Billet $billetId effacé.",  
-                    'error' => false,
-                    'billetId' => $billetId
+                    'error' => false
                 ]);
+                http_response_code(200);    // All is fine
             }
             else
             {
                 echo json_encode([  
-                    'message'=> "Impossible d'effacer le billet $billetId.",  
-                    'error' => true,
-                    'billetId' => $billetId
+                    'message'=> "Impossible d'effacer le billet ID : $billetId",  
+                    'error' => true
                 ]);
+                http_response_code(500); // Server problem. Maybe a DB error
             }
         }
 

@@ -174,7 +174,7 @@ class BilletDB extends Db
         }
     }
 
-    public function adminBillets()
+    public function adminBillets($assocFlag = false)
     {
         try
         {
@@ -182,9 +182,15 @@ class BilletDB extends Db
             $statement = $this->db->prepare('SELECT id, title, publish_at, DATE_FORMAT(publish_at, "%W %d %M, %H:%i") formatted_date FROM billets ORDER BY publish_at DESC');
 
             $statement->execute();
-            $result = $statement->fetchAll();
+            if($assocFlag)
+            {
+                $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+            }
+            else
+            {
+                $result = $statement->fetchAll();
+            }
             // var_dump($result);die;
-
             if(!empty($result))
             {
                 return $result;
@@ -194,7 +200,7 @@ class BilletDB extends Db
         catch(PDOException $e)
         {
             $this->logger->console($e->getMessage());
-            return false;
+            return array();
         }
     }
 
@@ -203,6 +209,16 @@ class BilletDB extends Db
         try
         {
             $this->db = Db::getInstance();
+            $statement = $this->db->prepare('DELETE FROM likes  
+                                                WHERE billets_id = :toto');
+            $statement->bindValue(':toto', $id);
+            $statement->execute();
+
+            $statement = $this->db->prepare('DELETE FROM comments  
+                                                WHERE billet_id = :toto');
+            $statement->bindValue(':toto', $id);
+            $statement->execute();
+
             $statement = $this->db->prepare('DELETE FROM billets 
                                                 WHERE id = :1');
 
@@ -245,9 +261,9 @@ class BilletDB extends Db
                                     WHERE users_id = :userId 
                                     AND billets_id = :billetId AND like_it = :like_it');
 
-            $statement->bindValue('userId', $userId);
-            $statement->bindValue('billetId', $billetId);
-            $statement->bindValue('like_it', $flag);
+            $statement->bindValue(':userId', $userId);
+            $statement->bindValue(':billetId', $billetId);
+            $statement->bindValue(':like_it', $flag);
             $statement->execute();
             return $statement->rowCount();
         }
@@ -267,8 +283,8 @@ class BilletDB extends Db
                                     WHERE users_id = :userId 
                                     AND billets_id = :billetId');
 
-            $statement->bindValue('userId', $userId);
-            $statement->bindValue('billetId', $billetId);
+            $statement->bindValue(':userId', $userId);
+            $statement->bindValue(':billetId', $billetId);
 
             $statement->execute();
             return $statement->fetch(PDO::FETCH_ASSOC);
@@ -311,9 +327,9 @@ class BilletDB extends Db
                 $statement = $this->db->prepare('UPDATE likes SET like_it = :likeflag 
                                                     WHERE billets_id = :billetId 
                                                         AND users_id = :userId');                
-                $statement->bindValue('userId', $userid);
-                $statement->bindValue('billetId', $billetId);
-                $statement->bindValue('likeflag', $actionflag);
+                $statement->bindValue(':userId', $userid);
+                $statement->bindValue(':billetId', $billetId);
+                $statement->bindValue(':likeflag', $actionflag);
                 $result =  $statement->execute();                
                 if($actionflag === BilletsController::ACTION_LIKE) 
                 { 
@@ -329,16 +345,16 @@ class BilletDB extends Db
                                                 thumbs_down =  thumbs_down + 1
                                             WHERE id = :id;');
                 }
-                $statement->bindValue('id', $billetId);
+                $statement->bindValue(':id', $billetId);
                 return $statement->execute();            
             }
             if($actiontype === BilletsController::ACTION_TYPE_INSERT) 
             {
                 $statement = $this->db->prepare('INSERT INTO likes (billets_id, users_id, like_it) 
                                                     VALUES (:billetId, :userId, :likeit)');                
-                $statement->bindValue('userId', $userid);
-                $statement->bindValue('billetId', $billetId);
-                $statement->bindValue('likeit', $actionflag);
+                $statement->bindValue(':userId', $userid);
+                $statement->bindValue(':billetId', $billetId);
+                $statement->bindValue(':likeit', $actionflag);
                 $result =  $statement->execute();                
                 if($actionflag === BilletsController::ACTION_LIKE) 
                 { 
@@ -352,15 +368,15 @@ class BilletDB extends Db
                                             SET thumbs_down =  thumbs_down + 1
                                             WHERE id = :id;');
                 }
-                $statement->bindValue('id', $billetId);
+                $statement->bindValue(':id', $billetId);
                 return $statement->execute();            
             }
             if($actiontype === BilletsController::ACTION_TYPE_DELETE) 
             {
                 $statement = $this->db->prepare('DELETE FROM likes WHERE billets_id = :billetId 
                                                                     AND users_id = :userId');                     
-                $statement->bindValue('userId', $userid);
-                $statement->bindValue('billetId', $billetId);
+                $statement->bindValue(':userId', $userid);
+                $statement->bindValue(':billetId', $billetId);
                 $result =  $statement->execute();                
                 if($actionflag === BilletsController::ACTION_LIKE) 
                 { 
@@ -374,7 +390,7 @@ class BilletDB extends Db
                                             SET thumbs_down =  thumbs_down - 1
                                             WHERE id = :id;');
                 }
-                $statement->bindValue('id', $billetId);
+                $statement->bindValue(':id', $billetId);
                 return $statement->execute();
             }
         }

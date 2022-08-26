@@ -103,34 +103,51 @@ $(document).ready( () => {
         }
 
         function deletebillet(billetId) {
-            const url = '/billets/jsonDeleteBillet/';
             const params = {
                 "billetId": billetId
             };
-            fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(params)
-            })
-            .then((res) => {
-               if (res.ok) {
-                   return res.json();
-               }
-               else {
-                   console.log(res.status);
-                   return;
-               }
-            })
-            .then((res)=>{
-                console.log(res.message);
-            })
-            .catch((e) => {
-               console.log(e);
-            })
+            console.clear();
+            console.log('Deleting billet : ' + billetId);
+            $.ajax(
+                {
+                    type: "POST",
+                    url: "/billets/jsonDeleteBillet/",
+                    dataType: "json",
+                    async: false,
+                    data: JSON.stringify(params),
+                    success: function(data) {
+                        console.log(data);
+                        updateStats();
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(JSON.stringify(params));
+                        console.log('DELETE KO : ' + xhr.status + " " + xhr.responseText);
+                    }            
+                }
+            );
         }
+    }
+
+    function updateStats(){
+        $.ajax(
+            {
+                type: "GET",
+                url: "/admin/jsonGetStats/",
+                dataType: "json",
+                async: false,
+                success: function(data) {
+                    console.log(data);
+                    $('#billets_stats .data').text(data.allCounters.publishedBillets);
+                    $('#member_stats .data').text(data.allCounters.allUsers);
+                    $('#comments_stats .data').text(data.allCounters.allComments);
+                    $('#modo_stats .data').text(data.allCounters.allModerate);
+                },
+                error: function(xhr, status, error) {
+                    console.log(xhr);
+                    console.log('Update Stats KO : ' + xhr.status + " " + xhr.responseText);
+                }            
+            }
+        );
     }
     
     function initTinyMce(selector, theheight) {

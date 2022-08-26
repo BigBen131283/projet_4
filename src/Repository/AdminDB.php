@@ -45,13 +45,13 @@ class AdminDB extends Db
             $result = $statement->fetch(PDO::FETCH_ASSOC);
 
             $allStatistics["allModerate"] = $result["countAllModerate"];
-            
+
             return (object)$allStatistics; //ça s'appelle un CAST https://stackoverflow.com/questions/1869091/how-to-convert-an-array-to-object-in-php
         }
         catch(PDOException $e)
         {
             $this->logger->console($e->getMessage());
-            return false;
+            return null;
         }
     }
 }

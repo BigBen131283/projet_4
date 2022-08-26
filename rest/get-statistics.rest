@@ -1,0 +1,2 @@
+GET http://projet4/admin/jsonGetStats/
+Content-Type: application/json

@@ -82,6 +82,36 @@ class AdminController extends Controller
             ]);
         }
     }
+
+    public function jsonGetStats()
+    {
+        $AdminDb = new AdminDB();
+        $billetDB = new BilletDB();
+        $statistics = $AdminDb->siteStatistics();
+        $adminBillets = $billetDB->adminBillets(true);
+                
+        echo json_encode([
+            'allBillets' => $adminBillets
+        ]);
+        http_response_code(200);
+        return;
+        // if($statistics !== null)
+        // {
+        //     echo json_encode([
+        //         'message'=>'Statistics',
+        //         'allCounters' => $statistics,
+        //         'allBillets' => $adminBillets
+        //     ]);
+        //     http_response_code(200);
+        // }
+        // else
+        // {
+        //     echo json_encode([
+        //         'message'=>'Erreur lors de la récupération des données'
+        //     ]);
+        //     http_response_code(500);
+        // }
+    }
 }
 
 ?>

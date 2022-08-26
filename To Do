@@ -1,10 +1,10 @@
-En update rendre l'image facultative
+**En update rendre l'image facultative
 
-En update, annulation ne vide pas les champs tinyMCE
+**En update, annulation ne vide pas les champs tinyMCE
 
-En create, pas de date sélectionnée  = date du clic par défaut
+**En create, pas de date sélectionnée  = date du clic par défaut
 
-En update, ne pas modifier la date de création mais indiquer une date de modification ou alors classer les billets par Id
+**En update, ne pas modifier la date de création mais indiquer une date de modification ou alors classer les billets par Id
 
 Voir date en Français
 

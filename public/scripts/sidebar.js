@@ -4,6 +4,7 @@ const list = document.querySelectorAll('.list');
 const membersBox = document.getElementById('#members');
 const moderationBox = document.getElementById('#moderate');
 const chapterBox = document.getElementById('#chapter');
+const writeBox = document.getElementById('#write');
 
 menuToggle.onclick = function(){
     navigation.classList.toggle('open');
@@ -17,3 +18,7 @@ function activeLink(){
 
 list.forEach((item) =>
     item.addEventListener('click', activeLink));
+
+function displayBox(){
+    
+}

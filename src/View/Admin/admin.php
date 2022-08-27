@@ -93,7 +93,7 @@
                 <?php endforeach?>
             </div>
         </div>
-        <div class="write" style="--clr:#b145e9">
+        <div class="write" id="write" style="--clr:#b145e9">
             <span class="icon"><ion-icon name="pencil-outline"></ion-icon></span>
             <form action="/billets/createbillet" method="post" novalidate enctype="multipart/form-data">
                 <?php echo $errorHandler->getFirstError('flashmessage'); ?>

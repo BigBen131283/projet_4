@@ -45,7 +45,65 @@ body
     padding-top: 10px;
 }
 
+.siteadmin .adminbox
+{
+    margin: 25px 0 10px 0;
+}
+
 .siteadmin .chapters
 {
     display: flex;
+}
+
+.siteadmin .chapters article
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.siteadmin .chapters article .desc
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: calc(100% - 200px);
+    color: var(--pclr);
+}
+
+.siteadmin .chapters article .desc .date
+{
+    font-size: .8rem;
+}
+
+.siteadmin .chapters article .modify
+{
+    height: 100%;
+    width: 200px;
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+}
+
+.siteadmin .chapters article .modify .notvisible 
+{
+    display: none;
+}
+
+.siteadmin .chapters article .modify li
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    width: 100px;
+    margin: 10px 15px;
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--alternatebgclr);
+    border: 3px solid var(--primaryclr);
+    border-radius: 20px;
 }

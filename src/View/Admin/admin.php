@@ -57,8 +57,11 @@
             </div>
         </div>
         <div class="siteadmin">
-            <div class="adminbox members" id="members"></div>
-            <div class="adminbox moderate" id="moderate">
+            <div class="adminbox members" id="members" style="--clr:#ffa117">
+                <span class="icon"><ion-icon name="person-outline"></ion-icon></span>
+            </div>
+            <div class="adminbox moderate" id="moderate"  style="--clr:#0fc70f">
+                <span class="icon"><ion-icon name="chatbubble-outline"></ion-icon></span>
                 <?php foreach($signaledComments as $comment):?>
                     <article>
                         <h2><a href="/billets/chapitre/<?= $comment->billet_id?>"><?= $comment->title?></a></h2>
@@ -74,20 +77,24 @@
                     </article>
                 <?php endforeach?>
             </div>
-            <div class="adminbox chapters" id="chapters">
-            <?php foreach($adminBillets as $billet):?>
+            <div class="adminbox chapters" id="chapters" style="--clr:#2196f3">
+                <span class="icon"><ion-icon name="book-outline"></ion-icon></span>
+                <?php foreach($adminBillets as $billet):?>
                     <article>
-                        <h2><a href="/billets/chapitre/<?= $billet->id?>"><?= $billet->title?></a></h2>
-                        <p class="date"><?= $billet->formatted_date?></p>
+                        <div class="desc">
+                            <h2><a href="/billets/chapitre/<?= $billet->id?>"><?= $billet->title?></a></h2>    
+                            <p class="date"><?= $billet->formatted_date?></p>
+                        </div>
                         <ul class="modify">
-                            <li class="selectbillet" id="editbillet-<?= $billet->id?>">Editer</li>
-                            <li class="selectbillet" id="deletebillet-<?= $billet->id?>">Supprimer</li>
+                                <li class="selectbillet notvisible" id="editbillet-<?= $billet->id?>">Editer</li>
+                                <li class="selectbillet" id="deletebillet-<?= $billet->id?>">Supprimer</li>
                         </ul>
                     </article>
                 <?php endforeach?>
             </div>
         </div>
-        <div class="write">
+        <div class="write" style="--clr:#b145e9">
+            <span class="icon"><ion-icon name="pencil-outline"></ion-icon></span>
             <form action="/billets/createbillet" method="post" novalidate enctype="multipart/form-data">
                 <?php echo $errorHandler->getFirstError('flashmessage'); ?>
                 <div class="inputBox">

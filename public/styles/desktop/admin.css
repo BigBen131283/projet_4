@@ -48,6 +48,7 @@
 {
     width: 32%;
     border-radius: 0;
+    margin: 15px 0 10px 0;
 }
 
 .siteadmin .adminbox::-webkit-scrollbar
@@ -71,14 +72,42 @@
                 0 0 40px var(--primaryclr);
 }
 
+.siteadmin .chapters article .modify
+{
+    flex-direction: column;
+}
+
+.siteadmin .chapters article .modify .notvisible
+{
+    display: flex;
+}
+
+.siteadmin .chapters article .modify li
+{
+    transition: 0.5s;
+    width: 130px;
+}
+
+.siteadmin .chapters article .modify li:hover
+{
+    letter-spacing: 0.15em;
+    cursor: pointer;
+    background-color: var(--secondaryclr);
+    color: var(--alternatebgclr);
+    box-shadow: 0 0 10px var(--primaryclr),
+                0 0 20px var(--primaryclr),
+                0 0 40px var(--primaryclr);
+}
+
 .dashboard .write
 {
+    position: relative;
     display: flex;
     width: 100%;
     min-height: 400px;
     margin: 30px 0px;
     background: rgba(255,255,255,0.8);
-    padding: 20px 10px;
+    padding: 35px 10px 20px;
 }
 
 .dashboard .write form

@@ -130,7 +130,7 @@ class BilletDB extends Db
         try
         {
             $this->db = Db::getInstance();
-            $statement = $this->db->prepare('SELECT id, title, abstract, chapter, publish_at, chapter_picture, DATE_FORMAT(publish_at, "%W %d %M, %H:%i") formatted_date FROM billets 
+            $statement = $this->db->prepare('SELECT id, title, abstract, chapter, publish_at, chapter_picture, DATE_FORMAT(publish_at, "%W %d %m, %H:%i") formatted_date FROM billets 
                                                 WHERE id = :id');
             $statement->bindValue(':id', $id);
 
@@ -154,14 +154,32 @@ class BilletDB extends Db
         try
         {
             $this->db = Db::getInstance();
-            $statement = $this->db->prepare('SELECT id, title, abstract, publish_at, chapter_picture, DATE_FORMAT(publish_at, "%W %d %M, %H:%i") formatted_date 
+            $statement = $this->db->prepare('SELECT id, title, abstract, publish_at, chapter_picture, DATE_FORMAT(publish_at, "%W %d %m, %H:%i") formatted_date 
                                                 FROM billets 
                                                 WHERE published = 1');
 
             $statement->execute();
             $result = $statement->fetchAll();
-            // var_dump($result);die;
-
+            $french_months = array('janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre');
+            foreach($result as $key => $value)
+            {
+                // echo $value->formatted_date;
+                // echo "</br>";
+            }
+            foreach($result as $key => $value)
+            {
+                $toto = explode(" ", $value->formatted_date);
+                $i = intval($toto[2]) - 1;
+                $toto[2] = $french_months[$i];
+                $titi = implode(" ", $toto);
+                $result[$key]->formatted_date = $titi;
+            }
+            foreach($result as $key => $value)
+            {
+                // echo $value->formatted_date;
+                // echo "</br>";
+            }
+            // die;
             if(!empty($result))
             {
                 return $result;
@@ -180,7 +198,7 @@ class BilletDB extends Db
         try
         {
             $this->db = Db::getInstance();
-            $statement = $this->db->prepare('SELECT id, title, publish_at, DATE_FORMAT(publish_at, "%W %d %M, %H:%i") formatted_date 
+            $statement = $this->db->prepare('SELECT id, title, publish_at, DATE_FORMAT(publish_at, "%W %d %m, %H:%i") formatted_date 
                                                 FROM billets 
                                                 ORDER BY publish_at DESC');
 

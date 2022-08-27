@@ -118,6 +118,10 @@ $(document).ready( () => {
                     success: function(data) {
                         console.log(data);
                         updateStats();
+                        $("#chapter"+billetId).remove();
+                        $(".comment"+billetId).each((index, element)=>{
+                            $(element).remove();
+                        });
                     },
                     error: function(xhr, status, error) {
                         console.log(JSON.stringify(params));

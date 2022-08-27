@@ -63,7 +63,7 @@
             <div class="adminbox moderate" id="moderate"  style="--clr:#0fc70f">
                 <span class="icon"><ion-icon name="chatbubble-outline"></ion-icon></span>
                 <?php foreach($signaledComments as $comment):?>
-                    <article>
+                    <article class="<?= "comment".$comment->billet_id?>">
                         <h2><a href="/billets/chapitre/<?= $comment->billet_id?>"><?= $comment->title?></a></h2>
                         <div class="comment"><?= html_entity_decode(stripslashes($comment->content))?></div>
                         <div class="auth">
@@ -80,7 +80,7 @@
             <div class="adminbox chapters" id="chapters" style="--clr:#2196f3">
                 <span class="icon"><ion-icon name="book-outline"></ion-icon></span>
                 <?php foreach($adminBillets as $billet):?>
-                    <article>
+                    <article id="<?= "chapter".$billet->id?>">
                         <div class="desc">
                             <h2><a href="/billets/chapitre/<?= $billet->id?>"><?= $billet->title?></a></h2>    
                             <p class="date"><?= $billet->formatted_date?></p>

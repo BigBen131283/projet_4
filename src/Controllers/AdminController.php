@@ -86,46 +86,23 @@ class AdminController extends Controller
     public function jsonGetStats()
     {
         $AdminDb = new AdminDB();
-        $billetDB = new BilletDB();
         $statistics = $AdminDb->siteStatistics();
-        $adminBillets = $billetDB->adminBillets(true);
-        $bcount = count($adminBillets);
 
-        $final = array();
-
-        foreach ($adminBillets as $key => $value) {
-            $final["$key"] = array();
-            $final["$key"][0] = $value['title'];
-            $final["$key"][1] = $value['publish_at'];
-            $final["$key"][2] = $value['id'];
+        if($statistics !== null)
+        {
+            echo json_encode([
+                'message'=>'Statistics',
+                'allCounters' => $statistics
+            ]);
+            http_response_code(200);
         }
-        echo json_encode($final);
-        http_response_code(200);
-        return;
-
-        echo json_encode([
-            'first' => $adminBillets[0],
-            'billetcount' => $bcount
-        ]);
-        http_response_code(200);
-        return;
-
-        // if($statistics !== null)
-        // {
-        //     echo json_encode([
-        //         'message'=>'Statistics',
-        //         'allCounters' => $statistics,
-        //         'allBillets' => $adminBillets
-        //     ]);
-        //     http_response_code(200);
-        // }
-        // else
-        // {
-        //     echo json_encode([
-        //         'message'=>'Erreur lors de la récupération des données'
-        //     ]);
-        //     http_response_code(500);
-        // }
+        else
+        {
+            echo json_encode([
+                'message'=>'Erreur lors de la récupération des données'
+            ]);
+            http_response_code(500);
+        }
     }
 }
 

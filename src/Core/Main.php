@@ -16,6 +16,12 @@ class Main
     private UsersModel $usersmodel;
     public Request $request;
     public Response $response;
+    private const IS_LOGGED = 1;
+    private const IS_ADMIN = 2;
+    private $protectedUrl = [
+        "AdminController.admin" => Main::IS_ADMIN,
+        "UsersController.profil" => Main::IS_LOGGED
+    ];
     
     public function __construct()
     {
@@ -78,7 +84,8 @@ class Main
             // Toutes les clés numériques seront modifiées pour commencer à zéro pendant que les clés litérales ne seront pas affectées.
             //
             //
-            $controller = '\\App\\Controllers\\'. ucfirst(array_shift($params)).'Controller';
+            $controllerName = ucfirst(array_shift($params)).'Controller';
+            $controller = '\\App\\Controllers\\'. $controllerName;
             
             // On instancie le contrôleur 
             $controller = new $controller;
@@ -93,6 +100,28 @@ class Main
                 // (isset($params[0])) ? $controller->$action($params) : $controller->$action();
                 // Ici on récupère les paramètres
                 // var_dump($controller, $action); 
+                if(isset($this->protectedUrl["$controllerName.$action"]))
+                {
+                    // $this->logger->console("URL protégé : $controllerName.$action");
+                    $accessLevel = $this->protectedUrl["$controllerName.$action"];
+                    if($accessLevel === Main::IS_ADMIN)
+                    {
+                        if(!$this->usersmodel->isAdmin())
+                        {
+                            $this->response->redirect('/users/login');
+                        }
+                    }
+                    else
+                    {
+                        if(!$this->usersmodel->isLogged()){
+                            $this->response->redirect('/users/login');
+                        }
+                    }
+                }
+                else
+                {
+                    // $this->logger->console("URL libre : $controllerName.$action");
+                }
                 (isset($params[0])) ? call_user_func_array([$controller, $action] , $params) : $controller->$action();
             }
             else

@@ -66,6 +66,7 @@ nav .sup img
     width: 60px;
     height: 60px;
     border: 2px solid var(--backgroundclr);
+    margin-left: 15px;
 }
 
 nav a

@@ -59,38 +59,45 @@
         <div class="siteadmin">
             <div class="adminbox members" id="members" style="--clr:#ffa117">
                 <span class="icon"><ion-icon name="person-outline"></ion-icon></span>
+                <div class="list">
+                    
+                </div>    
             </div>
             <div class="adminbox moderate" id="moderate"  style="--clr:#0fc70f">
-                <span class="icon"><ion-icon name="chatbubble-outline"></ion-icon></span>
-                <?php foreach($signaledComments as $comment):?>
-                    <article class="<?= "comment".$comment->billet_id?>">
-                        <h2><a href="/billets/chapitre/<?= $comment->billet_id?>"><?= $comment->title?></a></h2>
-                        <div class="comment"><?= html_entity_decode(stripslashes($comment->content))?></div>
-                        <div class="auth">
-                            <p class="pseudo"><?= $comment->pseudo?></p>    
-                            <p class="date"><?= $comment->formatted_date?></p>
-                        </div>
-                        <div class="advice">
-                            <a href="/admin/acceptcomment/<?= $comment->id?>">Autoriser</a>
-                            <a href="/admin/rejectcomment/<?= $comment->id?>">Supprimer</a>
-                        </div>
-                    </article>
-                <?php endforeach?>
+                <span class="icon"><ion-icon name="chatbubble-outline"></ion-icon></span>    
+                <div class="list">
+                    <?php foreach($signaledComments as $comment):?>
+                        <article class="<?= "comment".$comment->billet_id?>">
+                            <h2><a href="/billets/chapitre/<?= $comment->billet_id?>"><?= $comment->title?></a></h2>
+                            <div class="comment"><?= html_entity_decode(stripslashes($comment->content))?></div>
+                            <div class="auth">
+                                <p class="pseudo"><?= $comment->pseudo?></p>    
+                                <p class="date"><?= $comment->formatted_date?></p>
+                            </div>
+                            <div class="advice">
+                                <a href="/admin/acceptcomment/<?= $comment->id?>">Autoriser</a>
+                                <a href="/admin/rejectcomment/<?= $comment->id?>">Supprimer</a>
+                            </div>
+                        </article>
+                    <?php endforeach?>
+                </div>
             </div>
             <div class="adminbox chapters" id="chapters" style="--clr:#2196f3">
                 <span class="icon"><ion-icon name="book-outline"></ion-icon></span>
-                <?php foreach($adminBillets as $billet):?>
-                    <article id="<?= "chapter".$billet->id?>">
-                        <div class="desc">
-                            <h2><a href="/billets/chapitre/<?= $billet->id?>"><?= $billet->title?></a></h2>    
-                            <p class="date"><?= $billet->formatted_date?></p>
-                        </div>
-                        <ul class="modify">
-                                <li class="selectbillet notvisible" id="editbillet-<?= $billet->id?>">Editer</li>
-                                <li class="selectbillet" id="deletebillet-<?= $billet->id?>">Supprimer</li>
-                        </ul>
-                    </article>
-                <?php endforeach?>
+                <div class="list">
+                    <?php foreach($adminBillets as $billet):?>
+                        <article id="<?= "chapter".$billet->id?>">
+                            <div class="desc">
+                                <h2><a href="/billets/chapitre/<?= $billet->id?>"><?= $billet->title?></a></h2>    
+                                <p class="date"><?= $billet->formatted_date?></p>
+                            </div>
+                            <ul class="modify">
+                                    <li class="selectbillet notvisible" id="editbillet-<?= $billet->id?>">Editer</li>
+                                    <li class="selectbillet" id="deletebillet-<?= $billet->id?>">Supprimer</li>
+                            </ul>
+                        </article>
+                    <?php endforeach?>
+                </div>
             </div>
         </div>
         <div class="write" id="write" style="--clr:#b145e9">

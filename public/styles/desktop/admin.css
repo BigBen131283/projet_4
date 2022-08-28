@@ -51,7 +51,7 @@
     margin: 15px 0 10px 0;
 }
 
-.siteadmin .adminbox::-webkit-scrollbar
+.siteadmin .adminbox .list::-webkit-scrollbar
 {
     display: none;
 }
@@ -75,6 +75,7 @@
 .siteadmin .chapters article .modify
 {
     flex-direction: column;
+    width: 150px;
 }
 
 .siteadmin .chapters article .modify .notvisible
@@ -85,7 +86,6 @@
 .siteadmin .chapters article .modify li
 {
     transition: 0.5s;
-    width: 130px;
 }
 
 .siteadmin .chapters article .modify li:hover
@@ -107,7 +107,7 @@
     min-height: 400px;
     margin: 30px 0px;
     background: rgba(255,255,255,0.8);
-    padding: 35px 10px 20px;
+    padding: 40px 10px 20px;
 }
 
 .dashboard .write form

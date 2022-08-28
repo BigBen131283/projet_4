@@ -34,7 +34,7 @@ class AdminDB extends Db
 
             $allStatistics["allUsers"] = $result["countAllUsers"];
 
-            $statement = $this->db->prepare('SELECT COUNT(*) countAllComments FROM comments');
+            $statement = $this->db->prepare('SELECT COUNT(*) countAllComments FROM comments WHERE report >= 20');
             $statement->execute();
             $result = $statement->fetch(PDO::FETCH_ASSOC);
 

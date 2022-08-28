@@ -13,6 +13,7 @@ class BilletDB extends Db
 {
     private const STATUS_PUBLISHED = 1;
     private const STATUS_DEFERRED = 0;
+    private $french_months = array('janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre');
     
     private Logger $logger;
 
@@ -136,6 +137,11 @@ class BilletDB extends Db
 
             $statement->execute();
             $result = $statement->fetch(PDO::FETCH_OBJ);
+
+            $elements = explode(" ", $result->formatted_date);
+            $i = intval($elements[2]) - 1;
+            $elements[2] = $this->french_months[$i];
+            $result->formatted_date = implode(" ", $elements);
     
             if(!empty($result))
             {
@@ -159,27 +165,8 @@ class BilletDB extends Db
                                                 WHERE published = 1');
 
             $statement->execute();
-            $result = $statement->fetchAll();
-            $french_months = array('janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre');
-            foreach($result as $key => $value)
-            {
-                // echo $value->formatted_date;
-                // echo "</br>";
-            }
-            foreach($result as $key => $value)
-            {
-                $toto = explode(" ", $value->formatted_date);
-                $i = intval($toto[2]) - 1;
-                $toto[2] = $french_months[$i];
-                $titi = implode(" ", $toto);
-                $result[$key]->formatted_date = $titi;
-            }
-            foreach($result as $key => $value)
-            {
-                // echo $value->formatted_date;
-                // echo "</br>";
-            }
-            // die;
+            $result = $this->dateConverter($statement->fetchAll());
+
             if(!empty($result))
             {
                 return $result;
@@ -191,6 +178,19 @@ class BilletDB extends Db
             $this->logger->console($e->getMessage());
             return false;
         }
+    }
+
+    /**Use to fix date format behaviour with PDO*/
+    public function dateConverter($data)
+    {
+        foreach($data as $key => $value)
+        {
+            $elements = explode(" ", $value->formatted_date);
+            $i = intval($elements[2]) - 1;
+            $elements[2] = $this->french_months[$i];
+            $data[$key]->formatted_date = implode(" ", $elements);
+        }
+        return $data;
     }
 
     public function adminBillets($assocFlag = false)
@@ -211,10 +211,9 @@ class BilletDB extends Db
             {
                 $result = $statement->fetchAll();
             }
-            // var_dump($result);die;
             if(!empty($result))
             {
-                return $result;
+                return $this->dateConverter($result);
             }
             return array();
         }

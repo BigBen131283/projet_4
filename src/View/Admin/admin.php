@@ -9,25 +9,25 @@
                         <span class="text">Home</span>
                     </a>
                 </li>
-                <li class="list " style="--clr:#ffa117">
+                <li class="list btnMembers" style="--clr:#ffa117">
                     <a href="#">
                         <span class="icon"><ion-icon name="person-outline"></ion-icon></span>
                         <span class="text">Membres</span>
                     </a>
                 </li>
-                <li class="list" style="--clr:#0fc70f">
+                <li class="list btnComments" style="--clr:#0fc70f">
                     <a href="#">
                         <span class="icon"><ion-icon name="chatbubble-outline"></ion-icon></span>
                         <span class="text">Commentaires</span>
                     </a>
                 </li>
-                <li class="list" style="--clr:#2196f3">
+                <li class="list btnChapters" style="--clr:#2196f3">
                     <a href="#">
                         <span class="icon"><ion-icon name="book-outline"></ion-icon></span>
                         <span class="text">Chapitres</span>
                     </a>
                 </li>
-                <li class="list" style="--clr:#b145e9">
+                <li class="list btnWrite" style="--clr:#b145e9">
                     <a href="#">
                         <span class="icon"><ion-icon name="pencil-outline"></ion-icon></span>
                         <span class="text">Rédaction</span>

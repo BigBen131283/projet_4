@@ -10,25 +10,25 @@
                     </a>
                 </li>
                 <li class="list btnMembers" style="--clr:#ffa117">
-                    <a href="#">
+                    <a href="#members">
                         <span class="icon"><ion-icon name="person-outline"></ion-icon></span>
                         <span class="text">Membres</span>
                     </a>
                 </li>
                 <li class="list btnComments" style="--clr:#0fc70f">
-                    <a href="#">
+                    <a href="#moderate">
                         <span class="icon"><ion-icon name="chatbubble-outline"></ion-icon></span>
                         <span class="text">Commentaires</span>
                     </a>
                 </li>
                 <li class="list btnChapters" style="--clr:#2196f3">
-                    <a href="#">
+                    <a href="#chapters">
                         <span class="icon"><ion-icon name="book-outline"></ion-icon></span>
                         <span class="text">Chapitres</span>
                     </a>
                 </li>
                 <li class="list btnWrite" style="--clr:#b145e9">
-                    <a href="#">
+                    <a href="#write">
                         <span class="icon"><ion-icon name="pencil-outline"></ion-icon></span>
                         <span class="text">Rédaction</span>
                     </a>

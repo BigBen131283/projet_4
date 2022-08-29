@@ -108,13 +108,13 @@ class Main
                     {
                         if(!$this->usersmodel->isAdmin())
                         {
-                            $this->response->redirect('/users/login');
+                            $this->response->redirect('/redirect/error');
                         }
                     }
                     else
                     {
                         if(!$this->usersmodel->isLogged()){
-                            $this->response->redirect('/users/login');
+                            $this->response->redirect('/redirect/error');
                         }
                     }
                 }

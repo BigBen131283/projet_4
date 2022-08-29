@@ -111,6 +111,27 @@ class UsersDB extends Db
         return null;
     }
 
+    public function getUserbyEmail($email)
+    {
+        $this->db = Db::getInstance();
+
+        $statement = $this->db->prepare('SELECT id, pseudo, email, profile_picture, role 
+                                         FROM users 
+                                         WHERE email = :email');
+
+        $statement->bindValue(':email', $email);
+
+        $statement->execute();
+
+        $result = $statement->fetchObject(static::class);
+
+        if($result)
+        {
+            return $result;
+        }
+        return null;
+    }
+
     public function updateUser($id, $email, $pseudo, $picture)
     {
         try 
@@ -150,6 +171,42 @@ class UsersDB extends Db
         {
             return false;
         }
+    }
+
+    public function confirmPasswordReset($selector, $token) 
+    {
+        $this->db = Db::getInstance();
+        $resetdb = new ResetDB();
+        // 1st, check the resets table to validate the register confirmation request
+        if($resetdb->verify($selector, $token)) 
+        {
+            return true;
+        }   
+        else 
+        {
+            return false;
+        }
+    }
+
+    public function getPseudobySelector($selector)
+    {
+        $this->db = Db::getInstance();
+
+        $statement = $this->db->prepare('SELECT pseudo 
+                                         FROM resets 
+                                         WHERE selector = :selector');
+
+        $statement->bindValue(':selector', $selector);
+
+        $statement->execute();
+
+        $result = $statement->fetchObject(static::class);
+
+        if($result)
+        {
+            return $result;
+        }
+        return null;
     }
 }
 

@@ -9,12 +9,11 @@ class TokenSelector {
   // private $hashedtoken; 
   private $expires;
   private $url;
-  private const TARGETURL = '/users/registerconfirmed';
 
   /**
    * TARGETURL est le path dans le routeur pour confirmer l'enregistrement
    */
-  public function __construct()
+  public function __construct($targetUrl)
   {
     $host = $_SERVER['SERVER_NAME'];    // To build the URL
     // selector is used to find the user in the resets table
@@ -25,7 +24,7 @@ class TokenSelector {
     // expires gives a maximum 30 minutes delay for the user to act
     date_default_timezone_set('Europe/Paris');
     $this->expires = date("U") + 1800; 
-    $this->url = 'http://'.$host.self::TARGETURL;
+    $this->url = 'http://'.$host.$targetUrl;
     $this->url .= '?selector='.$this->selector.
                     '&token='.bin2hex($this->token);
   }

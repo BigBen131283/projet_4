@@ -39,7 +39,40 @@
             return $this->check($fieldsAndRules);
         }
 
+        public function checkPasswordResetFinal(array $params)
+        {
+            $fieldsAndRules=[];
+            if(!empty($params))
+            {
+                $fieldsAndRules = [
+                    "pass"=>[
+                        "value"=>$params['pass'],
+                        "rules"=>[self::RULE_NOTEMPTY, ["rule"=>self::RULE_MIN, 'length'=>6]]
+                    ],
+                    "confirm-pass"=>[
+                        "value"=>$params['confirm-pass'],
+                        "rules"=>[self::RULE_NOTEMPTY, ["rule"=>self::RULE_MATCH,'match'=>'pass']],
+                        'label'=>'Mot de passe'
+                    ]
+                ];
+            }
+            return $this->check($fieldsAndRules);
+        }
 
+        public function checkPasswordResetRequest(array $params)
+        {
+            $fieldsAndRules=[];
+            if(!empty($params))
+            {
+                $fieldsAndRules = [
+                    "email"=>[
+                    "value"=>$params['email'],
+                    "rules"=>[self::RULE_NOTEMPTY, self::RULE_EMAIL]
+                    ]
+                ];
+            }
+            return $this->check($fieldsAndRules);
+        }
         
         // -------------------------------------------------------------------
 

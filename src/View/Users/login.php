@@ -21,7 +21,7 @@
         <button type="submit">Se connecter</button>
         <ul>
             <li><a href="/users/register" data-text="S'inscrire">S'inscrire</a></li>
-            <li><a href="#" data-text="Mot de passe oublié">Mot de passe oublié</a></li>
+            <li><a href="/users/resetrequest" data-text="Mot de passe oublié">Mot de passe oublié</a></li>
         </ul>
     </div>
 </form>

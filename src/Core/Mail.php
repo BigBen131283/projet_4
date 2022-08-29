@@ -39,9 +39,9 @@ abstract class Mail
   abstract protected function sendRegisterConfirmation(string $subject, $userpseudo);
   
   //----------------------------------------------------------------------
-  public function createToken() 
+  public function createToken($url) 
   {
-    return new TokenSelector();
+    return new TokenSelector($url);
   }
   
   /**
@@ -68,10 +68,10 @@ abstract class Mail
    * @param [type] $userpseudo
    * @param [type] $tks
    */
-  public function storeMailRequest($userpseudo, $tks) {
+  public function storeMailRequest($userpseudo, $tks, $actionType) {
     // Insert a reset record used to process the user's answer when clicking oin the mail
     $resetdb = new ResetDB();
-    $resetdb->request('register', $userpseudo, 
+    $resetdb->request($actionType, $userpseudo, 
             $tks->getSelector(), 
             $tks->getToken(), 
             $tks->getExpires());

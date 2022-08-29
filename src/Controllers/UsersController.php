@@ -217,6 +217,71 @@ class UsersController extends Controller
         $this->render('users/profil', 'php', 'defaultLogin', ['loggedUser'=>$user, 'updateUser' => $validator]);
     }
 
+    public function resetrequest() 
+    {
+        $request = new Request;
+        $logger = new Logger(Users::class);
+        $user = Main::$main->getUsersModel();
+        $validator = new UsersValidator();
+
+        if($request->isPost())
+        {
+            $body = $request->getBody();
+            // On appelle ton validateur en lui passant les données
+            $errorList = $validator->checkPasswordResetRequest($body);
+            if(!$validator->hasError())
+            {
+                $dbAccess = new UsersDB();
+                $user = $dbAccess->getUserbyEmail($body['email']);
+                if($user)
+                {
+                    $logger->console('Sending the password reset email to user');
+                    $mail = new MailTrap($user->email);
+
+                    $result = $mail->sendPasswordReset("Bonjour $user->pseudo, veuillez cliquer sur le lien ci-dessous pour réinitialiser votre mot de passe", $user->pseudo);
+                    Main::$main->response->redirect('/users/login');
+                }
+                else
+                {
+                    $validator->addError('email', 'email inconnu');
+                }
+            }
+        }
+        $this->render('users/passwordresetrequest', 'php', 'defaultLogin', ['loggedUser'=>$user, 'errorHandler' => $validator]);
+    }
+
+    public function passwordReset()
+    {
+        $logger = new Logger(Users::class);
+        $user = Main::$main->getUsersModel();
+        $request = new Request();
+        $validator = new UsersValidator();
+
+        if($request->isPost())
+        {
+            $body = $request->getBody();
+            $errorList = $validator->checkPasswordResetFinal($body);
+            if(!$validator->hasError())
+            {
+                $dbAccess = new UsersDB();
+                
+                if($user)
+                {
+                    $logger->console('Sending the password reset email to user');
+                    $mail = new MailTrap($user->email);
+
+                    $result = $mail->sendPasswordReset("Bonjour $user->pseudo, veuillez cliquer sur le lien ci-dessous pour réinitialiser votre mot de passe", $user->pseudo);
+                    Main::$main->response->redirect('/users/login');
+                }
+                else
+                {
+                    $validator->addError('email', 'email inconnu');
+                }
+            }
+        }
+        $this->render('users/passwordreset', 'php', 'defaultLogin', ['loggedUser'=>$user, 'errorHandler' => $validator]);
+    }
+
     public function registerconfirmed() 
     {
         $logger = new Logger(__CLASS__);
@@ -227,10 +292,10 @@ class UsersController extends Controller
         parse_str($uricomponents['query'], $params);
         $selector = $params['selector'];
         $token = $params['token'];
-        try{
+        try
+        {
             if($request->isGet()&& $selector) {
                 if($usersDB->confirmRegistration($selector, $token)) {
-                    $logger->db('User registration confirmation failed');
                     Main::$main->response->redirect('/#accueil');
                 }
             }
@@ -245,6 +310,38 @@ class UsersController extends Controller
         }
         $logger->db('Confirmation request processed for ');
         Main::$main->response->redirect('/users/login');
+    }
+
+    public function passwordresetconfirmed()
+    {
+        $logger = new Logger(__CLASS__);
+        $usersDB = new UsersDB();
+        $request = new Request();
+        $uri = $_SERVER['REQUEST_URI'];
+        $uricomponents = parse_url($uri);
+        parse_str($uricomponents['query'], $params);
+        $selector = $params['selector'];
+        $token = $params['token'];
+        try
+        {
+            if($request->isGet()&& $selector) 
+            {
+                if($usersDB->confirmPasswordReset($selector, $token)) 
+                {
+                    $pseudo = $usersDB->getPseudobySelector($selector);
+                    Main::$main->response->redirect("/users/passwordreset/$pseudo");
+                }
+            }
+            else 
+            {
+                $logger->db('Invalid register confirmation request');
+                Main::$main->response->redirect('/#accueil');
+            }
+        }
+        catch(PDOException  $e) {
+            $logger->db($e->getMessage());
+            Main::$main->response->redirect('/#accueil');
+        }
     }
 }
 ?>

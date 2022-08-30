@@ -185,10 +185,10 @@ class BilletDB extends Db
         try
         {
             $this->db = Db::getInstance();
-            $statement = $this->db->prepare('SELECT abstract FROM `billets` ORDER BY id DESC LIMIT 1');
+            $statement = $this->db->prepare('SELECT abstract, title FROM `billets` ORDER BY id DESC LIMIT 1');
 
             $statement->execute();
-            $result = $statement->fetchAll();
+            $result = $statement->fetch();
             if(!empty($result))
             {
                 return $result;

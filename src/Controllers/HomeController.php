@@ -6,9 +6,7 @@ use App\Core\Controller;
 use App\Core\Main;
 use App\Core\Logger;
 use App\Models\UsersModel;
-
-
-
+use App\Repository\BilletDB;
 
 class HomeController extends Controller
 {
@@ -16,7 +14,11 @@ class HomeController extends Controller
     {
         $user = Main::$main->getUsersModel();
         $logger = new Logger(__CLASS__);
-        $this->render('home/index', 'php', 'default', ['loggedUser'=>$user]);
+        $billetDB = new BilletDB();
+        $billet = $billetDB->getLastAbstract();
+        // var_dump($billet); die;
+
+        $this->render('home/index', 'php', 'default', ['loggedUser'=>$user, 'billet'=>$billet]);
     }
 }
 

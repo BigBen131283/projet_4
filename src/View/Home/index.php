@@ -76,13 +76,9 @@
         <h1>L'Aventure</h1>
         <div class="last-post">
             <div class="last-post-content">
-                <h2>Titre du dernier chapitre</h2>
+                <h2><?= $billet->title?></h2>
                 <br/>
-                <p>
-                    Début du nouveau chapitre, idéalement une sélection d'une cinquantaine de mots, 
-                    les 50 premiers écrits auxquels on concatenne "..." afin de faire commencer la lecture
-                    au visiteur, puis d'aller en découvrir plus : 
-                </p>
+                <p class="abstract"><?= html_entity_decode(stripslashes($billet->abstract))?></p>
             </div>
         </div>
         <a href="/billets/chapterlist">Lire la suite</a>

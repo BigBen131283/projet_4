@@ -77,6 +77,53 @@
                 0 0 40px var(--primaryclr);
 }
 
+.siteadmin .adminbox .list .user
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.siteadmin .adminbox .list .user img
+{
+    position: relative;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    border: 2px solid var(--thirdclr);
+    object-position: center;
+    object-fit: cover;
+}
+
+.siteadmin .adminbox .list .user .identity
+{
+    width: calc(95% - 80px);
+    padding-left: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.siteadmin .adminbox .list .user .identity h2
+{
+    
+    padding: 5px 0px;
+    color: var(--primaryclr);
+}
+
+.siteadmin .adminbox .list .user .identity a
+{
+    color: var(--pclr);
+    display: none;
+}
+
+.siteadmin .adminbox.active .list .user .identity a
+{
+    display: flex;
+}
+
 .siteadmin .chapters article .modify
 {
     flex-direction: column;

@@ -60,7 +60,15 @@
             <div class="adminbox members" id="members" style="--clr:#ffa117">
                 <span class="icon"><ion-icon name="person-outline"></ion-icon></span>
                 <div class="list">
-                    
+                    <?php foreach($usersList as $user):?>
+                        <article class="user">
+                            <img src="<?= IMAGEROOT.$user->profile_picture?>" alt="Photo de profil" class="profile_picture">
+                            <div class="identity">
+                                <h2><?= $user->pseudo?></h2>
+                                <a href="mailto:<?= $user->email?>"><?= $user->email?></a>
+                            </div>
+                        </article>
+                    <?php endforeach?>
                 </div>    
             </div>
             <div class="adminbox moderate" id="moderate"  style="--clr:#0fc70f">

@@ -25,7 +25,7 @@ class AdminController extends Controller
         $adminBillets = $billetDB->adminBillets();
         $statistics = $AdminDb->siteStatistics();
         $usersList = $usersDB->getActiveUsers();
-        var_dump($usersList); die;
+        // var_dump($usersList); die;
         $this->render('admin/admin', 'php', 'defaultadmin', [
             'loggedUser'=>$user,
             'signaledComments'=>$signaledComments,

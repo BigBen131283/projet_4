@@ -260,23 +260,27 @@ class UsersController extends Controller
         $usersdb = new UsersDB();
 
         $body = $request->getBody();
+        // retrieve a selector to get user pseudo in the resets table
+        $urlelements = explode('/', $_SERVER['REQUEST_URI']);   // The selector is transmitted by the user email request
+        if(count($urlelements) === 4)
+        {
+            $selector = $urlelements[3];                            // Look at passwordresetconfirmed()
+        }
+        else
+        {
+            Main::$main->response->redirect('/redirect/error');
+        }
         if($request->isPost())
         {
             $errorList = $validator->checkPasswordResetFinal($body);
             if(!$validator->hasError())
             {
-                $dbAccess = new UsersDB();
-                // retrieve a selector to get user pseudo in the resets table
-                $urlelements = explode('/', $_SERVER['REQUEST_URI']);   // The selector is transmitted by the user email request
-                $selector = $urlelements[3];                            // Look at passwordresetconfirmed()
+                $dbAccess = new UsersDB();            
                 $reset = $usersdb->getPseudobySelector($selector);      // Read the resets table to get user pseudo
                 $user = $usersdb->getUserbyPseudo($reset->pseudo);      // Get the user
-                // var_dump($body);
-                // var_dump($user);die;
                 if($user)
                 {
                     $newpass = $body['pass'];
-                    // var_dump($newpass);
                     $usersdb->updatePassword($user->id, $newpass);     // Reset the user password
                     Main::$main->response->redirect('/users/login');
                 }

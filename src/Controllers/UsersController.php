@@ -244,6 +244,7 @@ class UsersController extends Controller
                 else
                 {
                     $validator->addError('email', 'email inconnu');
+                    $user = Main::$main->getUsersModel();
                 }
             }
         }
@@ -256,30 +257,37 @@ class UsersController extends Controller
         $user = Main::$main->getUsersModel();
         $request = new Request();
         $validator = new UsersValidator();
+        $usersdb = new UsersDB();
 
+        $body = $request->getBody();
         if($request->isPost())
         {
-            $body = $request->getBody();
             $errorList = $validator->checkPasswordResetFinal($body);
             if(!$validator->hasError())
             {
                 $dbAccess = new UsersDB();
-                
+                // retrieve a selector to get user pseudo in the resets table
+                $urlelements = explode('/', $_SERVER['REQUEST_URI']);   // The selector is transmitted by the user email request
+                $selector = $urlelements[3];                            // Look at passwordresetconfirmed()
+                $reset = $usersdb->getPseudobySelector($selector);      // Read the resets table to get user pseudo
+                $user = $usersdb->getUserbyPseudo($reset->pseudo);      // Get the user
+                // var_dump($body);
+                // var_dump($user);die;
                 if($user)
                 {
-                    $logger->console('Sending the password reset email to user');
-                    $mail = new MailTrap($user->email);
-
-                    $result = $mail->sendPasswordReset("Bonjour $user->pseudo, veuillez cliquer sur le lien ci-dessous pour réinitialiser votre mot de passe", $user->pseudo);
+                    $newpass = $body['pass'];
+                    // var_dump($newpass);
+                    $usersdb->updatePassword($user->id, $newpass);     // Reset the user password
                     Main::$main->response->redirect('/users/login');
                 }
                 else
                 {
-                    $validator->addError('email', 'email inconnu');
+                    $logger->console('Call IT dev, big big problem here !!!');
                 }
             }
         }
-        $this->render('users/passwordreset', 'php', 'defaultLogin', ['loggedUser'=>$user, 'errorHandler' => $validator]);
+        $this->render('users/passwordreset', 'php', 'defaultLogin', ['loggedUser'=>$user, 
+                                                                     'errorHandler' => $validator]);
     }
 
     public function registerconfirmed() 
@@ -328,8 +336,10 @@ class UsersController extends Controller
             {
                 if($usersDB->confirmPasswordReset($selector, $token)) 
                 {
-                    $pseudo = $usersDB->getPseudobySelector($selector);
-                    Main::$main->response->redirect("/users/passwordreset/$pseudo");
+                    Main::$main->response->redirect("/users/passwordreset/$selector");
+                }
+                else {
+                    Main::$main->response->redirect('/#accueil');
                 }
             }
             else 

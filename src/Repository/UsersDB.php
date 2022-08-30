@@ -131,6 +131,24 @@ class UsersDB extends Db
         }
         return null;
     }
+    public function getUserbyPseudo($pseudo)
+    {
+        $this->db = Db::getInstance();
+        $statement = $this->db->prepare('SELECT id, pseudo, email, profile_picture, role 
+                                            FROM users WHERE pseudo = :pseudo');
+
+        $statement->bindValue(':pseudo', $pseudo);
+
+        $statement->execute();
+
+        $result = $statement->fetchObject(static::class);
+
+        if($result)
+        {
+            return $result;
+        }
+        return null;
+    }
 
     public function updateUser($id, $email, $pseudo, $picture)
     {
@@ -144,6 +162,23 @@ class UsersDB extends Db
             $statement->bindValue(':email', $email);
             $statement->bindValue(':pseudo', $pseudo);
             $statement->bindValue(':pf', $picture);
+            return $statement->execute();
+        }
+        catch(PDOException $e) 
+        {
+            $this->logger->console($e->getMessage());
+            return false;
+        }
+    }
+    public function updatePassword($id, $password)
+    {
+        try 
+        {
+            $this->db = Db::getInstance();
+            $statement = $this->db->prepare('UPDATE users SET password = :password WHERE id = :id');
+            $statement->bindValue(':id', $id);
+            $password = password_hash($password, PASSWORD_ARGON2I);
+            $statement->bindValue(':password', $password);
             return $statement->execute();
         }
         catch(PDOException $e) 

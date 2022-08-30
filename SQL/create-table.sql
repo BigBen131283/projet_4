@@ -36,13 +36,15 @@ DROP TABLE IF EXISTS projet4.users ;
 
 CREATE TABLE IF NOT EXISTS projet4.users (
   id INT(11) NOT NULL AUTO_INCREMENT,
-  email VARCHAR(128) NOT NULL UNIQUE,
+  email VARCHAR(128) NOT NULL,
   password VARCHAR(256) NOT NULL,
-  pseudo VARCHAR(64) NOT NULL UNIQUE,
+  pseudo VARCHAR(64) NOT NULL,
   status INT(11) NOT NULL DEFAULT 10,
   role INT(11) NOT NULL DEFAULT 20,
   profile_picture VARCHAR(64) NOT NULL DEFAULT 'defaultuserpicture.png',
-  PRIMARY KEY (id))
+  PRIMARY KEY (id)
+  CONSTRAINT UC_MAIL UNIQUE (email),
+  CONSTRAINT UC_PSEUDO UNIQUE (pseudo))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 -- CREATE UNIQUE INDEX `uniqueUser` ON projet4.users(`email`, `pseudo`) USING BTREE;

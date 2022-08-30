@@ -70,14 +70,14 @@ class ResetDB extends Db
     $statement = $this->db->prepare('SELECT resetid, pseudo, token, expires FROM resets 
                             WHERE selector = :selector AND resetstatus = '.self::STATUS_REQUESTED);
     $statement->bindValue(':selector', $selector);
-    $statement->execute();
-    
-    if($statement) 
+    if($statement->execute() && $statement->rowCount() !== 0) 
     {
-      $record = $statement->fetchObject(static::class);
+      // var_dump($statement->rowCount(). ' - ');
+      $record = $statement->fetch();
       // Ok found a request record with this selector
       $requesttoken = hex2bin($token);  // Convert request token back to DB format
       // Is the validation token correct ?
+      
       if($requesttoken === $record->token) 
       {  
         $this->resetid = $record->resetid;

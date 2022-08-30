@@ -352,12 +352,12 @@ class UsersController extends Controller
             else 
             {
                 $message = 'Oups, vous devriez faire demi-tour...';
-                Main::$main->response->redirect("/redirect/error/$message");
+                Main::$main->response->redirect("/redirect/error/?errmsg=$message");
             }
         }
         catch(PDOException  $e) {
             $logger->db($e->getMessage());
-            Main::$main->response->redirect('/#accueil');
+            Main::$main->response->redirect("/redirect/error/?errmsg=$e->getMessage()");
         }
     }
 }

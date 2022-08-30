@@ -6,6 +6,7 @@ use App\Core\Main;
 use App\Repository\AdminDB;
 use App\Repository\BilletDB;
 use App\Repository\CommentsDB;
+use App\Repository\UsersDB;
 use App\Validator\BilletValidator;
 
 class AdminController extends Controller
@@ -17,18 +18,21 @@ class AdminController extends Controller
         $billetDB = new BilletDB();
         $validator = new BilletValidator();
         $AdminDb = new AdminDB();
+        $usersDB = new UsersDB();
         ini_set('upload_max_filesize', 5);
         
         $signaledComments = $commentsDB->getSignaledComments();
         $adminBillets = $billetDB->adminBillets();
         $statistics = $AdminDb->siteStatistics();
-        // var_dump($signaledComments); die;
+        $usersList = $usersDB->getActiveUsers();
+        var_dump($usersList); die;
         $this->render('admin/admin', 'php', 'defaultadmin', [
             'loggedUser'=>$user,
             'signaledComments'=>$signaledComments,
             'errorHandler'=>$validator,
             'adminBillets'=>$adminBillets,
-            'statistics'=>$statistics
+            'statistics'=>$statistics,
+            'usersList'=>$usersList
         ]);
     }
 

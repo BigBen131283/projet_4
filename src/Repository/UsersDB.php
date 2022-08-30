@@ -243,6 +243,26 @@ class UsersDB extends Db
         }
         return null;
     }
+
+    public function getActiveUsers()
+    {
+        try 
+        {
+            $this->db = Db::getInstance();
+            $statement = $this->db->prepare('SELECT pseudo, profile_picture, email
+                                         FROM users 
+                                         WHERE status = '.self::STATUS_CONFIRMED.' ORDER BY id DESC');
+            $statement->execute();
+            $result = $statement->fetchAll();
+
+            return $result;
+        }
+        catch(PDOException $e) 
+        {
+            $this->logger->console($e->getMessage());
+            return false;
+        }
+    }
 }
 
 ?>

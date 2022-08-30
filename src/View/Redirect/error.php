@@ -10,6 +10,6 @@
             $mess = explode('=', $elements[3]);
             $message = urldecode($mess[1]);
         }
-    ?>    
+    ?>  
     <h1><?= $message?></h1>
 </div>

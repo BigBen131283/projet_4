@@ -286,7 +286,8 @@ class UsersController extends Controller
                 }
                 else
                 {
-                    $logger->console('Call IT dev, big big problem here !!!');
+                    $message = 'Call IT dev, big big problem here !!!';
+                    Main::$main->response->redirect("/redirect/error/$message");
                 }
             }
         }
@@ -342,14 +343,16 @@ class UsersController extends Controller
                 {
                     Main::$main->response->redirect("/users/passwordreset/$selector");
                 }
-                else {
-                    Main::$main->response->redirect('/#accueil');
+                else 
+                {
+                    $message = 'Votre requête de réinitialisation du mot de passe est invalide.';
+                    Main::$main->response->redirect("/redirect/error/?errmsg=$message");
                 }
             }
             else 
             {
-                $logger->db('Invalid register confirmation request');
-                Main::$main->response->redirect('/#accueil');
+                $message = 'Oups, vous devriez faire demi-tour...';
+                Main::$main->response->redirect("/redirect/error/$message");
             }
         }
         catch(PDOException  $e) {

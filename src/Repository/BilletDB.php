@@ -180,6 +180,27 @@ class BilletDB extends Db
         }
     }
 
+    public function getLastAbstract()
+    {
+        try
+        {
+            $this->db = Db::getInstance();
+            $statement = $this->db->prepare('SELECT abstract FROM `billets` ORDER BY id DESC LIMIT 1');
+
+            $statement->execute();
+            $result = $statement->fetchAll();
+            if(!empty($result))
+            {
+                return $result;
+            }
+        }
+        catch(PDOException $e)
+        {
+            $this->logger->console($e->getMessage());
+            return false;
+        }
+    }
+
     /**Use to fix date format behaviour with PDO*/
     public function dateConverter($data)
     {

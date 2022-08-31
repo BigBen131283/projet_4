@@ -28,10 +28,7 @@
             $user = Main::$main->getUsersModel();
             // var_dump($result);die;
 
-            if(!empty($result))
-            {
-                $this->render('billets/chapterlist', 'php', 'defaultadventure', ['billets' => $result, 'loggedUser' => $user]);
-            }
+            $this->render('billets/chapterlist', 'php', 'defaultadventure', ['billets' => $result, 'loggedUser' => $user]);
         }
 
         public function chapitre(int $id)

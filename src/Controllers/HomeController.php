@@ -16,11 +16,14 @@ class HomeController extends Controller
         $logger = new Logger(__CLASS__);
         $billetDB = new BilletDB();
         $billet = $billetDB->getLastAbstract();
-        $letters = str_split($billet->abstract);
         $splitAbstract = "";
-        foreach($letters as $letter)
+        if($billet)
         {
-            $splitAbstract .= "<span>$letter</span>";
+            $letters = str_split($billet->abstract);
+            foreach($letters as $letter)
+            {
+                $splitAbstract .= "<span>$letter</span>";
+            }
         }
         // var_dump($splitAbstract); die;
 

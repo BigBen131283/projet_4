@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS projet4.users (
   status INT(11) NOT NULL DEFAULT 10,
   role INT(11) NOT NULL DEFAULT 20,
   profile_picture VARCHAR(64) NOT NULL DEFAULT 'defaultuserpicture.png',
-  PRIMARY KEY (id)
+  PRIMARY KEY (id),
   CONSTRAINT UC_MAIL UNIQUE (email),
   CONSTRAINT UC_PSEUDO UNIQUE (pseudo))
 ENGINE = InnoDB

@@ -193,6 +193,10 @@ class BilletDB extends Db
             {
                 return $result;
             }
+            else
+            {
+                return (object)['title'=>'', 'abstract'=>''];
+            }
         }
         catch(PDOException $e)
         {

@@ -78,7 +78,7 @@
             <div class="last-post-content">
                 <h2><?= $billet->title?></h2>
                 <br/>
-                <p class="abstract"><?= html_entity_decode(stripslashes($billet->abstract))?></p>
+                <p class="abstract"><?= $specialFX?></p>
             </div>
         </div>
         <a href="/billets/chapterlist">Lire la suite</a>

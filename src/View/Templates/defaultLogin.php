@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="/styles/mobile/mainmenu.css">
     <link rel="stylesheet" href="/styles/tablet/mainmenu.css" media="screen AND (min-width: 600px)">
     <link rel="stylesheet" href="/styles/desktop/mainmenu.css" media="screen AND (min-width: 1024px)">
+    <link rel="stylesheet" href="/styles/desktop/mainmenuLS.css" media="screen AND (min-width: 1550px)">
     <!-- <link rel="stylesheet" href="/styles/login/tablett.css" media="screen AND (min-width: 600px)">
     <link rel="stylesheet" href="/styles/login/desktop.css" media="screen AND (min-width: 1024px)"> -->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>

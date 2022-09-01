@@ -19,7 +19,7 @@
                 $fieldsAndRules = [
                     "content"=>[
                         "value"=>$params['content'],
-                        "rules"=>[self::RULE_NOTEMPTY, ["rule"=>self::RULE_MAX, 'length'=>80]]
+                        "rules"=>[self::RULE_NOTEMPTY, ["rule"=>self::RULE_MAX, 'length'=>255]]
                     ],
                 ];
             }

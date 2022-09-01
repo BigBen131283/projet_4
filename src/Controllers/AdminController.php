@@ -47,8 +47,10 @@ class AdminController extends Controller
             $validator = new BilletValidator();
             $billetDB = new BilletDB();
             $AdminDb = new AdminDB();
+            $usersDB = new UsersDB();
             $statistics = $AdminDb->siteStatistics();
             $adminBillets = $billetDB->adminBillets();
+            $usersList = $usersDB->getActiveUsers();
 
             $signaledComments = $commentsDB->getSignaledComments();
             $this->render('admin/admin', 'php', 'defaultadmin', [
@@ -56,7 +58,8 @@ class AdminController extends Controller
                 'signaledComments'=>$signaledComments, 
                 'errorHandler'=>$validator, 
                 'adminBillets'=>$adminBillets,
-                'statistics'=>$statistics
+                'statistics'=>$statistics,
+                'usersList'=>$usersList
             ]);
         }
     }
@@ -73,8 +76,10 @@ class AdminController extends Controller
             $validator = new BilletValidator();
             $billetDB = new BilletDB();
             $AdminDb = new AdminDB();
+            $usersDB = new UsersDB();
             $adminBillets = $billetDB->adminBillets();
             $statistics = $AdminDb->siteStatistics();
+            $usersList = $usersDB->getActiveUsers();
 
             $signaledComments = $commentsDB->getSignaledComments();
             $this->render('admin/admin', 'php', 'defaultadmin', [
@@ -82,7 +87,8 @@ class AdminController extends Controller
                 'signaledComments'=>$signaledComments, 
                 'errorHandler'=>$validator, 
                 'adminBillets'=>$adminBillets,
-                'statistics'=>$statistics
+                'statistics'=>$statistics,
+                'usersList'=>$usersList
             ]);
         }
     }

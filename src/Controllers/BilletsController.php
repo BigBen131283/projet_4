@@ -8,6 +8,7 @@
     use App\Repository\BilletDB;
     use App\Repository\CommentsDB;
     use App\Repository\AdminDB;
+    use App\Repository\UsersDB;
     use App\Validator\BilletValidator;
     use App\Validator\CommentsValidator;
     use Exception;
@@ -53,6 +54,7 @@
             $commentsDB = new CommentsDB();
             $billetDB = new BilletDB();
             $AdminDb = new AdminDB();
+            $usersDB = new UsersDB();
 
             $logger = new Logger(__CLASS__);
             $validator = new BilletValidator();
@@ -60,6 +62,7 @@
             $signaledComments = $commentsDB->getSignaledComments();
             $adminBillets = $billetDB->adminBillets();
             $statistics = $AdminDb->siteStatistics();
+            $usersList = $usersDB->getActiveUsers();
 
             if($request->isPost())
             {
@@ -89,7 +92,8 @@
                     'signaledComments'=>$signaledComments, 
                     'errorHandler'=>$validator, 
                     'adminBillets'=>$adminBillets,
-                    'statistics'=>$statistics
+                    'statistics'=>$statistics,
+                    'usersList'=>$usersList
                 ]);
             }
             else
@@ -99,7 +103,8 @@
                     'signaledComments'=>$signaledComments, 
                     'errorHandler'=>$validator, 
                     'adminBillets'=>$adminBillets,
-                    'statistics'=>$statistics
+                    'statistics'=>$statistics,
+                    'usersList'=>$usersList
                 ]);
             }
         }
@@ -110,6 +115,7 @@
             $commentsDB = new CommentsDB();
             $billetDB = new BilletDB();
             $AdminDb = new AdminDB();
+            $usersDB = new UsersDB();
 
             $logger = new Logger(__CLASS__);
             $validator = new BilletValidator();
@@ -117,6 +123,7 @@
             $signaledComments = $commentsDB->getSignaledComments();
             $adminBillets = $billetDB->adminBillets();
             $statistics = $AdminDb->siteStatistics();
+            $usersList = $usersDB->getActiveUsers();
 
             if($request->isPost())
             {                
@@ -177,7 +184,8 @@
                     'signaledComments'=>$signaledComments, 
                     'errorHandler'=>$validator, 
                     'adminBillets'=>$adminBillets,
-                    'statistics'=>$statistics
+                    'statistics'=>$statistics,
+                    'usersList'=>$usersList
                 ]);
             }
         }

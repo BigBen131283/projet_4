@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/styles/mobile/mainmenu.css">
     <link rel="stylesheet" href="/styles/tablet/mainmenu.css" media="screen AND (min-width: 600px)">
     <link rel="stylesheet" href="/styles/desktop/mainmenu.css" media="screen AND (min-width: 1024px)">
+    <link rel="stylesheet" href="/styles/desktop/mainmenuLS.css" media="screen AND (min-width: 1550px)">
     <link rel="stylesheet" href="/styles/mobile/sidebar.css">
     <link rel="stylesheet" href="/styles/tablet/sidebar.css" media="screen AND (min-width: 600px)">
     <link rel="stylesheet" href="/styles/desktop/sidebar.css" media="screen AND (min-width: 1024px)">

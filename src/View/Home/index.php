@@ -35,18 +35,17 @@
     <section class="projet" id="accueil">
         <h1>Le Projet :</h1>
         <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla nesciunt error quaerat, magni, 
-            repellat accusantium recusandae quidem nihil, voluptatem corporis iste necessitatibus officiis consequatur! 
-            Corporis at recusandae laboriosam labore adipisci odio deleniti qui nobis unde modi est veritatis amet, 
-            exercitationem suscipit quas et repellendus, molestiae minus? Debitis consequuntur officiis, 
-            possimus reiciendis fugiat minima architecto praesentium obcaecati mollitia quos? <br/><br/>
-            Odit, autem est corrupti quae eius doloribus consequatur voluptatem. Non iusto est velit. 
-            Quaerat iure ut temporibus laborum sapiente minima officiis eum numquam repudiandae, exercitationem maxime 
-            at enim consequatur voluptate libero voluptates aspernatur sequi, dolore cumque sed nam corrupti id 
-            nulla recusandae! Inventore cumque, molestias repudiandae sapiente enim quo! Corrupti architecto rem dolores.<br/><br/>
-            Blanditiis explicabo architecto, iste ducimus obcaecati, quae excepturi voluptas quisquam hic porro 
-            quaerat repudiandae illo sint totam doloribus esse aut voluptatum ipsa! Animi, odio neque placeat quaerat 
-            debitis hic voluptatum!</p>
+            C'est une idée un peu folle. Mais c'est aussi une incroyable expérience humaine. Traverser l'Alaska à pied et à traineau d'Anchorage à 
+            Prudhoe Bay.<br/><br/>
+            Les récits et les films ont façonné notre imaginaire, de Jack London à Christopher Nolan, de Sean Penn à  Didier van Cauwelaert. 
+            Je rêvais dans mon enfance des pionniers du Klondike, des animaux sauvages, de la solitude de l'aventurier. Cette terre hostile 
+            est un des derniers territoires encore vierge. C'est ici que je vais me perdre, en pleine nature.<br/><br/>
+            Je ne vais cependant pas partir seul. Je souhaite vous associer à mon aventure et vous emmener,un peu, avec moi. Découvrez mon périple 
+            à travers mon récit que je publierai sur ce Blog.<br/><br/>
+            Parce que j'ai toujours apprécié d'échanger avec mes lecteurs vous pourrez réagir à chaque publication. Un peu à la manière d'un roman intéractif,
+            devenez le héros, ou l'héroïne, de ce voyage.<br/><br/>
+            L'histoire commence donc à Anchorage, après un long voyage en train... Bienvenue au pays des saumons, territoire des ours, et royaume des moustiques... 
+        </p>
     </section>
     <section id="auteur">
         <h1>L'Auteur : Jean Forteroche</h1>
@@ -59,16 +58,11 @@
                     </div>
                 </div>
                 <p class="displayed_bio">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.<br/><br/> 
-                    Architecto dolor dolore id aperiam laudantium vero tempore placeat minima autem inventore, 
-                    doloribus, deserunt excepturi! Iure laborum doloremque sint quisquam, fuga quas error corrupti 
-                    voluptate deleniti porro quasi eum saepe reprehenderit, nemo id ratione architecto minima. 
-                    Deserunt, eaque ducimus assumenda reiciendis illo vitae ipsam quis est eveniet maxime, 
-                    sint doloremque. Impedit, ut voluptatibus nesciunt perferendis libero quo perspiciatis 
-                    nemo possimus nihil. Temporibus excepturi nulla architecto iusto amet accusamus magni eos odit 
-                    vero quae corporis error ipsam, laudantium, soluta dolores enim ullam tenetur sed unde dolore 
-                    deserunt dolorem!<br/><br/>
-                    Expedita accusantium aspernatur sed vitae.
+                    Né le 10 mai 1981 dans la banlieue de Neuilly-sur-Seine, Jean Forteroche grandit entre la modeste maison familiale de la Villa Madrid, 
+                    le petit pied-à-terre de l'île de Ré et le chalet de Méribel.<br/><br/>
+                    A peine âgé de 18 ans son premier roman, Je serai le prochain Rastignac (2001), est un succès qui le propulse sur le devant de la scène. Qualifié de chef d'oeuvre
+                    de la pensée du vide, il devient le chef de file des nouveaux penseurs de notre temps.<br/><br/>
+                    Ses autres romans, Atomes (2003), Le pas diagonale (2007), Les mûres en hiver (2012), Vers l'été éternel (2017) sont disponibles chez Jägerstedt Publishing. 
                 </p>
             </div>
     </section>
@@ -78,7 +72,7 @@
             <div class="last-post-content">
                 <h2><?= $billet->title?></h2>
                 <br/>
-                <p class="abstract"><?= $specialFX?></p>
+                <p class="abstract"><?=$specialFX?></p>
             </div>
         </div>
         <a href="/billets/chapterlist">Lire la suite</a>

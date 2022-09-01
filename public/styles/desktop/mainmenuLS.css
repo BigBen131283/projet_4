@@ -1,0 +1,16 @@
+.main_menu
+{
+    width: 100%;
+    min-width: none;
+    max-width: none;
+}
+
+.menu_access li a
+{
+    font-size: 1rem;
+}
+
+.main_menu .sup .user_name
+{
+    font-size: 1rem;
+}

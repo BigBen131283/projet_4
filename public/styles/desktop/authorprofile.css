@@ -27,7 +27,6 @@
 .full-bio.active
 {
     transform: translate(0%);
-    height: 700px;
 }
 
 .displayed_bio
@@ -38,6 +37,7 @@
     padding-right: 20px;
     transform: opacity 0;
     transition: all 0.75s ease-in;
+    font-size: .85rem;
 }
 
 .displayed_bio.active

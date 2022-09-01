@@ -1,0 +1,14 @@
+.statistics
+{
+    flex-wrap: nowrap;
+}
+
+.statistics .statbox
+{
+    width: 25%;
+}
+
+.siteadmin .adminbox .list .user .identity h2
+{
+    font-size: 1.5rem;
+}

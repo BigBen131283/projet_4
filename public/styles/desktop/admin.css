@@ -22,19 +22,15 @@
     border-radius: 0px;
 }
 
-.statistics
-{
-    flex-wrap: nowrap;
-}
-
 .statistics .statbox
 {
     border-radius: 0px;
+    width: 45%;
 }
 
 .statistics .statbox h2
 {
-    font-size: .8rem;
+    font-size: 1rem;
 }
 
 .siteadmin .members, .siteadmin .write
@@ -111,6 +107,7 @@
     
     padding: 5px 0px;
     color: var(--primaryclr);
+    font-size: 1rem;
 }
 
 .siteadmin .adminbox .list .user .identity a
@@ -124,10 +121,48 @@
     display: flex;
 }
 
-.siteadmin .chapters article .modify
+.siteadmin .adminbox .list .comment, .siteadmin .adminbox .list .advice
+{
+    display: none;
+}
+
+.siteadmin .adminbox .list .auth
 {
     flex-direction: column;
+    color: var(--pclr);
+}
+
+.siteadmin .adminbox.active .list .auth
+{
+    flex-direction: row;
+    color: var(--primaryclr);
+}
+
+.siteadmin .adminbox.active .list .comment, .siteadmin .adminbox.active .list .advice
+{
+    display: flex;
+}
+
+.siteadmin .chapters article .desc
+{
+    width: 90%;
+}
+
+.siteadmin .chapters.active article .desc
+{
+    width: calc(100% - 200px);
+}
+
+.siteadmin .chapters article .modify
+{
+    display: none;
+    flex-direction: column;
     width: 150px;
+}
+
+.siteadmin .chapters.active article .modify
+{
+    display: flex;
 }
 
 .siteadmin .chapters article .modify .notvisible

@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="/styles/mobile/admin.css">
     <link rel="stylesheet" href="/styles/tablet/admin.css" media="screen AND (min-width: 600px)">
     <link rel="stylesheet" href="/styles/desktop/admin.css" media="screen AND (min-width: 1024px)">
+    <link rel="stylesheet" href="/styles/desktop/adminLS.css" media="screen AND (min-width: 1350px)">
     <script type="module" src="/scripts/script.js"></script>
     <script type="module" src="/scripts/sidebar.js"></script>
     <script type="module" src="/scripts/admin.js"></script>

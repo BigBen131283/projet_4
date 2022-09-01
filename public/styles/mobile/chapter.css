@@ -46,9 +46,9 @@ body
 
 article
 {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    /* display: flex; */
+    /* flex-direction: column; */
+    /* justify-content: center; */
     width: 100%;
     margin-top: 70px;
 }
@@ -58,8 +58,8 @@ article h1
     padding: 20px 0px 15px;
     border-bottom: 1px solid var(--backgroundclr);
     width: 100%;
-    object-fit: cover;
-    object-position: center;
+    /* object-fit: cover; */
+    /* object-position: center; */
 }
 
 article h1 a

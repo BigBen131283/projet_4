@@ -197,6 +197,44 @@ class Main
         $str = str_replace($search, $replace, $str);
         return $str;
     }
+
+    public function replaceHTMLAccent($str)
+    {
+        $search = array(
+            '&Agrave;', '&Aacute;', '&Acirc;', '&Atilde;', '&Auml;', '	&Aring;',
+            '&#199;', 
+            '&Egrave;', '&Eacute;', '&Ecirc;', '&Euml;',
+            '&Igrave;', '&Iacute;', '&Icirc;', '&Iuml;',
+            '&Ograve;', '&Oacute;', '&Ocirc;', '&Otilde;', '&Ouml;',
+            '&Ugrave;', '&Uacute;', '&Ucirc;', '&Uuml;',
+            '&Yacute;',
+            '&agrave;', '&aacute;', '&acirc;', '&atilde;', '&auml;', '&aring;',
+            '&#231;', 
+            '&egrave;', '&eacute;', '&ecirc;', '&euml;',
+            '&igrave;', '&iacute;', '&icirc;', '&iuml;',
+            '&ograve;', '&oacute;', '&ocirc;', '&otilde;', '&ouml;',
+            '&ugrave;', '&uacute;', '&ucirc;', '&uuml;',
+            '&yacute;', '&yuml;'
+        );
+        $replace = array(
+            'A', 'A', 'A', 'A', 'A', 'A', 
+            'C', 
+            'E', 'E', 'E', 'E', 
+            'I', 'I', 'I', 'I', 
+            'O', 'O', 'O', 'O', 'O', 
+            'U', 'U', 'U', 'U', 
+            'Y', 
+            'a', 'a', 'a', 'a', 'a', 'a', 
+            'c', 
+            'e', 'e', 'e', 'e', 
+            'i', 'i', 'i', 'i', 
+            'o', 'o', 'o', 'o', 'o', 
+            'u', 'u', 'u', 'u', 
+            'y', 'y'
+        );
+        $str = str_replace($search, $replace, $str);
+        return $str;
+    }
 }
 
 ?>

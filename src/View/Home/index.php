@@ -72,16 +72,27 @@
             <div class="last-post-content">
                 <h2><?= $billet->title?></h2>
                 <br/>
-                <p class="abstract"><?=html_entity_decode(stripslashes($specialFX))?></p>
-                <h1>
+                <p class="abstract">
                     <?php
                         use App\Core\Main;
-                        $essai = Main::$main->replaceAccent("Résumé extrêment accentué, très agréable, à croire que c'est la pânacée");
-                        echo $essai
+                        $str = html_entity_decode(stripslashes($specialFX));
+                        $string = Main::$main->replaceHTMLAccent($str);
+                        $splitAbstract = "";
+                        if($string)
+                        {
+                            
+                            $strtags = strip_tags($string);
+                            $letters = str_split($strtags);
+                            foreach($letters as $letter)
+                            {
+                                $splitAbstract .= "<span>$letter</span>";
+                            }
+                            echo strtoupper($splitAbstract);
+                        }
                     ?>
-                </h1>
+                </p>
             </div>
         </div>
-        <a href="/billets/chapterlist">Lire la suite</a>
+        <a href="/billets/chapterlist" class="tales">Lire la suite</a>
     </section>
 </div>

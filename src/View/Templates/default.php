@@ -21,7 +21,8 @@
     <link rel="stylesheet" href="/styles/desktop/authorprofile.css" media="screen AND (min-width: 1024px)">
     <link rel="stylesheet" href="/styles/desktop/authorprofileLS.css" media="screen AND (min-width: 1500px)">
     <link rel="stylesheet" href="/styles/mobile/lastpost.css">
-    <!-- <link rel="stylesheet" href="/styles/tablet/lastpost.css" media="screen AND (min-width: 600px)"> -->
+    <link rel="stylesheet" href="/styles/tablet/lastpost.css" media="screen AND (min-width: 600px)">
+    <link rel="stylesheet" href="/styles/desktop/lastpost.css" media="screen AND (min-width: 1024px)">
     <link rel="stylesheet" href="/styles/project.css">
     <script type="module" src="/scripts/script.js"></script>
     <script type="module" src="/scripts/parallax.js"></script>

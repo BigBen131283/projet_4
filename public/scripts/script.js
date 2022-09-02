@@ -43,3 +43,6 @@ function checkBilletPublication(){
             console.log(err);
         })
 }
+
+// gestion de la partie Aventure de l'accueil
+setTimeout()

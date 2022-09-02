@@ -1,0 +1,34 @@
+/* ROOT */
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+
+:root
+{
+    --backgroundclr: #333;
+    --alternatebgclr: #fdfdfd;
+    --h1clr: #333;
+    --pclr: #fdfdfd;
+    --primaryclr: #59B8A2;
+    --secondaryclr: #1C3253;
+    --thirdclr: #bbb5ac;
+    --fourthclr: #ffd101;
+}
+
+#adventure a
+{
+    background: var(--secondaryclr);
+    border: solid 3px var(--secondaryclr);
+    color: var(--pclr);
+    font-weight: 600;
+    transition: all 0.5s;
+}
+
+#adventure a:hover
+{
+    border: solid 3px var(--primaryclr);
+    font-weight: 700;
+    letter-spacing: 1.4px;
+    box-shadow: 0 0 10px var(--primaryclr),
+                0 0 20px var(--primaryclr),
+                0 0 40px var(--primaryclr);
+}
+

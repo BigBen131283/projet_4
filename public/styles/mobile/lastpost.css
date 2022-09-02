@@ -1,4 +1,5 @@
 /* ROOT */
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
 
 :root
 {
@@ -20,7 +21,83 @@
     font-family: 'Poppins', sans-serif;
 }
 
+#adventure
+{
+    padding: 15px;
+}
+
+#adventure .last-post
+{
+    padding: 5px 5px 15px;
+}
+
+#adventure .last-post-content h2
+{
+    font-family: 'Permanent Marker', sans-serif;
+    font-size: 2rem;
+    color: var(--secondaryclr);
+}
+
+#adventure .last-post-content .abstract span
+{
+    font-family: 'Permanent Marker', sans-serif;
+    font-size: 1.7rem;
+    text-shadow: 0 0 0 var(--h1clr);
+    animation: smoky 5s 3s both;
+}
+
+#adventure .last-post-content .abstract span:nth-child(even)
+{
+    animation-name: smoky-mirror;
+}
+
+@keyframes smoky 
+{
+    60% 
+    {
+        text-shadow: 0 0 40px var(--h1clr);
+    }
+    to {
+        transform:
+        translate3d(15rem,-8rem,0)
+        rotate(-40deg)
+        skewX(70deg)
+        scale(1.5);
+        text-shadow: 0 0 20px var(--h1clr);
+        opacity: 0;
+    }
+}
+
+@keyframes smoky-mirror 
+{
+    60% 
+    {
+        text-shadow: 0 0 40px var(--h1clr); 
+    }
+    to 
+    {
+        transform:
+        translate3d(18rem,-8rem,0)
+        rotate(-40deg) 
+        skewX(-70deg)
+        scale(2);
+        text-shadow: 0 0 20px var(--h1clr);
+        opacity: 0;
+    }
+}
+
 #adventure a
 {
-    border: solid 1px var(--secondaryclr);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: var(--pclr);
+    background: var(--secondaryclr);
+    border: solid 3px var(--primaryclr);
+    border-radius: 40px;
+    height: 50px;
+    width: 150px;
+    font-size: 1.2rem;
+    font-weight: 500;
 }

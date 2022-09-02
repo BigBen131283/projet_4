@@ -1,0 +1,15 @@
+/* ROOT */
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+
+:root
+{
+    --backgroundclr: #333;
+    --alternatebgclr: #fdfdfd;
+    --h1clr: #333;
+    --pclr: #fdfdfd;
+    --primaryclr: #59B8A2;
+    --secondaryclr: #1C3253;
+    --thirdclr: #bbb5ac;
+    --fourthclr: #ffd101;
+}
+

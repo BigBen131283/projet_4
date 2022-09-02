@@ -1,0 +1,9 @@
+@import "compass/css3";
+
+@for $item from 1 through 21 
+{
+    span:nth-of-type(#{$item})
+    { 
+        animation-delay: #{(3 + ($item/10))}s; 
+    }
+}

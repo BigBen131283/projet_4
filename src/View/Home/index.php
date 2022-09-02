@@ -72,7 +72,14 @@
             <div class="last-post-content">
                 <h2><?= $billet->title?></h2>
                 <br/>
-                <p class="abstract"><?=$specialFX?></p>
+                <p class="abstract"><?=html_entity_decode(stripslashes($specialFX))?></p>
+                <h1>
+                    <?php
+                        use App\Core\Main;
+                        $essai = Main::$main->replaceAccent("Résumé extrêment accentué, très agréable, à croire que c'est la pânacée");
+                        echo $essai
+                    ?>
+                </h1>
             </div>
         </div>
         <a href="/billets/chapterlist">Lire la suite</a>

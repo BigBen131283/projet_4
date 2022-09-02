@@ -16,18 +16,19 @@ class HomeController extends Controller
         $logger = new Logger(__CLASS__);
         $billetDB = new BilletDB();
         $billet = $billetDB->getLastAbstract();
-        $splitAbstract = "";
-        if($billet)
-        {
-            $letters = str_split($billet->abstract);
-            foreach($letters as $letter)
-            {
-                $splitAbstract .= "<span>$letter</span>";
-            }
-        }
-        // var_dump($splitAbstract); die;
+        $abstract = html_entity_decode(stripslashes($billet->abstract));
+        // var_dump($abstract); die;
 
-        $this->render('home/index', 'php', 'default', ['loggedUser'=>$user, 'billet'=>$billet, 'specialFX'=>$splitAbstract]);
+        // $splitAbstract = "";
+        // if($billet)
+        // {
+        //     $letters = str_split($billet);
+        //     foreach($letters as $letter)
+        //     {
+        //         $splitAbstract .= "<span>$letter</span>";
+        //     }
+        // }
+        $this->render('home/index', 'php', 'default', ['loggedUser'=>$user, 'billet'=>$billet, 'specialFX'=>$billet->abstract]);
     }
 }
 

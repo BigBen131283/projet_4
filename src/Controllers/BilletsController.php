@@ -70,6 +70,8 @@
                 $filetype = $_FILES["chapter_picture"]["type"];
                 
                 $body = $request->getBody();
+                // $body["abstract"] = Main::$main->replaceAccent($body["abstract"]);
+                // var_dump($body["abstract"]); die;
                 $body["chapter_picture"] = $filename.'.'.$filetype;
                 $errorList = $validator->checkBilletEntries($body);
 

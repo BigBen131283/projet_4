@@ -12,7 +12,7 @@ define('IMAGEROOTCHAPTER', '/images/chapter_pictures/');
 define('DEFAULTIMAGECHAPTER', 'default.jpg');
 // var_dump(ROOT);
 // On importe l'autoloader
-require_once ROOT.'./src/Autoloader.php';
+require_once ROOT.'/src/Autoloader.php';
 Autoloader::register();
 
 // On instancie Main (notre routeur)

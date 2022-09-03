@@ -41,49 +41,20 @@
 #adventure .last-post-content .abstract span
 {
     font-family: 'Permanent Marker', sans-serif;
-    font-size: 1.7rem;
-    text-shadow: 0 0 0 var(--h1clr);
-    animation: smoky 5s 3s both;
+    font-size: 1rem;
+    transform: rotate(0deg) translateY(0px);
+    opacity: 1;
+    transition: all 1s;
 }
 
-#adventure .last-post-content .abstract span:nth-child(even)
+#adventure .last-post-content .abstract.active span
 {
-    animation-name: smoky-mirror;
-}
-
-@keyframes smoky 
-{
-    60% 
-    {
-        text-shadow: 0 0 40px var(--h1clr);
-    }
-    to {
-        transform:
-        translate3d(15rem,-8rem,0)
-        rotate(-40deg)
-        skewX(70deg)
-        scale(1.5);
-        text-shadow: 0 0 20px var(--h1clr);
-        opacity: 0;
-    }
-}
-
-@keyframes smoky-mirror 
-{
-    60% 
-    {
-        text-shadow: 0 0 40px var(--h1clr); 
-    }
-    to 
-    {
-        transform:
-        translate3d(18rem,-8rem,0)
-        rotate(-40deg) 
-        skewX(-70deg)
-        scale(2);
-        text-shadow: 0 0 20px var(--h1clr);
-        opacity: 0;
-    }
+    filter: blur(1px);
+    display: inline-block;
+    transform: rotate(45deg) translateY(-50px);
+    opacity: 0;
+    filter: blur(10px);
+    transition-delay: calc(0.15s * var(--i)/5);
 }
 
 #adventure a

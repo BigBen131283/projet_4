@@ -73,6 +73,7 @@ article img
 {
     padding: 10px;
     border-bottom: 1px solid var(--backgroundclr);
+    width: 100%;
 }
 
 article p

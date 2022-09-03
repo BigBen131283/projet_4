@@ -214,7 +214,8 @@ class Main
             '&igrave;', '&iacute;', '&icirc;', '&iuml;',
             '&ograve;', '&oacute;', '&ocirc;', '&otilde;', '&ouml;',
             '&ugrave;', '&uacute;', '&ucirc;', '&uuml;',
-            '&yacute;', '&yuml;'
+            '&yacute;', '&yuml;',
+            '&#39;'
         );
         $replace = array(
             'A', 'A', 'A', 'A', 'A', 'A', 
@@ -230,7 +231,8 @@ class Main
             'i', 'i', 'i', 'i', 
             'o', 'o', 'o', 'o', 'o', 
             'u', 'u', 'u', 'u', 
-            'y', 'y'
+            'y', 'y',
+            ' '
         );
         $str = str_replace($search, $replace, $str);
         return $str;

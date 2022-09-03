@@ -10,7 +10,6 @@ const picture = document.querySelector('.box');
 
 
 
-
 //main menu
 menuToggle.onclick = function(){
     navigation.classList.toggle('active');
@@ -44,5 +43,3 @@ function checkBilletPublication(){
         })
 }
 
-// gestion de la partie Aventure de l'accueil
-setTimeout()

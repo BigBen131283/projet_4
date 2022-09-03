@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="/styles/desktop/lastpost.css" media="screen AND (min-width: 1024px)">
     <link rel="stylesheet" href="/styles/project.css">
     <script type="module" src="/scripts/script.js"></script>
+    <script type="module" src="/scripts/smoke.js"></script>
     <script type="module" src="/scripts/parallax.js"></script>
     <script type="module" src="/scripts/redac.js"></script>
     <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>

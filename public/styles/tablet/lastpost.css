@@ -13,3 +13,7 @@
     --fourthclr: #ffd101;
 }
 
+#adventure .last-post-content .abstract span
+{
+    font-size: 1.7rem;
+}

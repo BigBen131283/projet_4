@@ -93,6 +93,6 @@
                 </p>
             </div>
         </div>
-        <a href="/billets/chapterlist" class="tales">Lire la suite</a>
+        <a href="#adventure" class="tales">Lire la suite</a>
     </section>
 </div>

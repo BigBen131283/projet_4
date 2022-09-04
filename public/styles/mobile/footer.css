@@ -20,6 +20,7 @@ footer
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-top: 5px;
 }
 
 .contenu-footer
@@ -70,11 +71,12 @@ footer
 {
     padding: 10px 5px;
     border-top: 1px solid var(--pclr);
-    width: 95%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
+    background: var(--backgroundclr);
 }
 
 .disclaimer h2

@@ -13,7 +13,18 @@
     --fourthclr: #ffd101;
 }
 
-#adventure .last-post-content .abstract span
+#adventure .last-post
+{
+    display: flex;
+    width: 80%;
+}
+
+#adventure .last-post-content
+{
+    width: 100%;
+}
+
+#adventure .last-post-content p
 {
     font-size: 1.7rem;
 }

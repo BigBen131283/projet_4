@@ -51,10 +51,10 @@
 {
     filter: blur(1px);
     display: inline-block;
-    transform: rotate(45deg) translateY(-50px);
+    transform: rotate(80deg) translateY(-100px);
     opacity: 0;
     filter: blur(10px);
-    transition-delay: calc(0.15s * var(--i)/5);
+    transition-delay: calc(0.15s * var(--i)/10);
 }
 
 #adventure a

@@ -6,16 +6,19 @@ const moderationBox = document.querySelector('#moderate');
 const chapterBox = document.querySelector('#chapters');
 const writeBox = document.querySelector('#write');
 const btnAll = document.querySelector('.btnAll');
-const btnMembers = document.querySelector('.btnMembers')
-const btnComments = document.querySelector('.btnComments')
-const btnChapters = document.querySelector('.btnChapters')
-const btnWrite = document.querySelector('.btnWrite')
+const btnMembers = document.querySelector('.btnMembers');
+const btnComments = document.querySelector('.btnComments');
+const btnChapters = document.querySelector('.btnChapters');
+const btnWrite = document.querySelector('.btnWrite');
+const editButton = document.querySelector('.selectbillet');
 
 btnAll.addEventListener('click', displayBox);
 btnMembers.addEventListener('click', displayMembers);
 btnComments.addEventListener('click', displayModerate);
 btnChapters.addEventListener('click', displayChapters);
 btnWrite.addEventListener('click', displayWrite);
+editButton.addEventListener('click', displayWrite);
+editButton.addEventListener('click', switchToEdit);
 
 menuToggle.onclick = function(){
     navigation.classList.toggle('open');
@@ -145,4 +148,9 @@ function displayWrite(){
     membersBox.classList.add('hidden');
     moderationBox.classList.add('hidden');
     chapterBox.classList.add('hidden');
+}
+
+function switchToEdit(){
+    btnChapters.classList.remove('active');
+    btnWrite.classList.add('active');
 }

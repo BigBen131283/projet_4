@@ -22,5 +22,5 @@ tales.addEventListener('click', (e)=>{
     setTimeout(() => {
         window.location.href = "/billets/chapterlist";
         console.log("timeout executed...");
-    }, 5000);
+    }, 3000);
 })

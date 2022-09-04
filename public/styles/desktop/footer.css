@@ -1,0 +1,53 @@
+/* ROOT */
+
+:root
+{
+    --clr: #222327;
+    --backgroundclr: #333;
+    --alternatebgclr: #fdfdfd;
+    --h1clr: #333;
+    --pclr: #fdfdfd;
+    --primaryclr: #59B8A2;
+    --secondaryclr: #1C3253;
+    --thirdclr: #bbb5ac;
+    --fourthclr: #ffd101;
+}
+
+footer
+{
+    background: var(--pclr);
+    width: 80%;
+}
+
+.contenu-footer
+{
+    flex-wrap: nowrap;
+    background: var(--pclr);
+}
+
+.contenu-footer .bloc
+{
+    width: 25%;
+    color: var(--h1clr);
+}
+
+.contenu-footer li a
+{
+    color: var(--h1clr);
+}
+
+.contenu-footer li ion-icon
+{
+    font-size: 1.2rem;
+}
+
+.disclaimer
+{
+    border-top: 1px solid var(--backgroundclr);
+}
+
+.disclaimer p
+{
+    color: var(--backgroundclr);
+    font-size: 1rem;
+}

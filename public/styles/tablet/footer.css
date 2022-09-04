@@ -1,0 +1,26 @@
+/* ROOT */
+
+:root
+{
+    --clr: #222327;
+    --backgroundclr: #333;
+    --alternatebgclr: #fdfdfd;
+    --h1clr: #333;
+    --pclr: #fdfdfd;
+    --primaryclr: #59B8A2;
+    --secondaryclr: #1C3253;
+    --thirdclr: #bbb5ac;
+    --fourthclr: #ffd101;
+}
+
+.contenu-footer
+{
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+.contenu-footer .bloc
+{
+    width: 45%;
+}

@@ -1,6 +1,6 @@
 const menuToggle = document.querySelector('.sidebarToggle');
 const navigation = document.querySelector('.side-navigation');
-const list = document.querySelectorAll('.list');
+const menulist = document.querySelectorAll('.menulist');
 const membersBox = document.querySelector('#members');
 const moderationBox = document.querySelector('#moderate');
 const chapterBox = document.querySelector('#chapters');
@@ -10,27 +10,33 @@ const btnMembers = document.querySelector('.btnMembers');
 const btnComments = document.querySelector('.btnComments');
 const btnChapters = document.querySelector('.btnChapters');
 const btnWrite = document.querySelector('.btnWrite');
-const editButton = document.querySelector('.selectbillet');
+const editButton = document.querySelector('.switchToEdit');
 
 btnAll.addEventListener('click', displayBox);
 btnMembers.addEventListener('click', displayMembers);
 btnComments.addEventListener('click', displayModerate);
 btnChapters.addEventListener('click', displayChapters);
 btnWrite.addEventListener('click', displayWrite);
-editButton.addEventListener('click', displayWrite);
 editButton.addEventListener('click', switchToEdit);
 
 menuToggle.onclick = function(){
     navigation.classList.toggle('open');
 }
 
+function switchToEdit(){
+    btnChapters.classList.remove('active');
+    btnWrite.classList.add('active');
+    displayWrite();
+}
+
 function activeLink(){
-    list.forEach((item) =>
+    console.log('coucou');
+    menulist.forEach((item) =>
         item.classList.remove('active'));
     this.classList.add('active');
 }
 
-list.forEach((item) =>
+menulist.forEach((item) =>
     item.addEventListener('click', activeLink));
 
 // display des parties selon le click
@@ -148,9 +154,4 @@ function displayWrite(){
     membersBox.classList.add('hidden');
     moderationBox.classList.add('hidden');
     chapterBox.classList.add('hidden');
-}
-
-function switchToEdit(){
-    btnChapters.classList.remove('active');
-    btnWrite.classList.add('active');
 }

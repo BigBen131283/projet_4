@@ -38,24 +38,37 @@
     color: var(--secondaryclr);
 }
 
-#adventure .last-post-content .abstract span
+#adventure .last-post-content p
 {
     font-family: 'Permanent Marker', sans-serif;
     font-size: 1rem;
-    transform: rotate(0deg) translateY(0px);
-    opacity: 1;
-    transition: all 1s;
+    background: var(--pclr);
+    box-shadow: 0 10px 10px var(--backgroundclr);
 }
 
-#adventure .last-post-content .abstract.active span
+#adventure .last-post-content.active p
 {
-    filter: blur(1px);
-    display: inline-block;
-    transform: rotate(80deg) translateY(-100px);
-    opacity: 0;
-    filter: blur(10px);
-    transition-delay: calc(0.15s * var(--i)/10);
+    transform-origin: 0% 50%;
+    animation: turnpage 2s linear;
 }
+
+@keyframes turnpage
+{
+    0%
+    {
+        transform: rotateY(0deg) skew(0deg, 0deg);
+    }
+    50%
+    {
+        transform: rotateY(90deg) skew(15deg, 15deg);
+    }
+    100%
+    {
+        transform: rotateY(180deg) skew(0deg, 0deg);
+    }
+}
+
+
 
 #adventure a
 {

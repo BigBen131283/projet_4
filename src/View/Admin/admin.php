@@ -3,31 +3,31 @@
         <div class="side-navigation">
             <div class="sidebarToggle"></div>
             <ul>
-                <li class="list active btnAll" style="--clr:#f44336">
+                <li class="menulist active btnAll" style="--clr:#f44336">
                     <a href="#">
                         <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
                         <span class="text">Home</span>
                     </a>
                 </li>
-                <li class="list btnMembers" style="--clr:#ffa117">
+                <li class="menulist btnMembers" style="--clr:#ffa117">
                     <a href="#members">
                         <span class="icon"><ion-icon name="person-outline"></ion-icon></span>
                         <span class="text">Membres</span>
                     </a>
                 </li>
-                <li class="list btnComments" style="--clr:#0fc70f">
+                <li class="menulist btnComments" style="--clr:#0fc70f">
                     <a href="#moderate">
                         <span class="icon"><ion-icon name="chatbubble-outline"></ion-icon></span>
                         <span class="text">Commentaires</span>
                     </a>
                 </li>
-                <li class="list btnChapters" style="--clr:#2196f3">
+                <li class="menulist btnChapters" style="--clr:#2196f3">
                     <a href="#chapters">
                         <span class="icon"><ion-icon name="book-outline"></ion-icon></span>
                         <span class="text">Chapitres</span>
                     </a>
                 </li>
-                <li class="list btnWrite" style="--clr:#b145e9">
+                <li class="menulist btnWrite" style="--clr:#b145e9">
                     <a href="#write">
                         <span class="icon"><ion-icon name="pencil-outline"></ion-icon></span>
                         <span class="text">Rédaction</span>
@@ -100,7 +100,7 @@
                                 <p class="date"><?= $billet->formatted_date?></p>
                             </div>
                             <ul class="modify">
-                                    <li class="selectbillet notvisible" id="editbillet-<?= $billet->id?>">Editer</li>
+                                    <li class="selectbillet notvisible switchToEdit" id="editbillet-<?= $billet->id?>">Editer</li>
                                     <li class="selectbillet" id="deletebillet-<?= $billet->id?>">Supprimer</li>
                             </ul>
                         </article>

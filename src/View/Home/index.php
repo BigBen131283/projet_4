@@ -71,26 +71,7 @@
         <div class="last-post">
             <div class="last-post-content">
                 <h2><?= $billet->title?></h2>
-                <br/>
-                <p class="abstract">
-                    <?php
-                        use App\Core\Main;
-                        $str = html_entity_decode(stripslashes($specialFX));
-                        $string = Main::$main->replaceHTMLAccent($str);
-                        $splitAbstract = "";
-                        if($string)
-                        {
-                            
-                            $strtags = strip_tags($string);
-                            $letters = str_split($strtags);
-                            foreach($letters as $letter)
-                            {
-                                $splitAbstract .= "<span>$letter</span>";
-                            }
-                            echo strtoupper($splitAbstract);
-                        }
-                    ?>
-                </p>
+                <?= html_entity_decode(stripslashes($billet->abstract))?>
             </div>
         </div>
         <a href="#adventure" class="tales">Lire la suite</a>

@@ -37,6 +37,7 @@ body
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    min-height: 100vh;
 }
 
 .site
@@ -47,6 +48,7 @@ body
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    flex: 1 0 auto;
 }
 
 h1

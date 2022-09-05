@@ -42,9 +42,11 @@ body
 
 .site
 {
+    margin-top: 66px;
     width: 90%;
     height: auto;
-    max-height: 90vh;
+    min-height: 89vh;
+    max-height: 89vh;
     overflow-x: hidden;
     overflow-y: auto;
     background: rgba(255,255,255,.5);

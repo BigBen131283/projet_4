@@ -2,3 +2,9 @@
 {
     display: none;
 }
+
+.site
+{
+    min-height: 77.7vh;
+    max-height: 77.7vh;
+}

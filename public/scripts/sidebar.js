@@ -30,7 +30,6 @@ function switchToEdit(){
 }
 
 function activeLink(){
-    console.log('coucou');
     menulist.forEach((item) =>
         item.classList.remove('active'));
     this.classList.add('active');

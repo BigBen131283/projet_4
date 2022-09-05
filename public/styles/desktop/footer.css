@@ -17,6 +17,7 @@ footer
 {
     background: var(--pclr);
     width: 80%;
+    max-width: 1600px;
 }
 
 .contenu-footer

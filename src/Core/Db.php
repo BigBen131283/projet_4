@@ -12,10 +12,16 @@ class Db extends PDO
     private static $instance;
 
     // Informations de connexion
+
     private const DBHOST = 'localhost';
     private const DBUSER = 'root';
     private const DBPASS = 'root';
     private const DBNAME = 'projet4';
+
+    // private const DBHOST = 'localhost';
+    // private const DBUSER = 'zwxz2725_admin';
+    // private const DBPASS = 'Betowan3#';
+    // private const DBNAME = 'zwxz2725_blog';
 
     /**
      * Constructeur de la classe
@@ -31,23 +37,20 @@ class Db extends PDO
         /**
          * On essaye de se connecter à la base de données
          * Si on n'y arrive on affiche un message d'erreur
-         * 
+         *
          * FETCH_ASSOC : A chaque fois qu'on fait un FETCH on obtient un tableau associatif
          * c'est à dire 'Nom de colonne' => 'Valeur'
-         * 
+         *
          * ERRMODE_EXCEPTION : Déclenche une exception dès lors qu'on a un pb
          */
-        try
-        {
+        try {
             parent::__construct($_dsn, self::DBUSER, self::DBPASS);
 
             $this->setAttribute(PDO::MYSQL_ATTR_INIT_COMMAND, 'SET NAMES utf8');
             $this->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
             $this->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->exec('SET lc_time_names = \'fr_FR\'');
-        }
-        catch(PDOException $e)
-        {
+        } catch (PDOException $e) {
             die($e->getMessage());
         }
     }
@@ -58,10 +61,9 @@ class Db extends PDO
      *
      * @return self
      */
-    public static function getInstance():self
+    public static function getInstance(): self
     {
-        if(self::$instance === null)
-        {
+        if (self::$instance === null) {
             self::$instance = new self();
         }
         return self::$instance;

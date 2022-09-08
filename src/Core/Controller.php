@@ -16,13 +16,13 @@ abstract class Controller
         // A partir de ce point toute sortie est conservée en mémoire
 
         // On créé le chemin vers la vue
-        require_once ROOT.'./src/View/'.$fichier.".$extension";
+
+        require_once '../src/View/' . $fichier . ".$extension";
 
         $contenu = ob_get_clean();
-       
-        require_once ROOT.'./src/View/Templates/'.$layout.'.php';
+
+        require_once '../src/View/templates/' . $layout . '.php';
 
     }
 }
 
-?>

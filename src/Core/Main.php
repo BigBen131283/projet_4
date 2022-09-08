@@ -3,9 +3,9 @@
 namespace App\Core;
 
 use App\Controllers\HomeController;
-use App\core\Request;
-use App\core\Response;
-use App\core\Session;
+use App\Core\Request;
+use App\Core\Response;
+use App\Core\Session;
 use App\Models\UsersModel;
 
 class Main

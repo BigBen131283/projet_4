@@ -83,7 +83,7 @@
                     <li><a href="#"><ion-icon name="logo-facebook"></ion-icon>La page facebook</a></li>
                     <li><a href="#"><ion-icon name="logo-youtube"></ion-icon>Nos vidéos</a></li>
                     <li><a href="#"><ion-icon name="logo-twitter"></ion-icon>Le Twitter de l'aventure</a></li>
-                    <li><a href="#"><ion-icon name="logo-discord"></ion-icon></ion-icon>Le discord de Jean</a></li>
+                    <li><a href="#"><ion-icon name="logo-discord"></ion-icon>Le discord de Jean</a></li>
                 </ul>
             </div>
         </div>

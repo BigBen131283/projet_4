@@ -15,8 +15,8 @@ abstract class Mail
 
   protected Logger $logger;
   protected $to;
-  protected $from = 'noreply@alaskastory.fr';
-  protected $reply = 'noreply@alaskastory.fr';
+  protected $from = 'aventure.alaska@blog.big-ben.fr';
+  protected $reply = 'noreply@blog.big-ben.fr';
 
   /**
    * constructeur de la classe Mail

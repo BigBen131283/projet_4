@@ -9,7 +9,7 @@ use App\Core\Flash;
 use App\Validator\UsersValidator;
 use App\Core\Logger;
 use App\Core\Main;
-use App\Core\MailTrap;
+use App\Core\Mailo2;
 use Exception;
 use PDOException;
 
@@ -82,7 +82,7 @@ class UsersController extends Controller
                 {
                     $email = $body['email'];
                     $pseudo = $body['pseudo'];
-                    $mail = new MailTrap($email);
+                    $mail = new Mailo2($email);
 
                     $result = $mail->sendRegisterConfirmation("Please $pseudo, confirm your registration", $pseudo);
 
@@ -236,7 +236,7 @@ class UsersController extends Controller
                 if($user)
                 {
                     $logger->console('Sending the password reset email to user');
-                    $mail = new MailTrap($user->email);
+                    $mail = new Mailo2($user->email);
 
                     $result = $mail->sendPasswordReset("Bonjour $user->pseudo, veuillez cliquer sur le lien ci-dessous pour réinitialiser votre mot de passe", $user->pseudo);
                     Main::$main->response->redirect('/users/login');
